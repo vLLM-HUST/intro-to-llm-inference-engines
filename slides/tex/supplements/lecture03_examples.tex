@@ -1,54 +1,90 @@
-\begin{frame}{例子：一次多轮对话的真实链路并不止于模型前向}
+\begin{frame}{讲解：为什么生命周期是后续所有机制课的前提}
+  \Core{如果一次请求的阶段边界没画清楚，调度、KV、执行优化都会变成悬空讨论。}
+  \begin{itemize}
+    \item 生命周期把一个请求拆成进入、规范化、排队、prefill、decode、返回、回收等阶段。
+    \item 不同阶段的资源特征不同，因此瓶颈也不同；TTFT 和 TPOT 往往不是由同一阶段支配。
+    \item 只有先把阶段画出来，后面才知道一个优化到底改了哪里、为什么可能生效。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{讲解：prefill 与 decode 为什么必须分开教}
+  \Core{很多初学者把“生成”当成单一过程，但系统里最重要的区分之一就是 prefill 与 decode。}
+  \begin{itemize}
+    \item prefill 更像一次性大计算，直接决定首 token 何时出现。
+    \item decode 更像持续迭代的稳态过程，更容易受到调度、状态驻留和抖动影响。
+    \item 课程后续很多机制都是围绕这一区分展开的，例如阶段解耦、continuous batching 和状态搬运。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{例子：一次多轮对话的真实链路并不止于模型前向（1）}
   \Core{请求生命周期要覆盖从输入组织到状态回收的完整过程，而不是只盯住模型执行。}
-  \begin{block}{进入前的准备}
+\begin{block}{进入前的准备}
     chat template、tokenizer 和 prompt 拼接本身就会引入时间与长度变化。
   \end{block}
-  \pause
-  \begin{block}{进入后的主路径}
+\end{frame}
+
+\begin{frame}{例子：一次多轮对话的真实链路并不止于模型前向（2）}
+  \Core{请求生命周期要覆盖从输入组织到状态回收的完整过程，而不是只盯住模型执行。}
+\begin{block}{进入后的主路径}
     入队、调度、prefill、decode、输出组装会在不同对象之间多次转移控制权。
   \end{block}
-  \pause
-  \begin{block}{完成后的尾部动作}
+\end{frame}
+
+\begin{frame}{例子：一次多轮对话的真实链路并不止于模型前向（3）}
+  \Core{请求生命周期要覆盖从输入组织到状态回收的完整过程，而不是只盯住模型执行。}
+\begin{block}{完成后的尾部动作}
     请求结束不代表系统工作结束，状态释放、统计更新和资源回收同样属于生命周期的一部分。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：chat template 为什么会影响生命周期分析}
+\begin{frame}{例子：chat template 为什么会影响生命周期分析（1）}
   \Core{如果输入在真正进入 engine 前已经发生了长度膨胀，那么后面的阶段观察也会被一并放大。}
-  \begin{block}{用户看到的是一条自然语言消息}
+\begin{block}{用户看到的是一条自然语言消息}
     但系统里常常先被改写为带角色标记、特殊 token 和 generation prompt 的模板串。
   \end{block}
-  \pause
-  \begin{block}{直接后果}
+\end{frame}
+
+\begin{frame}{例子：chat template 为什么会影响生命周期分析（2）}
+  \Core{如果输入在真正进入 engine 前已经发生了长度膨胀，那么后面的阶段观察也会被一并放大。}
+\begin{block}{直接后果}
     prompt\_len 变化会影响 prefill 代价、KV 初始规模和后续排队行为。
   \end{block}
-  \pause
-  \begin{block}{教学意义}
+\end{frame}
+
+\begin{frame}{例子：chat template 为什么会影响生命周期分析（3）}
+  \Core{如果输入在真正进入 engine 前已经发生了长度膨胀，那么后面的阶段观察也会被一并放大。}
+\begin{block}{教学意义}
     生命周期不是从“用户文本”开始算，而是从“真正进入系统的 token 序列”开始算。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：多轮对话在入口处如何被组织}
+\begin{frame}{代码例子：多轮对话在入口处如何被组织（1）}
   \Core{生命周期课程里的代码例子要回答：输入是怎样变成请求对象的。}
-  \begin{block}{入口片段}
+\begin{block}{入口片段}
     {\ttfamily\small
     \detokenize{prompts = [tokenizer.apply_chat_template(...)]}\par
     \detokenize{outputs = llm.generate(prompts, sampling_params)}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：多轮对话在入口处如何被组织（2）}
+  \Core{生命周期课程里的代码例子要回答：输入是怎样变成请求对象的。}
+\begin{block}{课堂应追问}
     `generate()` 接到的是原始文本、token 序列，还是已经带运行时元数据的请求对象？
   \end{block}
-  \pause
-  \begin{block}{系统含义}
+\end{frame}
+
+\begin{frame}{代码例子：多轮对话在入口处如何被组织（3）}
+  \Core{生命周期课程里的代码例子要回答：输入是怎样变成请求对象的。}
+\begin{block}{系统含义}
     入口处的数据形态，决定了后面 state object 该如何承载长度、状态和 block table。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：Sequence 为什么是生命周期里的关键对象}
+\begin{frame}{代码例子：Sequence 为什么是生命周期里的关键对象（1）}
   \Core{如果不能说清 \texttt{Sequence} 承载了哪些字段，就很难讲明请求是如何跨阶段存活的。}
-  \begin{block}{课堂应关注的字段}
+\begin{block}{课堂应关注的字段}
     {\ttfamily\small
     \detokenize{status}\par
     \detokenize{num_cached_tokens}\par
@@ -56,42 +92,60 @@
     \detokenize{last_block_num_tokens}\par
     }
   \end{block}
-  \pause
-  \begin{block}{对象视角}
+\end{frame}
+
+\begin{frame}{代码例子：Sequence 为什么是生命周期里的关键对象（2）}
+  \Core{如果不能说清 \texttt{Sequence} 承载了哪些字段，就很难讲明请求是如何跨阶段存活的。}
+\begin{block}{对象视角}
     这些字段把“请求内容、调度状态、KV 元数据”压在了同一个生命周期对象上。
   \end{block}
-  \pause
-  \begin{block}{结论}
+\end{frame}
+
+\begin{frame}{代码例子：Sequence 为什么是生命周期里的关键对象（3）}
+  \Core{如果不能说清 \texttt{Sequence} 承载了哪些字段，就很难讲明请求是如何跨阶段存活的。}
+\begin{block}{结论}
     一次请求之所以是系统问题，关键就在于它不是一次函数调用，而是一个持续演化的状态对象。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：prefill 和 decode 为什么应该拆开看}
+\begin{frame}{例子：prefill 和 decode 为什么应该拆开看（1）}
   \Core{生命周期讲义里最重要的区分，就是 prefill 与 decode 的资源特征不同。}
-  \begin{block}{prefill}
+\begin{block}{prefill}
     一次性处理更长输入，计算更密集，也更容易直接抬高 TTFT。
   \end{block}
-  \pause
-  \begin{block}{decode}
+\end{frame}
+
+\begin{frame}{例子：prefill 和 decode 为什么应该拆开看（2）}
+  \Core{生命周期讲义里最重要的区分，就是 prefill 与 decode 的资源特征不同。}
+\begin{block}{decode}
     每轮 token 较少，但会跨更多轮持续存在，更容易与调度和状态驻留绑定在一起。
   \end{block}
-  \pause
-  \begin{block}{误区}
+\end{frame}
+
+\begin{frame}{例子：prefill 和 decode 为什么应该拆开看（3）}
+  \Core{生命周期讲义里最重要的区分，就是 prefill 与 decode 的资源特征不同。}
+\begin{block}{误区}
     如果把二者都写成“模型生成阶段”，就会把关键的性能来源混在一起。
   \end{block}
 \end{frame}
 
-\begin{frame}{课堂练习：用时序图复述一次请求}
+\begin{frame}{课堂练习：用时序图复述一次请求（1）}
   \Core{课程练习的目的不是画复杂图，而是检验你是否知道控制权何时转移。}
-  \begin{block}{练习一}
+\begin{block}{练习一}
     在时序图中标出：请求进入、prefill 开始、decode 开始、输出完成、状态释放五个节点。
   \end{block}
-  \pause
-  \begin{block}{练习二}
+\end{frame}
+
+\begin{frame}{课堂练习：用时序图复述一次请求（2）}
+  \Core{课程练习的目的不是画复杂图，而是检验你是否知道控制权何时转移。}
+\begin{block}{练习二}
     说明其中哪一个节点最适合插第一条日志，为什么。
   \end{block}
-  \pause
-  \begin{block}{练习三}
+\end{frame}
+
+\begin{frame}{课堂练习：用时序图复述一次请求（3）}
+  \Core{课程练习的目的不是画复杂图，而是检验你是否知道控制权何时转移。}
+\begin{block}{练习三}
     用一句话回答：为什么生命周期图是后续调度和 KV 讨论的公共前提？
   \end{block}
 \end{frame}

@@ -1,111 +1,171 @@
-\begin{frame}{例子：为什么同一机制在 GPU 和国产 NPU 上经常表现不同}
+\begin{frame}{讲解：平台适配课的核心不是移植，而是重建假设}
+  \Core{GPU 上形成的经验并不能直接平移到国产 NPU 或其他异构平台，因为假设条件一起变了。}
+  \begin{itemize}
+    \item 图执行、编译路径、通信比例、调试工具和默认优化都可能不同。
+    \item 因此适配不是“接口替换”，而是重新确认瓶颈在哪、哪些机制仍然成立。
+    \item 这也是为什么平台适配有研究价值，它迫使我们暴露原本被默认隐藏的系统前提。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{讲解：第九讲应建立的验证边界}
+  \Core{跨平台比较最容易失真，所以课程里必须先讲什么叫“可比”。}
+  \begin{itemize}
+    \item 模型、精度、workload、warmup 和并行配置如果不统一，数字很难解释。
+    \item “能跑起来”只对应功能层，真正可研究的是“能优化”和“能验证”两层。
+    \item 因此平台课的重点不是比谁更快，而是学会设计公平、可追责的比较实验。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{例子：为什么同一机制在 GPU 和国产 NPU 上经常表现不同（1）}
   \Core{平台适配课的出发点不是“换了芯片”，而是执行语义、工具链和瓶颈位置一起变了。}
-  \begin{block}{GPU 路径}
+\begin{block}{GPU 路径}
     开发者往往更熟悉 CUDA、Nsight 和主流 kernel 栈，性能问题定位更直接。
   \end{block}
-  \pause
-  \begin{block}{NPU 路径}
+\end{frame}
+
+\begin{frame}{例子：为什么同一机制在 GPU 和国产 NPU 上经常表现不同（2）}
+  \Core{平台适配课的出发点不是“换了芯片”，而是执行语义、工具链和瓶颈位置一起变了。}
+\begin{block}{NPU 路径}
     图执行、编译栈、通信路径和 profiler 语义可能完全不同，原有直觉经常失效。
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{例子：为什么同一机制在 GPU 和国产 NPU 上经常表现不同（3）}
+  \Core{平台适配课的出发点不是“换了芯片”，而是执行语义、工具链和瓶颈位置一起变了。}
+\begin{block}{课程结论}
     平台迁移不是简单重编译，而是一次系统假设重审。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：能跑、能优化、能验证为什么要分成三层}
+\begin{frame}{例子：能跑、能优化、能验证为什么要分成三层（1）}
   \Core{很多适配工作停留在“能跑起来”，但课程必须让学生看到这和“能做研究”之间还有距离。}
-  \begin{block}{能跑}
+\begin{block}{能跑}
     模型能返回结果，但不代表路径正确、效率合理或结果稳定。
   \end{block}
-  \pause
-  \begin{block}{能优化}
+\end{frame}
+
+\begin{frame}{例子：能跑、能优化、能验证为什么要分成三层（2）}
+  \Core{很多适配工作停留在“能跑起来”，但课程必须让学生看到这和“能做研究”之间还有距离。}
+\begin{block}{能优化}
     说明热点路径、编译行为和资源瓶颈已经可观察、可改动。
   \end{block}
-  \pause
-  \begin{block}{能验证}
+\end{frame}
+
+\begin{frame}{例子：能跑、能优化、能验证为什么要分成三层（3）}
+  \Core{很多适配工作停留在“能跑起来”，但课程必须让学生看到这和“能做研究”之间还有距离。}
+\begin{block}{能验证}
     说明你可以用公平实验解释收益，而不是把所有差异都推给平台黑盒。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：平台适配首先会动到哪些运行时入口}
+\begin{frame}{代码例子：平台适配首先会动到哪些运行时入口（1）}
   \Core{平台适配往往不是直接改模型定义，而是先从 runner、worker、编译与内存路径切入。}
-  \begin{block}{典型入口}
+\begin{block}{典型入口}
     {\ttfamily\small
     \detokenize{model_runner.py}\par
     \detokenize{worker / executor backend}\par
     \detokenize{graph capture / compile policy}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：平台适配首先会动到哪些运行时入口（2）}
+  \Core{平台适配往往不是直接改模型定义，而是先从 runner、worker、编译与内存路径切入。}
+\begin{block}{课堂应追问}
     这些位置分别更接近功能兼容、性能优化，还是验证与观测能力？
   \end{block}
-  \pause
-  \begin{block}{系统含义}
+\end{frame}
+
+\begin{frame}{代码例子：平台适配首先会动到哪些运行时入口（3）}
+  \Core{平台适配往往不是直接改模型定义，而是先从 runner、worker、编译与内存路径切入。}
+\begin{block}{系统含义}
     真正的适配路径通常要先建立“哪个层面在出问题”的分层诊断。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：最小平台差异观察日志}
+\begin{frame}{代码例子：最小平台差异观察日志（1）}
   \Core{平台适配课里的代码页，重点是教学生如何建立平台差异的第一手证据。}
-  \begin{block}{最小日志样式}
+\begin{block}{最小日志样式}
     {\ttfamily\small
     \detokenize{log(platform, batch_size, prompt_len, stage, latency_ms)}\par
     \detokenize{log(graph_mode, compile_hit, memory_allocated)}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：最小平台差异观察日志（2）}
+  \Core{平台适配课里的代码页，重点是教学生如何建立平台差异的第一手证据。}
+\begin{block}{课堂应追问}
     哪些量说明“路径不同”，哪些量说明“只是配置不同”？
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{代码例子：最小平台差异观察日志（3）}
+  \Core{平台适配课里的代码页，重点是教学生如何建立平台差异的第一手证据。}
+\begin{block}{课程结论}
     没有分层日志，平台差异就会退化成模糊叙述，无法进入系统研究语境。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：公平实验为什么在异构平台上更难}
+\begin{frame}{例子：公平实验为什么在异构平台上更难（1）}
   \Core{平台比较最容易犯的错误，是把环境差异、软件成熟度差异和机制差异混在一起。}
-  \begin{block}{不公平一}
+\begin{block}{不公平一}
     比较时使用了不同精度、不同 batch 上限或不同 warmup 策略。
   \end{block}
-  \pause
-  \begin{block}{不公平二}
+\end{frame}
+
+\begin{frame}{例子：公平实验为什么在异构平台上更难（2）}
+  \Core{平台比较最容易犯的错误，是把环境差异、软件成熟度差异和机制差异混在一起。}
+\begin{block}{不公平二}
     一方用了成熟 profiler 和手工优化，另一方仍停留在默认配置。
   \end{block}
-  \pause
-  \begin{block}{课程要求}
+\end{frame}
+
+\begin{frame}{例子：公平实验为什么在异构平台上更难（3）}
+  \Core{平台比较最容易犯的错误，是把环境差异、软件成熟度差异和机制差异混在一起。}
+\begin{block}{课程要求}
     异构平台实验必须先交代可比边界，再谈数字输赢。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：迁移一条 decode 热路径时会遇到什么}
+\begin{frame}{例子：迁移一条 decode 热路径时会遇到什么（1）}
   \Core{decode 热路径对平台差异特别敏感，因为它既要求低抖动，又持续依赖状态与调度稳定性。}
-  \begin{block}{算子层}
+\begin{block}{算子层}
     kernel、算子融合和内存布局可能都需要重新调优。
   \end{block}
-  \pause
-  \begin{block}{运行时层}
+\end{frame}
+
+\begin{frame}{例子：迁移一条 decode 热路径时会遇到什么（2）}
+  \Core{decode 热路径对平台差异特别敏感，因为它既要求低抖动，又持续依赖状态与调度稳定性。}
+\begin{block}{运行时层}
     graph capture、同步语义和调度节拍可能与原平台不同。
   \end{block}
-  \pause
-  \begin{block}{研究层}
+\end{frame}
+
+\begin{frame}{例子：迁移一条 decode 热路径时会遇到什么（3）}
+  \Core{decode 热路径对平台差异特别敏感，因为它既要求低抖动，又持续依赖状态与调度稳定性。}
+\begin{block}{研究层}
     如果不能解释是哪个层面出问题，适配工作就很难形成可发表的系统结论。
   \end{block}
 \end{frame}
 
-\begin{frame}{课堂练习：为跨平台实验写一页计划}
+\begin{frame}{课堂练习：为跨平台实验写一页计划（1）}
   \Core{平台适配课最适合训练的，是写出一份短而硬的验证计划。}
-  \begin{block}{练习一}
+\begin{block}{练习一}
     指定两个平台、一个共同 workload 和三项必须控制的变量。
   \end{block}
-  \pause
-  \begin{block}{练习二}
+\end{frame}
+
+\begin{frame}{课堂练习：为跨平台实验写一页计划（2）}
+  \Core{平台适配课最适合训练的，是写出一份短而硬的验证计划。}
+\begin{block}{练习二}
     指出你会优先观测的两个局部探针，以及它们为什么能帮助解释性能差异。
   \end{block}
-  \pause
-  \begin{block}{练习三}
+\end{frame}
+
+\begin{frame}{课堂练习：为跨平台实验写一页计划（3）}
+  \Core{平台适配课最适合训练的，是写出一份短而硬的验证计划。}
+\begin{block}{练习三}
     用一句话回答：为什么“能跑起来”还不算完成平台适配？
   \end{block}
 \end{frame}

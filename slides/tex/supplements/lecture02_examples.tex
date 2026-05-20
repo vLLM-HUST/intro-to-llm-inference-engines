@@ -1,97 +1,151 @@
-\begin{frame}{例子：同样是在线请求，工作负载分布可以完全不同}
+\begin{frame}{讲解：工作负载为什么先于指标}
+  \Core{指标没有脱离场景的独立意义，必须先交代 workload，才能解释数字。}
+  \begin{itemize}
+    \item 离线批处理更接近资源利用率问题，在线对话更接近响应性问题。
+    \item RAG 与 Agent 会把“生成”嵌入更长链路，因此单点吞吐不再足以代表体验。
+    \item 同一套指标在不同 workload 下含义会变化，这就是为什么课程里反复强调“先说场景，再说指标”。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{讲解：这一讲真正要学会的不是指标名词}
+  \Core{这讲的核心不是记住 TTFT、P99、goodput 的定义，而是学会用它们刻画取舍。}
+  \begin{itemize}
+    \item 一个系统如果吞吐更高，但首 token 更慢，它未必更适合在线服务。
+    \item 一个系统如果尾时延稳定，但设备空转严重，它也未必更优。
+    \item 因此评价不是找“最好看的数字”，而是明确哪个指标是主目标，哪个指标是代价。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{例子：同样是在线请求，工作负载分布可以完全不同（1）}
   \Core{指标解释必须建立在真实 workload 之上，否则结论会整体偏移。}
-  \begin{block}{对话服务}
+\begin{block}{对话服务}
     请求到达更连续，prompt 长度波动大，用户对 TTFT 更敏感。
   \end{block}
-  \pause
-  \begin{block}{RAG 服务}
+\end{frame}
+
+\begin{frame}{例子：同样是在线请求，工作负载分布可以完全不同（2）}
+  \Core{指标解释必须建立在真实 workload 之上，否则结论会整体偏移。}
+\begin{block}{RAG 服务}
     请求链路更长，检索与生成交织，单次输出长度未必长，但整体时延更复杂。
   \end{block}
-  \pause
-  \begin{block}{Agent 服务}
+\end{frame}
+
+\begin{frame}{例子：同样是在线请求，工作负载分布可以完全不同（3）}
+  \Core{指标解释必须建立在真实 workload 之上，否则结论会整体偏移。}
+\begin{block}{Agent 服务}
     一次用户任务会触发多轮工具调用和多次生成，简单平均吞吐很难刻画真实体验。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：为什么平均值经常误导课程项目}
+\begin{frame}{例子：为什么平均值经常误导课程项目（1）}
   \Core{系统课里最常见的误区，是只看均值而不看分布和尾部。}
-  \begin{block}{平均 TTFT 看起来正常}
+\begin{block}{平均 TTFT 看起来正常}
     但只要少量长请求和突发到达叠加，P99 就可能已经不可接受。
   \end{block}
-  \pause
-  \begin{block}{平均吞吐更高}
+\end{frame}
+
+\begin{frame}{例子：为什么平均值经常误导课程项目（2）}
+  \Core{系统课里最常见的误区，是只看均值而不看分布和尾部。}
+\begin{block}{平均吞吐更高}
     可能只是牺牲了短请求体验或拉高了队列等待，并不等于服务更好。
   \end{block}
-  \pause
-  \begin{block}{goodput 的作用}
+\end{frame}
+
+\begin{frame}{例子：为什么平均值经常误导课程项目（3）}
+  \Core{系统课里最常见的误区，是只看均值而不看分布和尾部。}
+\begin{block}{goodput 的作用}
     它提醒我们：真正有价值的是满足 SLO 的有效吞吐，而不是单纯多算几个 token。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：最小 benchmark 如何固定输入分布}
+\begin{frame}{代码例子：最小 benchmark 如何固定输入分布（1）}
   \Core{工作负载与指标课程需要让学生看到，实验不是“随便跑一遍”。}
-  \begin{block}{代码片段}
+\begin{block}{代码片段}
     {\ttfamily\small
     \detokenize{seed(0)}\par
     \detokenize{prompt_token_ids = [[randint(0, 10000) for _ in range(randint(100, max_input_len))] ...]}\par
     \detokenize{sampling_params = [SamplingParams(max_tokens=randint(100, max_output_len)) ...]}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：最小 benchmark 如何固定输入分布（2）}
+  \Core{工作负载与指标课程需要让学生看到，实验不是“随便跑一遍”。}
+\begin{block}{课堂应追问}
     这里哪些变量控制了“输入长度分布”，哪些变量控制了“输出长度分布”？
   \end{block}
-  \pause
-  \begin{block}{系统含义}
+\end{frame}
+
+\begin{frame}{代码例子：最小 benchmark 如何固定输入分布（3）}
+  \Core{工作负载与指标课程需要让学生看到，实验不是“随便跑一遍”。}
+\begin{block}{系统含义}
     如果这两类分布没说清，后面的 TTFT、throughput、queue wait 都可能失去解释基础。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：如何把原始运行结果转成指标}
+\begin{frame}{代码例子：如何把原始运行结果转成指标（1）}
   \Core{指标不是抽象名词，而是从运行记录里计算出来的。}
-  \begin{block}{最小计算逻辑}
+\begin{block}{最小计算逻辑}
     {\ttfamily\small
     \detokenize{t = time.time()}\par
     \detokenize{llm.generate(prompt_token_ids, sampling_params, use_tqdm=False)}\par
     \detokenize{throughput = total_tokens / (time.time() - t)}\par
     }
   \end{block}
-  \pause
-  \begin{block}{局限}
+\end{frame}
+
+\begin{frame}{代码例子：如何把原始运行结果转成指标（2）}
+  \Core{指标不是抽象名词，而是从运行记录里计算出来的。}
+\begin{block}{局限}
     这里只有总体 throughput，没有拆 TTFT、P99 和批次级探针。
   \end{block}
-  \pause
-  \begin{block}{教学意义}
+\end{frame}
+
+\begin{frame}{代码例子：如何把原始运行结果转成指标（3）}
+  \Core{指标不是抽象名词，而是从运行记录里计算出来的。}
+\begin{block}{教学意义}
     这正好说明：一个最小 benchmark 足够入门，但不足以支撑完整系统结论。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：throughput、TTFT、P99 三者为何经常互相拉扯}
+\begin{frame}{例子：throughput、TTFT、P99 三者为何经常互相拉扯（1）}
   \Core{工作负载与评价指标这一讲的重点，是学会接受真实系统中的指标张力。}
-  \begin{block}{更大的 batch}
+\begin{block}{更大的 batch}
     往往提高总体吞吐，但也可能拉高等待时间和 TTFT。
   \end{block}
-  \pause
-  \begin{block}{更保守的调度}
+\end{frame}
+
+\begin{frame}{例子：throughput、TTFT、P99 三者为何经常互相拉扯（2）}
+  \Core{工作负载与评价指标这一讲的重点，是学会接受真实系统中的指标张力。}
+\begin{block}{更保守的调度}
     可能稳定尾时延，却压低设备利用率和平均吞吐。
   \end{block}
-  \pause
-  \begin{block}{课程项目要求}
+\end{frame}
+
+\begin{frame}{例子：throughput、TTFT、P99 三者为何经常互相拉扯（3）}
+  \Core{工作负载与评价指标这一讲的重点，是学会接受真实系统中的指标张力。}
+\begin{block}{课程项目要求}
     任何优化都要先说清：你优先保哪个指标，愿意牺牲哪个指标。
   \end{block}
 \end{frame}
 
-\begin{frame}{课堂练习：为同一系统写出两种不同的指标故事}
+\begin{frame}{课堂练习：为同一系统写出两种不同的指标故事（1）}
   \Core{同一组数字可以对应完全不同的解释，关键在于你把问题定义成什么。}
-  \begin{block}{练习一}
+\begin{block}{练习一}
     如果一个系统吞吐提高 15\%，但 TTFT 恶化 30\%，你会如何判断它对在线服务是否更好？
   \end{block}
-  \pause
-  \begin{block}{练习二}
+\end{frame}
+
+\begin{frame}{课堂练习：为同一系统写出两种不同的指标故事（2）}
+  \Core{同一组数字可以对应完全不同的解释，关键在于你把问题定义成什么。}
+\begin{block}{练习二}
     给出一个适用于 Agent 工作流的 SLO 组合，不要只写单个 TTFT 阈值。
   \end{block}
-  \pause
-  \begin{block}{练习三}
+\end{frame}
+
+\begin{frame}{课堂练习：为同一系统写出两种不同的指标故事（3）}
+  \Core{同一组数字可以对应完全不同的解释，关键在于你把问题定义成什么。}
+\begin{block}{练习三}
     说明为什么课程里反复强调“指标必须回到 workload 和场景”。
   \end{block}
 \end{frame}

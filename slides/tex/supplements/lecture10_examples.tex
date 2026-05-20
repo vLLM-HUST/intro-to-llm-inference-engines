@@ -1,55 +1,91 @@
-\begin{frame}{例子：同一篇系统论文应该先看哪里}
+\begin{frame}{讲解：论文比较方法课真正训练的能力}
+  \Core{这讲不是教学生复述论文摘要，而是训练把论文拆成“问题、机制、代价、边界、证据”的能力。}
+  \begin{itemize}
+    \item 先问作者到底重构了哪个系统问题，而不是先看图表大不大。
+    \item 再问机制改变了什么控制点，为什么这个点值得改。
+    \item 最后问实验到底支撑了哪些结论，还有哪些只是作者的延伸解释。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{讲解：为什么系统论文不能只比“数字是否更高”}
+  \Core{论文比较的核心不是找一个冠军，而是判断一篇工作是否真的把问题讲清、做实、证实。}
+  \begin{itemize}
+    \item 工程量很大，不等于研究判断就清楚。
+    \item 加速很明显，不等于对照就公平、边界就被说明。
+    \item 所以课程希望学生形成的不是“排名思维”，而是“证据与边界思维”。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{例子：同一篇系统论文应该先看哪里（1）}
   \Core{论文比较方法课不是教学生背结论，而是教他们迅速识别论文的真正控制点和证据边界。}
-  \begin{block}{第一步：找问题定义}
+\begin{block}{第一步：找问题定义}
     这篇论文到底在解决哪一个系统对象的什么痛点？
   \end{block}
-  \pause
-  \begin{block}{第二步：找机制变化}
+\end{frame}
+
+\begin{frame}{例子：同一篇系统论文应该先看哪里（2）}
+  \Core{论文比较方法课不是教学生背结论，而是教他们迅速识别论文的真正控制点和证据边界。}
+\begin{block}{第二步：找机制变化}
     它改了控制点、状态组织、执行路径，还是实验方法本身？
   \end{block}
-  \pause
-  \begin{block}{第三步：找证据边界}
+\end{frame}
+
+\begin{frame}{例子：同一篇系统论文应该先看哪里（3）}
+  \Core{论文比较方法课不是教学生背结论，而是教他们迅速识别论文的真正控制点和证据边界。}
+\begin{block}{第三步：找证据边界}
     它的实验到底支撑了哪部分结论，还有哪部分只是推测？
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：把 vLLM 论文拆成五段会看到什么}
+\begin{frame}{例子：把 vLLM 论文拆成五段会看到什么（1）}
   \Core{经典论文最好拿来做结构拆解，因为它能帮助学生建立统一的阅读框架。}
-  \begin{block}{假设}
+\begin{block}{假设}
     动态 serving 的关键瓶颈之一是 KV 管理方式不支持高效 continuous batching。
   \end{block}
-  \pause
-  \begin{block}{机制}
+\end{frame}
+
+\begin{frame}{例子：把 vLLM 论文拆成五段会看到什么（2）}
+  \Core{经典论文最好拿来做结构拆解，因为它能帮助学生建立统一的阅读框架。}
+\begin{block}{机制}
     用 PagedAttention 改写状态组织方式，而不是只调度得更频繁。
   \end{block}
-  \pause
-  \begin{block}{边界}
+\end{frame}
+
+\begin{frame}{例子：把 vLLM 论文拆成五段会看到什么（3）}
+  \Core{经典论文最好拿来做结构拆解，因为它能帮助学生建立统一的阅读框架。}
+\begin{block}{边界}
     论文证明了什么条件下收益成立，但不等于所有 serving 问题都因此解决。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：把论文机制映射回真实代码}
+\begin{frame}{代码例子：把论文机制映射回真实代码（1）}
   \Core{论文阅读真正有价值的时刻，是你能指出机制落到代码里大概对应哪类对象。}
-  \begin{block}{代码映射示例}
+\begin{block}{代码映射示例}
     {\ttfamily\small
     \detokenize{BlockManager / block_table -> KV organization}\par
     \detokenize{Scheduler -> control point}\par
     \detokenize{bench.py / scripts -> evidence path}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：把论文机制映射回真实代码（2）}
+  \Core{论文阅读真正有价值的时刻，是你能指出机制落到代码里大概对应哪类对象。}
+\begin{block}{课堂应追问}
     如果一篇论文的核心机制在代码里找不到等价控制点，你该如何判断它是否被真实实现？
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{代码例子：把论文机制映射回真实代码（3）}
+  \Core{论文阅读真正有价值的时刻，是你能指出机制落到代码里大概对应哪类对象。}
+\begin{block}{课程结论}
     论文比较不能停在图表和术语层，必须回到对象、控制点和可验证实现。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：系统论文精读报告模板}
+\begin{frame}{代码例子：系统论文精读报告模板（1）}
   \Core{这类课程最好给学生一份“可直接套用但不偷懒”的读论文结构模板。}
-  \begin{block}{模板片段}
+\begin{block}{模板片段}
     {\ttfamily\small
     \detokenize{1. Problem and system object}\par
     \detokenize{2. Mechanism and changed control point}\par
@@ -57,57 +93,81 @@
     \detokenize{4. Evidence and what is still unsupported}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：系统论文精读报告模板（2）}
+  \Core{这类课程最好给学生一份“可直接套用但不偷懒”的读论文结构模板。}
+\begin{block}{课堂应追问}
     为什么“论文摘要改写一遍”不能算合格精读报告？
   \end{block}
-  \pause
-  \begin{block}{教学意义}
+\end{frame}
+
+\begin{frame}{代码例子：系统论文精读报告模板（3）}
+  \Core{这类课程最好给学生一份“可直接套用但不偷懒”的读论文结构模板。}
+\begin{block}{教学意义}
     模板的作用不是降低难度，而是强制学生用系统语言组织判断。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：什么叫 synthetic gain}
+\begin{frame}{例子：什么叫 synthetic gain（1）}
   \Core{课程里必须训练学生识别“图很好看，但比较并不公平”的论文叙事。}
-  \begin{block}{迹象一}
+\begin{block}{迹象一}
     baseline 选择过弱，或者没有把现有系统最佳实践纳入比较。
   \end{block}
-  \pause
-  \begin{block}{迹象二}
+\end{frame}
+
+\begin{frame}{例子：什么叫 synthetic gain（2）}
+  \Core{课程里必须训练学生识别“图很好看，但比较并不公平”的论文叙事。}
+\begin{block}{迹象二}
     workload 过于单一，恰好只适合提出的方法。
   \end{block}
-  \pause
-  \begin{block}{迹象三}
+\end{frame}
+
+\begin{frame}{例子：什么叫 synthetic gain（3）}
+  \Core{课程里必须训练学生识别“图很好看，但比较并不公平”的论文叙事。}
+\begin{block}{迹象三}
     只给出端到端大图，不给局部探针与失败条件，导致因果链断裂。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：工程量大不等于研究贡献大}
+\begin{frame}{例子：工程量大不等于研究贡献大（1）}
   \Core{系统论文比较方法课另一个关键目标，是帮助学生区分“做了很多”和“回答了好问题”。}
-  \begin{block}{工程量大}
+\begin{block}{工程量大}
     代码多、模块多、图表多，但问题定义可能仍然模糊。
   \end{block}
-  \pause
-  \begin{block}{研究贡献大}
+\end{frame}
+
+\begin{frame}{例子：工程量大不等于研究贡献大（2）}
+  \Core{系统论文比较方法课另一个关键目标，是帮助学生区分“做了很多”和“回答了好问题”。}
+\begin{block}{研究贡献大}
     可能只改变一个关键控制点，却清楚说明了为什么这个点改变了系统边界。
   \end{block}
-  \pause
-  \begin{block}{课堂结论}
+\end{frame}
+
+\begin{frame}{例子：工程量大不等于研究贡献大（3）}
+  \Core{系统论文比较方法课另一个关键目标，是帮助学生区分“做了很多”和“回答了好问题”。}
+\begin{block}{课堂结论}
     论文比较首先比较问题与证据，其次才比较工程复杂度。
   \end{block}
 \end{frame}
 
-\begin{frame}{课堂练习：用五句话否定一篇论文}
+\begin{frame}{课堂练习：用五句话否定一篇论文（1）}
   \Core{真正的精读能力之一，是能用短而硬的判断指出论文的边界。}
-  \begin{block}{练习一}
+\begin{block}{练习一}
     用一句话写出论文假设最脆弱的地方。
   \end{block}
-  \pause
-  \begin{block}{练习二}
+\end{frame}
+
+\begin{frame}{课堂练习：用五句话否定一篇论文（2）}
+  \Core{真正的精读能力之一，是能用短而硬的判断指出论文的边界。}
+\begin{block}{练习二}
     用一句话写出最需要补充的实验。
   \end{block}
-  \pause
-  \begin{block}{练习三}
+\end{frame}
+
+\begin{frame}{课堂练习：用五句话否定一篇论文（3）}
+  \Core{真正的精读能力之一，是能用短而硬的判断指出论文的边界。}
+\begin{block}{练习三}
     用一句话写出：如果这个实验结果反过来，整篇论文最先倒塌的结论是什么。
   \end{block}
 \end{frame}

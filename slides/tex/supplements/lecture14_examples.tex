@@ -1,51 +1,89 @@
-\begin{frame}{例子：这门课最后到底希望学生带走什么}
+\begin{frame}{讲解：课程总结课真正要收束的是什么}
+  \Core{最后一讲不只是把前面内容重复一遍，而是要让学生看到整门课其实一直在重复同一套分析框架。}
+  \begin{itemize}
+    \item 工作负载告诉我们问题边界在哪里。
+    \item 控制点告诉我们系统行为由谁改变。
+    \item 状态对象告诉我们容量、复用和稳定性为何会成为主矛盾。
+    \item 验证方法告诉我们哪些结论值得相信。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{讲解：讲义、tutorial、实验和代码如何形成真正闭环}
+  \Core{你前面强调四层材料要互相呼应，最后一讲就应该把这件事明确讲出来。}
+  \begin{itemize}
+    \item slides 负责提出问题和建立概念框架。
+    \item tutorials 负责把概念映射到代码对象和思考路径。
+    \item experiments 负责把问题变成可执行、可复查的证据收集过程。
+    \item code 负责提供真实控制点，让讨论不漂浮在抽象层面。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{例子：这门课最后到底希望学生带走什么（1）}
   \Core{课程总结不应只回顾目录，而应明确学生已经获得的一套可重复的方法。}
-  \begin{block}{不是记住若干论文名字}
+\begin{block}{不是记住若干论文名字}
     论文只是样本，真正带走的应是分析系统问题的框架。
   \end{block}
-  \pause
-  \begin{block}{也不是掌握一套固定 runtime}
+\end{frame}
+
+\begin{frame}{例子：这门课最后到底希望学生带走什么（2）}
+  \Core{课程总结不应只回顾目录，而应明确学生已经获得的一套可重复的方法。}
+\begin{block}{也不是掌握一套固定 runtime}
     runtime 会变，但对象、控制点、收益链路和验证方法这套框架可以迁移。
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{例子：这门课最后到底希望学生带走什么（3）}
+  \Core{课程总结不应只回顾目录，而应明确学生已经获得的一套可重复的方法。}
+\begin{block}{课程结论}
     这门课真正的产出，是一套进入真实推理系统后还能继续使用的工作方法。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：一个优秀最终汇报通常长什么样}
+\begin{frame}{例子：一个优秀最终汇报通常长什么样（1）}
   \Core{好的最终汇报通常不追求面面俱到，而是把问题和证据压到很实。}
-  \begin{block}{开场}
+\begin{block}{开场}
     先用一句话讲清系统对象、控制点和目标指标。
   \end{block}
-  \pause
-  \begin{block}{主体}
+\end{frame}
+
+\begin{frame}{例子：一个优秀最终汇报通常长什么样（2）}
+  \Core{好的最终汇报通常不追求面面俱到，而是把问题和证据压到很实。}
+\begin{block}{主体}
     用最小实现和最关键实验支撑核心因果链，而不是堆大量细碎结果。
   \end{block}
-  \pause
-  \begin{block}{结尾}
+\end{frame}
+
+\begin{frame}{例子：一个优秀最终汇报通常长什么样（3）}
+  \Core{好的最终汇报通常不追求面面俱到，而是把问题和证据压到很实。}
+\begin{block}{结尾}
     诚实说明失败条件、边界和后续路线，往往比强行夸大收益更有研究价值。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：一个看似很努力但不合格的汇报}
+\begin{frame}{例子：一个看似很努力但不合格的汇报（1）}
   \Core{课程总结课也要明确失败模式，这样学生才知道之后如何避免。}
-  \begin{block}{问题一}
+\begin{block}{问题一}
     讲了很多实现细节，却没有说明到底改变了哪个控制点。
   \end{block}
-  \pause
-  \begin{block}{问题二}
+\end{frame}
+
+\begin{frame}{例子：一个看似很努力但不合格的汇报（2）}
+  \Core{课程总结课也要明确失败模式，这样学生才知道之后如何避免。}
+\begin{block}{问题二}
     图很多，但 workload、对照和失败边界都不清楚。
   \end{block}
-  \pause
-  \begin{block}{问题三}
+\end{frame}
+
+\begin{frame}{例子：一个看似很努力但不合格的汇报（3）}
+  \Core{课程总结课也要明确失败模式，这样学生才知道之后如何避免。}
+\begin{block}{问题三}
     把工程量直接当成研究贡献，导致整场报告没有中心判断。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：最终汇报推荐结构}
+\begin{frame}{代码例子：最终汇报推荐结构（1）}
   \Core{课程最后一讲可以给出一份较硬的汇报骨架，帮助学生把材料组织成研究叙事。}
-  \begin{block}{结构模板}
+\begin{block}{结构模板}
     {\ttfamily\small
     \detokenize{1. Problem and system object}\par
     \detokenize{2. Changed control point / mechanism}\par
@@ -53,19 +91,25 @@
     \detokenize{4. Evidence, boundary, next step}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：最终汇报推荐结构（2）}
+  \Core{课程最后一讲可以给出一份较硬的汇报骨架，帮助学生把材料组织成研究叙事。}
+\begin{block}{课堂应追问}
     为什么这个结构里没有单独的“工程量展示”章节？
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{代码例子：最终汇报推荐结构（3）}
+  \Core{课程最后一讲可以给出一份较硬的汇报骨架，帮助学生把材料组织成研究叙事。}
+\begin{block}{课程结论}
     汇报的中心是研究判断，而不是开发过程流水账。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：课程项目资料如何互相对齐}
+\begin{frame}{代码例子：课程项目资料如何互相对齐（1）}
   \Core{你前面要求的“讲义、tutorial、实验和代码互相呼应”，在最后汇报里必须显式体现。}
-  \begin{block}{对齐关系}
+\begin{block}{对齐关系}
     {\ttfamily\small
     \detokenize{slides -> problem framing}\par
     \detokenize{tutorials -> concept and code map}\par
@@ -73,42 +117,60 @@
     \detokenize{code -> control point and implementation}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：课程项目资料如何互相对齐（2）}
+  \Core{你前面要求的“讲义、tutorial、实验和代码互相呼应”，在最后汇报里必须显式体现。}
+\begin{block}{课堂应追问}
     如果你的最终报告无法指出这四层材料各自承担什么角色，说明前期材料组织仍然是断裂的。
   \end{block}
-  \pause
-  \begin{block}{教学意义}
+\end{frame}
+
+\begin{frame}{代码例子：课程项目资料如何互相对齐（3）}
+  \Core{你前面要求的“讲义、tutorial、实验和代码互相呼应”，在最后汇报里必须显式体现。}
+\begin{block}{教学意义}
     课程闭环不是文档美观问题，而是研究训练是否真正闭合的问题。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：从课程项目继续做研究的三条路线}
+\begin{frame}{例子：从课程项目继续做研究的三条路线（1）}
   \Core{课程结束后，真正有潜力的项目通常沿着问题深化、系统加深和证据扩展三条路线继续走。}
-  \begin{block}{路线一：问题深化}
+\begin{block}{路线一：问题深化}
     把一个课程级现象收紧成更明确的系统假设。
   \end{block}
-  \pause
-  \begin{block}{路线二：系统加深}
+\end{frame}
+
+\begin{frame}{例子：从课程项目继续做研究的三条路线（2）}
+  \Core{课程结束后，真正有潜力的项目通常沿着问题深化、系统加深和证据扩展三条路线继续走。}
+\begin{block}{路线二：系统加深}
     从教学代码进入真实 runtime 或异构平台，验证机制是否仍成立。
   \end{block}
-  \pause
-  \begin{block}{路线三：证据扩展}
+\end{frame}
+
+\begin{frame}{例子：从课程项目继续做研究的三条路线（3）}
+  \Core{课程结束后，真正有潜力的项目通常沿着问题深化、系统加深和证据扩展三条路线继续走。}
+\begin{block}{路线三：证据扩展}
     把最小实验扩大到更真实 workload、更严格对照和更强失败分析。
   \end{block}
 \end{frame}
 
-\begin{frame}{课堂练习：给未来的自己留一张研究路线卡}
+\begin{frame}{课堂练习：给未来的自己留一张研究路线卡（1）}
   \Core{课程最后的练习，不是再做一题，而是把当前项目转成可继续推进的路线图。}
-  \begin{block}{练习一}
+\begin{block}{练习一}
     写出你项目里最值得继续研究的一条假设。
   \end{block}
-  \pause
-  \begin{block}{练习二}
+\end{frame}
+
+\begin{frame}{课堂练习：给未来的自己留一张研究路线卡（2）}
+  \Core{课程最后的练习，不是再做一题，而是把当前项目转成可继续推进的路线图。}
+\begin{block}{练习二}
     写出下一步最值得补的一个实验和一个代码入口。
   \end{block}
-  \pause
-  \begin{block}{练习三}
+\end{frame}
+
+\begin{frame}{课堂练习：给未来的自己留一张研究路线卡（3）}
+  \Core{课程最后的练习，不是再做一题，而是把当前项目转成可继续推进的路线图。}
+\begin{block}{练习三}
     用一句话回答：这门课之后，你进入一个新推理系统时会先看什么？
   \end{block}
 \end{frame}

@@ -1,36 +1,66 @@
-\begin{frame}{例子：一个好题目和一个坏题目的差别}
+\begin{frame}{讲解：项目工作坊首先要把题目压缩成什么}
+  \Core{一个课程项目如果不能在一句话里同时说出对象、控制点和指标，通常说明题目还没成形。}
+  \begin{itemize}
+    \item “对象”回答你到底在优化什么，例如调度、KV、状态搬运、观测路径。
+    \item “控制点”回答你准备改哪里，而不是泛泛地说“优化系统”。
+    \item “指标”回答你如何判断成功，以及什么结果会证明你判断错了。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{讲解：为什么项目工作坊不鼓励一开始就做大而全}
+  \Core{课程项目最常见的失败，并不是学生不努力，而是题目边界从第一周起就没有收紧。}
+  \begin{itemize}
+    \item 没有最小场景时，实验无法快速给出正反反馈。
+    \item 没有最小机制时，实现工作会吞掉分析和验证时间。
+    \item 所以工作坊的目标不是激励大家“做更大”，而是帮助大家“做得更真、更可证伪”。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{例子：一个好题目和一个坏题目的差别（1）}
   \Core{项目工作坊最先要解决的不是“做什么酷”，而是“什么问题有清晰对象、控制点和验证路径”。}
-  \begin{block}{坏题目}
+\begin{block}{坏题目}
     “优化大模型推理性能”过大，既没有对象边界，也没有明确失败条件。
   \end{block}
-  \pause
-  \begin{block}{好题目}
+\end{frame}
+
+\begin{frame}{例子：一个好题目和一个坏题目的差别（2）}
+  \Core{项目工作坊最先要解决的不是“做什么酷”，而是“什么问题有清晰对象、控制点和验证路径”。}
+\begin{block}{好题目}
     “在长短请求混部场景下，验证某种 admission 策略能否改善短请求 TTFT 且不损伤 goodput”。
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{例子：一个好题目和一个坏题目的差别（3）}
+  \Core{项目工作坊最先要解决的不是“做什么酷”，而是“什么问题有清晰对象、控制点和验证路径”。}
+\begin{block}{课程结论}
     题目一旦能被写成“对象 + 控制点 + 指标 + 失败条件”，项目才真正开始成立。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：为什么中期汇报最该暴露风险而不是展示进度}
+\begin{frame}{例子：为什么中期汇报最该暴露风险而不是展示进度（1）}
   \Core{中期汇报的价值在于及时暴露错误方向，而不是把已经投入的工程量包装成确定性成果。}
-  \begin{block}{好汇报}
+\begin{block}{好汇报}
     说明当前假设最危险的地方、最可能失败的实验和最需要外界判断的路径。
   \end{block}
-  \pause
-  \begin{block}{坏汇报}
+\end{frame}
+
+\begin{frame}{例子：为什么中期汇报最该暴露风险而不是展示进度（2）}
+  \Core{中期汇报的价值在于及时暴露错误方向，而不是把已经投入的工程量包装成确定性成果。}
+\begin{block}{坏汇报}
     只列做了多少代码、跑了多少图，却回避核心假设是否站得住。
   \end{block}
-  \pause
-  \begin{block}{教学意义}
+\end{frame}
+
+\begin{frame}{例子：为什么中期汇报最该暴露风险而不是展示进度（3）}
+  \Core{中期汇报的价值在于及时暴露错误方向，而不是把已经投入的工程量包装成确定性成果。}
+\begin{block}{教学意义}
     中期不是“半成品展示会”，而是“研究方向纠偏会”。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：项目提案的一页式模板}
+\begin{frame}{代码例子：项目提案的一页式模板（1）}
   \Core{工作坊里最好强制学生先写一页提案，再决定是否进入较重实现。}
-  \begin{block}{模板片段}
+\begin{block}{模板片段}
     {\ttfamily\small
     \detokenize{Problem object: ...}\par
     \detokenize{Changed control point: ...}\par
@@ -38,61 +68,85 @@
     \detokenize{Falsifying result: ...}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：项目提案的一页式模板（2）}
+  \Core{工作坊里最好强制学生先写一页提案，再决定是否进入较重实现。}
+\begin{block}{课堂应追问}
     如果其中一项写不出来，说明项目还缺什么？
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{代码例子：项目提案的一页式模板（3）}
+  \Core{工作坊里最好强制学生先写一页提案，再决定是否进入较重实现。}
+\begin{block}{课程结论}
     一页提案的作用不是形式化，而是逼迫项目从“想法”进入“可检验命题”。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：最小实验矩阵如何设计}
+\begin{frame}{代码例子：最小实验矩阵如何设计（1）}
   \Core{课程项目不需要一开始就大规模扫参，更需要一个能快速否定错误方向的实验矩阵。}
-  \begin{block}{实验矩阵草图}
+\begin{block}{实验矩阵草图}
     {\ttfamily\small
     \detokenize{baseline vs method}\par
     \detokenize{short-heavy / mixed / long-heavy workload}\par
     \detokenize{ttft / p99 / goodput / probe metrics}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：最小实验矩阵如何设计（2）}
+  \Core{课程项目不需要一开始就大规模扫参，更需要一个能快速否定错误方向的实验矩阵。}
+\begin{block}{课堂应追问}
     为什么先做三种 workload 的小矩阵，往往比直接追求“大而全”更有效？
   \end{block}
-  \pause
-  \begin{block}{结论}
+\end{frame}
+
+\begin{frame}{代码例子：最小实验矩阵如何设计（3）}
+  \Core{课程项目不需要一开始就大规模扫参，更需要一个能快速否定错误方向的实验矩阵。}
+\begin{block}{结论}
     研究初期最宝贵的不是更多图，而是更快得到可否定反馈。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：项目失控往往从哪一步开始}
+\begin{frame}{例子：项目失控往往从哪一步开始（1）}
   \Core{大多数课程项目不是在最后失败，而是在最初没有把边界收紧时就已经埋下失败。}
-  \begin{block}{失控点一}
+\begin{block}{失控点一}
     先承诺一个“大一统系统”，没有最小场景和最小机制。
   \end{block}
-  \pause
-  \begin{block}{失控点二}
+\end{frame}
+
+\begin{frame}{例子：项目失控往往从哪一步开始（2）}
+  \Core{大多数课程项目不是在最后失败，而是在最初没有把边界收紧时就已经埋下失败。}
+\begin{block}{失控点二}
     先写很多代码，后补问题定义和实验设计。
   \end{block}
-  \pause
-  \begin{block}{失控点三}
+\end{frame}
+
+\begin{frame}{例子：项目失控往往从哪一步开始（3）}
+  \Core{大多数课程项目不是在最后失败，而是在最初没有把边界收紧时就已经埋下失败。}
+\begin{block}{失控点三}
     只追求正结果，没有提前设计失败也有价值的解释路径。
   \end{block}
 \end{frame}
 
-\begin{frame}{课堂练习：把你的题目压缩到一句话}
+\begin{frame}{课堂练习：把你的题目压缩到一句话（1）}
   \Core{一个能做完的课程项目，往往都能被压缩成一句短而硬的问题句。}
-  \begin{block}{练习一}
+\begin{block}{练习一}
     用一句话写出你的项目对象、控制点和主指标，不超过 35 个字。
   \end{block}
-  \pause
-  \begin{block}{练习二}
+\end{frame}
+
+\begin{frame}{课堂练习：把你的题目压缩到一句话（2）}
+  \Core{一个能做完的课程项目，往往都能被压缩成一句短而硬的问题句。}
+\begin{block}{练习二}
     再用一句话写出最危险的失败条件。
   \end{block}
-  \pause
-  \begin{block}{练习三}
+\end{frame}
+
+\begin{frame}{课堂练习：把你的题目压缩到一句话（3）}
+  \Core{一个能做完的课程项目，往往都能被压缩成一句短而硬的问题句。}
+\begin{block}{练习三}
     用一句话回答：如果只能保留一个实验，你会做哪个，为什么？
   \end{block}
 \end{frame}

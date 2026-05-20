@@ -1,97 +1,151 @@
-\begin{frame}{例子：为什么控制面和数据面一定要分开讲}
+\begin{frame}{讲解：系统架构课为什么必须把三条路径画出来}
+  \Core{好的架构分析不只是列模块名，而是同时说明请求路径、状态路径和观测路径。}
+  \begin{itemize}
+    \item 请求路径回答“系统怎么跑起来”。
+    \item 状态路径回答“哪些对象在不同模块之间被持有、更新、回收”。
+    \item 观测路径回答“我们靠什么知道系统真的按预期工作”。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{讲解：为什么日志、benchmark 和回归也属于架构}
+  \Core{如果只把 runtime 主循环画进架构图，课程最后很容易出现“会讲代码，不会验证系统”的断裂。}
+  \begin{itemize}
+    \item benchmark 决定 workload 如何进入系统，结果如何被汇总。
+    \item 日志和指标决定问题是否可诊断，机制是否可解释。
+    \item 回归脚本决定改动能否长期维护，因此它们不是外围工具，而是系统可持续性的组成部分。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{例子：为什么控制面和数据面一定要分开讲（1）}
   \Core{系统架构课的关键不是记模块名，而是知道谁负责决策、谁负责执行、谁负责携带状态。}
-  \begin{block}{控制面}
+\begin{block}{控制面}
     接收请求、维护队列、决定调度策略、记录指标和做资源治理。
   \end{block}
-  \pause
-  \begin{block}{数据面}
+\end{frame}
+
+\begin{frame}{例子：为什么控制面和数据面一定要分开讲（2）}
+  \Core{系统架构课的关键不是记模块名，而是知道谁负责决策、谁负责执行、谁负责携带状态。}
+\begin{block}{数据面}
     真正执行 tokenizer、prefill、decode、KV 访问和结果回传。
   \end{block}
-  \pause
-  \begin{block}{课程结论}
+\end{frame}
+
+\begin{frame}{例子：为什么控制面和数据面一定要分开讲（3）}
+  \Core{系统架构课的关键不是记模块名，而是知道谁负责决策、谁负责执行、谁负责携带状态。}
+\begin{block}{课程结论}
     如果控制面和数据面在讲授中混在一起，学生很难看出系统边界和可改控制点。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：分布式拓扑为什么会改变同一个问题的答案}
+\begin{frame}{例子：分布式拓扑为什么会改变同一个问题的答案（1）}
   \Core{单机上看起来只是“多开几个请求”的问题，进入分布式拓扑后会变成通信和协调问题。}
-  \begin{block}{单卡}
+\begin{block}{单卡}
     主要矛盾是调度、KV 驻留和本地显存组织。
   \end{block}
-  \pause
-  \begin{block}{多卡 TP / PP / DP}
+\end{frame}
+
+\begin{frame}{例子：分布式拓扑为什么会改变同一个问题的答案（2）}
+  \Core{单机上看起来只是“多开几个请求”的问题，进入分布式拓扑后会变成通信和协调问题。}
+\begin{block}{多卡 TP / PP / DP}
     同一个 batch 决策会影响跨卡同步、负载倾斜和阶段间流水稳定性。
   \end{block}
-  \pause
-  \begin{block}{教学意义}
+\end{frame}
+
+\begin{frame}{例子：分布式拓扑为什么会改变同一个问题的答案（3）}
+  \Core{单机上看起来只是“多开几个请求”的问题，进入分布式拓扑后会变成通信和协调问题。}
+\begin{block}{教学意义}
     架构课要让学生意识到：系统模块关系会随着部署拓扑变化而重排。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：从 LLMEngine 到 ModelRunner 的调用链}
+\begin{frame}{代码例子：从 LLMEngine 到 ModelRunner 的调用链（1）}
   \Core{系统架构课最适合补的代码页，是跨组件调用链而不是单函数细节。}
-  \begin{block}{调用链草图}
+\begin{block}{调用链草图}
     {\ttfamily\small
     \detokenize{LLM.generate -> LLMEngine.generate}\par
     \detokenize{LLMEngine.step -> Scheduler.schedule}\par
     \detokenize{LLMEngine.step -> ModelRunner.execute_model}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：从 LLMEngine 到 ModelRunner 的调用链（2）}
+  \Core{系统架构课最适合补的代码页，是跨组件调用链而不是单函数细节。}
+\begin{block}{课堂应追问}
     这一链路上，哪个位置属于控制面，哪个位置已经进入数据面？
   \end{block}
-  \pause
-  \begin{block}{系统含义}
+\end{frame}
+
+\begin{frame}{代码例子：从 LLMEngine 到 ModelRunner 的调用链（3）}
+  \Core{系统架构课最适合补的代码页，是跨组件调用链而不是单函数细节。}
+\begin{block}{系统含义}
     架构分析的第一步不是画框图，而是把真实调用关系翻译成模块职责图。
   \end{block}
 \end{frame}
 
-\begin{frame}{代码例子：为什么可观测性也属于架构的一部分}
+\begin{frame}{代码例子：为什么可观测性也属于架构的一部分（1）}
   \Core{没有日志、指标和 trace，系统架构图只是静态想象，无法支持真实调试和研究。}
-  \begin{block}{最小可观测性接口}
+\begin{block}{最小可观测性接口}
     {\ttfamily\small
     \detokenize{logger.info(stage, request_id, batch_size)}\par
     \detokenize{metrics.observe("ttft_ms", value)}\par
     \detokenize{trace.annotate("decode_step_begin")}\par
     }
   \end{block}
-  \pause
-  \begin{block}{课堂应追问}
+\end{frame}
+
+\begin{frame}{代码例子：为什么可观测性也属于架构的一部分（2）}
+  \Core{没有日志、指标和 trace，系统架构图只是静态想象，无法支持真实调试和研究。}
+\begin{block}{课堂应追问}
     哪些观测点属于控制面信号，哪些属于执行面信号？
   \end{block}
-  \pause
-  \begin{block}{结论}
+\end{frame}
+
+\begin{frame}{代码例子：为什么可观测性也属于架构的一部分（3）}
+  \Core{没有日志、指标和 trace，系统架构图只是静态想象，无法支持真实调试和研究。}
+\begin{block}{结论}
     真正可维护的架构，必须把观测路径和主执行路径一起设计。
   \end{block}
 \end{frame}
 
-\begin{frame}{例子：一个坏架构图通常坏在哪里}
+\begin{frame}{例子：一个坏架构图通常坏在哪里（1）}
   \Core{学生最常见的问题是画出很多框，但无法说明数据、状态和决策谁在流动。}
-  \begin{block}{坏图一}
+\begin{block}{坏图一}
     只列模块名，不说明调用方向和控制点。
   \end{block}
-  \pause
-  \begin{block}{坏图二}
+\end{frame}
+
+\begin{frame}{例子：一个坏架构图通常坏在哪里（2）}
+  \Core{学生最常见的问题是画出很多框，但无法说明数据、状态和决策谁在流动。}
+\begin{block}{坏图二}
     只画数据流，不画状态驻留和资源回收。
   \end{block}
-  \pause
-  \begin{block}{坏图三}
+\end{frame}
+
+\begin{frame}{例子：一个坏架构图通常坏在哪里（3）}
+  \Core{学生最常见的问题是画出很多框，但无法说明数据、状态和决策谁在流动。}
+\begin{block}{坏图三}
     把日志、benchmark、回归系统完全排除在架构之外，导致系统边界被画得过窄。
   \end{block}
 \end{frame}
 
-\begin{frame}{课堂练习：把架构图画成三层而不是一团}
+\begin{frame}{课堂练习：把架构图画成三层而不是一团（1）}
   \Core{课程作业里更推荐“三层图”：入口与控制、执行与状态、观测与验证。}
-  \begin{block}{练习一}
+\begin{block}{练习一}
     在你的架构图中分别标出请求入口、调度器、执行器、状态管理器和指标记录点。
   \end{block}
-  \pause
-  \begin{block}{练习二}
+\end{frame}
+
+\begin{frame}{课堂练习：把架构图画成三层而不是一团（2）}
+  \Core{课程作业里更推荐“三层图”：入口与控制、执行与状态、观测与验证。}
+\begin{block}{练习二}
     指出哪一个模块最像“全局控制点”，哪一个模块最像“热路径执行点”。
   \end{block}
-  \pause
-  \begin{block}{练习三}
+\end{frame}
+
+\begin{frame}{课堂练习：把架构图画成三层而不是一团（3）}
+  \Core{课程作业里更推荐“三层图”：入口与控制、执行与状态、观测与验证。}
+\begin{block}{练习三}
     用一句话回答：为什么日志和 benchmark 不应该被排除在系统架构课之外？
   \end{block}
 \end{frame}
