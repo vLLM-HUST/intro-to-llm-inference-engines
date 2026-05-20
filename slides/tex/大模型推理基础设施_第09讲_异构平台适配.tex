@@ -1,0 +1,102 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 9 讲 异构平台与国产算力适配}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲讨论平台差异如何系统性改变瓶颈位置、最优策略与验证方法。}
+  \begin{itemize}
+    \item 理解能运行、能优化、能验证三个层次。
+    \item 理解国产异构平台的系统性差异。
+    \item 讨论跨平台收益如何公平验证。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么平台差异是系统差异}
+  \Core{不同平台在图执行、算子栈、互联和调试环境上的差异，会直接改写系统设计空间。}
+  \begin{itemize}
+    \item 软件栈成熟度不同。
+    \item 互联协议与带宽比例不同。
+    \item host-device 数据路径代价不同。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{平台差异会改写哪些瓶颈}
+  \Core{同一机制在不同平台上可能卡在完全不同的地方，因此不能直接平移 GPU 经验。}
+  \begin{itemize}
+    \item 有的平台先卡在图执行与编译稳定性。
+    \item 有的平台先卡在通信与互联约束。
+    \item 有的平台先卡在调试工具和观测能力不足。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{适配的三个层次}
+  \Core{平台适配至少分为三个层次，而真正的研究通常从第二层开始。}
+  \begin{enumerate}
+    \item 能运行：基本功能打通
+    \item 能优化：根据平台特性重构路径
+    \item 能验证：建立公平可复现的基线和对照
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{从可运行到可优化的差异}
+  \Core{适配工作常停留在基本可运行阶段，而研究价值主要体现在可优化与可验证两个层次。}
+  \begin{itemize}
+    \item 跑通只说明接口存在。
+    \item 稳定收益需要重新建模瓶颈。
+    \item 可验证结论需要统一实验设计与对照基线。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{常见误区}
+  \Core{把问题只定义成“移植工程”，往往会掩盖真正有研究价值的系统差异。}
+  \begin{itemize}
+    \item 只报告局部跑通，不说明收益边界。
+    \item 直接沿用 GPU 经验，不重新验证假设。
+    \item 用不一致 workload 比较不同平台。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{跨平台实验如何更可信}
+  \Core{跨平台比较最关键的是控制变量，而不是堆更多数字。}
+  \begin{itemize}
+    \item 统一模型、输入分布和服务目标。
+    \item 显式说明软件栈、精度和并行配置。
+    \item 同时报告端到端指标和关键探针指标。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{跨平台比较中的常见问题}
+  \Core{跨平台比较中的主要问题通常来自对照不公平、工作负载不一致或边界说明不足。}
+  \begin{itemize}
+    \item 输入分布不同会直接破坏比较意义。
+    \item 精度和默认优化不一致会导致结论失真。
+    \item 没有端到端指标时很难说明真实服务价值。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture09_examples.tex}
+
+\begin{frame}{课堂讨论}
+  \Core{跨平台研究需要明确平台差异究竟改写了哪些系统假设。}
+  \begin{itemize}
+    \item 为什么“在平台 A 上有效”不自动说明方法具有普适性？
+    \item 怎样设计一个最小跨平台验证计划？
+    \item 什么结论最容易因为实验不公平而失真？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{平台适配本身构成系统研究的重要组成部分。}
+  \begin{itemize}
+    \item 平台差异会重写瓶颈与最优策略。
+    \item 只有能验证，平台适配结论才有说服力。
+  \end{itemize}
+\end{frame}
+
+\end{document}

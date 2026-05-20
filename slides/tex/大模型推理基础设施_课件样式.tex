@@ -1,0 +1,33 @@
+\documentclass[11pt,aspectratio=169]{ctexbeamer}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+\definecolor{DeepBlue}{RGB}{25,74,122}
+\definecolor{SoftInk}{RGB}{53,59,66}
+\definecolor{PaperBg}{RGB}{249,248,245}
+\definecolor{PanelBlue}{RGB}{236,243,249}
+
+\setbeamercolor{normal text}{fg=SoftInk,bg=PaperBg}
+\setbeamercolor{structure}{fg=DeepBlue}
+\setbeamercolor{frametitle}{fg=DeepBlue,bg=PaperBg}
+\setbeamercolor{title}{fg=DeepBlue}
+\setbeamercolor{block title}{fg=DeepBlue,bg=PanelBlue}
+\setbeamercolor{block body}{fg=SoftInk,bg=white}
+
+\newcommand{\Core}[1]{
+  \begin{block}{核心结论}
+    #1
+  \end{block}
+}
+
+\newcommand{\LectureMeta}[2]{
+  \title{大模型推理基础设施}
+  \subtitle{#1}
+  \author{张书豪}
+  \institute{华中科技大学计算机学院}
+  \date{#2}
+}

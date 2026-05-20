@@ -1,0 +1,170 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 4 讲 请求调度与 continuous batching}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲讨论调度粒度变化对系统控制能力与服务边界的直接影响。}
+  \begin{itemize}
+    \item 理解 request-level 和 iteration-level 调度差异。
+    \item 分析长短请求混部的队头阻塞。
+    \item 理解 continuous batching 的系统意义和边界。
+    \item 把调度问题上升为 SLO 驱动的控制环问题。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么推理系统首先是调度问题}
+  \Core{在线推理服务的核心矛盾在于如何将动态到达请求持续组织为稳定服务。}
+  \begin{itemize}
+    \item 请求长度分布高度不均匀。
+    \item 新请求持续到达，旧请求持续占用状态。
+    \item 用户感知的卡顿往往首先来自排队和插队失败，而不是单轮计算过慢。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{调度对象是什么}
+  \Core{调度并不天然对应“请求”，系统可以调度 request、iteration、token 或更高层服务对象。}
+  \begin{itemize}
+    \item request-level：实现简单，但灵活性较低。
+    \item iteration-level：控制点更细，更适合在线服务。
+    \item token-level：理论上更灵活，但控制开销更大。
+    \item 更细粒度往往带来更高的元数据管理与状态同步开销。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{一个最小例子：为什么会发生队头阻塞}
+  \Core{长短请求混部时，长请求不只占用更多计算时间，还会延迟新请求被重新组织进 batch 的时机。}
+  \begin{itemize}
+    \item 假设 batch 中有一个 8k token 长请求和多个短请求。
+    \item 如果系统只能按 request 级别完成后再重组，新请求会被整段等待放大。
+    \item 结果是平均吞吐可能还不错，但 TTFT 和 P99 迅速恶化。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{问题本质：共享执行收益与等待代价的冲突}
+  \Core{batching 带来的共享执行收益，并不自动等于服务质量收益，因为等待代价会随调度控制点的粗糙程度被放大。}
+  \begin{itemize}
+    \item 更大的 batch 通常带来更高设备利用率。
+    \item 但更长的重组周期会直接伤害新请求首 token 时延。
+    \item 调度问题的关键因此变成：如何在共享执行和时延控制之间找到可持续平衡。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Orca 的问题设定}
+  \Core{Orca 的核心问题是在动态到达条件下维持在线队列的持续可重组性。}
+  \begin{itemize}
+    \item 传统 request-level serving 难以在执行中途插入新请求。
+    \item 结果是长请求拖住短请求，队头阻塞显著。
+    \item Orca 用 iteration 级重调度改变了系统控制点。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Orca 的核心机制}
+  \Core{Orca 的机制核心是：每完成一轮生成，就重新决定谁进入下一轮 batch。}
+  \begin{itemize}
+    \item 调度粒度从 request 下沉到 iteration。
+    \item selective batching 保留共享执行收益。
+    \item 新请求更容易在轮次边界插入，旧请求不再长期独占路径。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Orca 的价值与边界}
+  \Core{Orca 证明了调度控制点本身可以成为论文贡献，但它并没有自动解决状态与内存的扩展性问题。}
+  \begin{itemize}
+    \item 价值：显式缓解在线服务的队头阻塞。
+    \item 边界：更细粒度调度需要配套状态保留与内存组织机制。
+    \item 启发：调度收益必须与底层状态管理能力结合看待。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{vLLM 为什么进一步推进了这条线}
+  \Core{vLLM 的重要性在于，它没有把调度和内存管理当作两个独立问题。}
+  \begin{itemize}
+    \item continuous batching 维持高频率的请求进入与退出。
+    \item PagedAttention 使动态请求组织不被大块连续显存要求卡住。
+    \item 系统因此同时解决“怎么调度”和“怎么放状态”。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{continuous batching 的含义}
+  \Core{continuous batching 的关键在于请求能够持续加入和离开执行批次。}
+  \begin{itemize}
+    \item 请求完成后可以尽快离开，释放状态与算力。
+    \item 新请求可以更快补入，而不必等待整批结束。
+    \item 调度器因此获得更高频率的控制机会。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{调度和 KV 管理为什么必须联动}
+  \Core{如果状态管理方式不支持动态批处理，调度器理论上的灵活性很快就会被容量和碎片问题吃掉。}
+  \begin{itemize}
+    \item 更频繁的请求进出意味着更频繁的状态分配和回收。
+    \item 如果 KV 需要连续大块空间，dynamic batching 很快遇到容量墙。
+    \item 这就是为什么 vLLM 的调度贡献必须和 PagedAttention 一起理解。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{调度作为控制环}
+  \Core{在线推理调度更像一个围绕 SLO 的反馈控制环，而不是静态队列算法。}
+  \begin{itemize}
+    \item 输入：到达率、长度分布、资源利用率、KV 占用。
+    \item 决策：准入、优先级、batch 上限、路由与配额。
+    \item 输出：TTFT、P99、吞吐、违约率。
+    \item 目标：在负载波动下维持稳态，而不是只在固定场景上跑出峰值数字。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：nano-vllm-hust 的调度器主循环}
+  \Core{\texttt{\detokenize{nanovllm/engine/scheduler.py}} 提供了一个适合课堂讲解的调度器实现，可以直接对应本讲的调度概念。}
+  \begin{itemize}
+    \item \texttt{\detokenize{waiting}} 与 \texttt{\detokenize{running}} 两个队列刻画了请求的基本运行状态。
+    \item \texttt{\detokenize{schedule()}} 先尝试 prefill，再进入 decode 调度。
+    \item \texttt{\detokenize{preempt()}} 与 \texttt{\detokenize{postprocess()}} 体现了调度决策和状态更新的闭环关系。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：适合课堂提问的细节}
+  \Core{该实现虽然精简，但保留了若干非常适合课堂讨论的运行时细节。}
+  \begin{itemize}
+    \item 为什么 chunked prefill 只允许在当前批次的第一个序列上发生。
+    \item 为什么 decode 过程中 \texttt{\detokenize{can_append()}} 失败会触发抢占与回退。
+    \item 为什么 \texttt{\detokenize{postprocess()}} 同时承担完成判定、状态回收和运行队列维护。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{哪些场景会让调度问题更难}
+  \Core{模型和工作负载的变化，会显著提高调度问题的复杂度。}
+  \begin{itemize}
+    \item 长上下文放大 prefill 和 KV 驻留压力。
+    \item MoE 带来稀疏激活和跨卡负载倾斜。
+    \item 智能体工作流带来更不稳定的请求形态和服务阶段。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture04_examples.tex}
+
+\begin{frame}{课堂讨论}
+  \Core{调度设计的关键，在于控制点能够在全链路范围内稳定保留收益。}
+  \begin{itemize}
+    \item 为什么 iteration-level 调度不是简单“调得更频繁”？
+    \item 在什么情况下更细粒度调度反而不值得？
+    \item 如果你要设计下一代 serving scheduler，你会优先观察哪些信号？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{调度改变的是系统控制点，而控制点决定系统对动态负载的响应能力。}
+  \begin{itemize}
+    \item 不理解调度粒度，就无法理解 serving runtime 的核心差异。
+    \item Orca 说明控制点本身可以成为贡献。
+    \item vLLM 说明调度收益必须和状态管理能力一起兑现。
+    \item 后续 KV 与状态管理讨论都要回到这一控制视角。
+  \end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,143 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 3 讲 一次推理请求的完整链路}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲分解一次生成请求的完整系统链路，建立面向时序与阶段的分析视角。}
+  \begin{itemize}
+    \item 理解 API 到流式返回的关键阶段。
+    \item 区分 prefill 与 decode 的资源特性。
+    \item 找到排队点、状态生成点与资源回收点。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{请求生命周期总览}
+  \Core{一次请求通常要经历接入、规范化、排队、执行、返回和回收六个阶段。}
+  \begin{enumerate}
+    \item API 接入与参数校验
+    \item tokenizer 与输入规范化
+    \item 请求排队与调度
+    \item prefill 生成首轮 KV
+    \item decode 迭代输出 token
+    \item 流式返回与资源回收
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{为什么生命周期视角是基础}
+  \Core{只有先把请求穿过系统的完整路径画清楚，后续任何优化才知道自己在改哪一段。}
+  \begin{itemize}
+    \item 生命周期视角帮助区分排队问题和执行问题。
+    \item 生命周期视角帮助区分计算状态和长期状态对象。
+    \item 生命周期视角帮助解释 TTFT 和 TPOT 为什么受不同阶段支配。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{prefill 与 decode}
+  \Core{prefill 和 decode 在资源需求、控制目标和瓶颈形式上显著不同。}
+  \begin{itemize}
+    \item prefill 更计算密集，直接决定首 token 延迟。
+    \item decode 单轮较轻，但迭代频繁，更依赖状态驻留。
+    \item 把二者混为同一任务，容易造成错误调度与资源竞争。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{prefill 为什么敏感}
+  \Core{prefill 直接决定首 token 何时出现，因此它既是计算问题，也是用户体验问题。}
+  \begin{itemize}
+    \item 长 prompt 会显著放大 prefill 开销。
+    \item RAG 或工具注入会进一步增加 prompt 长度和波动。
+    \item prefill 常常也是资源切分和阶段解耦的起点。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{decode 为什么难管}
+  \Core{decode 每轮算得不重，但它持续依赖状态驻留和低抖动调度，因此更容易受系统噪声影响。}
+  \begin{itemize}
+    \item 每轮都依赖已有 KV 和 batch 组织。
+    \item 并发请求越多，轮次间调度和状态竞争越复杂。
+    \item decode 是服务稳态控制的核心阶段。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{系统中的潜在瓶颈点}
+  \Core{生命周期视角的价值，在于把不同阶段的瓶颈显式区分开。}
+  \begin{itemize}
+    \item 队列等待与队头阻塞。
+    \item prefill 对长 prompt 的容量和算力压力。
+    \item decode 的状态驻留和频繁调度开销。
+    \item 输出侧流式接口和回收延迟。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{状态对象沿着哪条链路传播}
+  \Core{一次请求在生命周期中会持续生成和消耗多类状态对象。}
+  \begin{itemize}
+    \item tokenizer 生成规范化输入状态。
+    \item prefill 生成首轮 KV。
+    \item decode 追加 KV 并消费队列与调度元数据。
+    \item 返回阶段触发日志、统计和资源回收。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：在 nano-vllm-hust 中跟踪请求路径}
+  \Core{\texttt{\detokenize{nano-vllm-hust}} 为本课程提供了一个足够精简、同时又包含完整运行时主路径的教学实现。}
+  \begin{itemize}
+    \item \texttt{\detokenize{nanovllm/engine/llm_engine.py}} 中的 \texttt{\detokenize{add_request()}} 对应请求进入系统。
+    \item 同一文件中的 \texttt{\detokenize{step()}} 串联 \texttt{\detokenize{schedule()}}、模型执行和 \texttt{\detokenize{postprocess()}}。
+    \item \texttt{\detokenize{generate()}} 展示了从批量请求注入到全部完成的完整外层驱动循环。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：课堂观察重点}
+  \Core{沿着 \texttt{\detokenize{LLMEngine}} 的主路径阅读源码，可以将本讲的生命周期划分与真实实现逐段对应起来。}
+  \begin{itemize}
+    \item 请求进入点：\texttt{\detokenize{LLMEngine.add_request()}} 中的 tokenizer 编码与 \texttt{\detokenize{Sequence}} 构造。
+    \item 阶段切换点：\texttt{\detokenize{step()}} 中 \texttt{\detokenize{schedule()}} 返回的 \texttt{\detokenize{is_prefill}} 标志。
+    \item 完成与回收点：\texttt{\detokenize{postprocess()}} 更新状态并在完成时输出结果。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么生命周期视角重要}
+  \Core{很多“优化没生效”的根本原因，是优化点并不位于主导端到端时延的阶段。}
+  \begin{itemize}
+    \item 局部 kernel 更快，可能仍然输给排队放大。
+    \item 共享执行更强，可能仍然输给 KV 驻留边界。
+    \item 需要先定位主导阶段，再定义优化对象。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{生命周期分析中的典型误判}
+  \Core{将 GPU 利用率偏低直接视为主导问题，往往会忽略等待放大与状态竞争的真实影响。}
+  \begin{itemize}
+    \item 设备不满载不一定说明算力不足。
+    \item 可能是请求排队、KV 碎片或重组时机不合适。
+    \item 生命周期分析的作用，就是避免过早跳到算子层结论。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课堂练习}
+  \Core{本讲可组织请求时序图绘制练习，以强化生命周期分析能力。}
+  \begin{itemize}
+    \item 标出至少 4 个潜在瓶颈点。
+    \item 标出至少 3 类状态对象的生成与释放时刻。
+    \item 讨论哪个阶段最可能支配 TTFT，哪个阶段最可能支配 TPOT。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture03_examples.tex}
+
+\begin{frame}{本讲总结}
+  \Core{理解单个请求如何穿过系统，是分析后续调度、KV 与执行优化问题的基础。}
+  \begin{itemize}
+    \item 请求链路是系统问题的最小观察单元。
+    \item 生命周期分析先于机制设计。
+  \end{itemize}
+\end{frame}
+
+\end{document}

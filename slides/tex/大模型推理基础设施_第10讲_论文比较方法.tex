@@ -1,0 +1,104 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 10 讲 论文比较方法与实验可信性}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲训练系统论文阅读能力，重点在于从论文中提炼真实研究问题与比较维度。}
+  \begin{itemize}
+    \item 识别瓶颈假设和控制点变化。
+    \item 分析机制代价与适用边界。
+    \item 判断实验是否足以支撑结论。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{系统论文的阅读重点}
+  \Core{阅读系统论文时，首要任务是重建问题定义而非简单记忆图表。}
+  \begin{itemize}
+    \item 论文究竟重新定义了什么问题？
+    \item 改变了哪个控制点或状态对象？
+    \item 引入了哪些额外代价？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{五段式精读框架}
+  \Core{一个清晰的精读报告至少应包含五个部分。}
+  \begin{enumerate}
+    \item 问题假设
+    \item 核心机制
+    \item 额外代价
+    \item 适用边界
+    \item 实验支撑度
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{什么叫“问题假设”}
+  \Core{很多学生读论文只看作者做了什么，却忽略了作者默认哪些前提成立。}
+  \begin{itemize}
+    \item workload 是否是在线动态到达。
+    \item 瓶颈是否真的在作者声称的部分。
+    \item 硬件、模型和系统配置是否会改变结论。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{忽略问题假设的风险}
+  \Core{曲线和表格通常建立在特定假设、工作负载与平台条件之上，脱离前提容易导致误判。}
+  \begin{itemize}
+    \item 看似很大的加速可能只在窄场景成立。
+    \item 看似中性的结果可能在更公平基线下并不成立。
+    \item 论文真正的贡献常常在问题重构而不是数值本身。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{如何识别真正的机制贡献}
+  \Core{所谓“机制贡献”，应当表现为控制点、状态组织或执行路径被实质性改变。}
+  \begin{itemize}
+    \item 只是换了术语，不算机制。
+    \item 只是重新组合已有做法，也未必构成实质贡献。
+    \item 真正有价值的机制应当改变系统行为边界。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{如何判断实验支撑度}
+  \Core{实验的任务在于论证问题假设与机制收益是否成立。}
+  \begin{itemize}
+    \item workload 是否贴合目标场景。
+    \item 对照组是否公平。
+    \item 指标是否覆盖端到端效果与关键探针。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture10_examples.tex}
+
+\begin{frame}{课堂练习}
+  \Core{本讲可组织学生独立拆解代表论文，以训练结构化比较能力。}
+  \begin{itemize}
+    \item 每组选择一篇代表论文。
+    \item 用五段式框架做 10 分钟汇报。
+    \item 汇报中必须包含一个会否定作者结论的反例设想。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课堂讨论}
+  \Core{系统论文阅读的重点在于判断问题是否真实、机制是否必要以及结果是否可信。}
+  \begin{itemize}
+    \item 如何区分“新机制”和“新命名”？
+    \item 如何判断一个对照实验是否公平？
+    \item 什么样的结果最应该要求作者额外解释？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{规范的论文阅读能力能够直接提升研究选题质量与实验设计质量。}
+  \begin{itemize}
+    \item 论文是问题建模与机制设计的分析样本。
+    \item 论文阅读的最终目标是形成稳定的研究判断能力。
+  \end{itemize}
+\end{frame}
+
+\end{document}

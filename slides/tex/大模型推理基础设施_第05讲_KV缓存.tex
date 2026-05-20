@@ -1,0 +1,130 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 5 讲 KV Cache 管理}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲将 KV Cache 作为影响并发、调度与服务稳定性的核心系统对象进行讨论。}
+  \begin{itemize}
+    \item 理解 KV 生命周期与容量压力。
+    \item 理解分页、块管理、碎片与回收。
+    \item 说明 KV 组织方式如何反向影响调度器能力。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么 KV 是系统核心对象}
+  \Core{KV 既是性能关键状态，又是容量主约束，因此它会塑造系统设计空间。}
+  \begin{itemize}
+    \item 随上下文长度和并发增长快速膨胀。
+    \item 需要跨 decode 多轮驻留。
+    \item 既影响时延，也限制 batch 扩展空间。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么 KV 问题会在大模型时代被放大}
+  \Core{随着上下文更长、并发更高、交互更持续，KV 已经从实现细节变成系统一等约束。}
+  \begin{itemize}
+    \item 长上下文让单请求状态膨胀。
+    \item 在线服务让状态必须跨轮驻留。
+    \item 多租户与动态到达让分配与回收更频繁。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{KV 生命周期}
+  \Core{理解 KV，首先要理解它如何生成、追加、复用、迁移和回收。}
+  \begin{enumerate}
+    \item prefill 生成首轮 KV
+    \item decode 持续追加
+    \item 可能发生前缀复用或跨请求共享
+    \item 完成后释放或转入更低层存储
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{连续地址为什么会成为问题}
+  \Core{如果逻辑连续序列必须映射到物理连续大块显存，动态服务很快会受到碎片和预留浪费限制。}
+  \begin{itemize}
+    \item 并发请求越多，连续空间越难保证。
+    \item 预留过大则浪费，预留过小则频繁失败。
+    \item 这正是分页式 KV 管理出现的直接背景。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{PagedAttention 的设计直觉}
+  \Core{PagedAttention 的关键在于将逻辑连续状态映射为物理离散块。}
+  \begin{itemize}
+    \item 避免显存必须连续分配大块空间。
+    \item 降低内部碎片与预留浪费。
+    \item 为更动态的请求组织提供底层支撑。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{PagedAttention 的系统意义}
+  \Core{PagedAttention 的价值，不只在于节省显存，更在于把状态组织方式改造成了支持动态调度的形式。}
+  \begin{itemize}
+    \item 更灵活的状态分配与回收。
+    \item 更小的显存预留压力。
+    \item 更强的 continuous batching 支撑能力。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么 KV 会反向约束调度}
+  \Core{调度器看似管理请求，但真正决定并发上限的常常是状态驻留能力。}
+  \begin{itemize}
+    \item 如果 KV 不能灵活管理，continuous batching 只会更快碰到容量墙。
+    \item 如果回收和复用代价过高，调度收益会被状态管理开销抵消。
+    \item 这就是为什么 vLLM 的调度贡献必须和 PagedAttention 一起理解。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{前缀复用为何进一步提升复杂度}
+  \Core{一旦系统开始尝试前缀复用，KV 就不再只是“每个请求私有状态”，而开始成为跨请求共享对象。}
+  \begin{itemize}
+    \item 共享带来更高潜在收益。
+    \item 也带来正确性、元数据组织和回收边界问题。
+    \item 这使 KV 进一步接近广义状态管理问题。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：nano-vllm-hust 中的 KV 管理结构}
+  \Core{\texttt{\detokenize{nanovllm/engine/block_manager.py}} 将课堂中的块管理、引用计数与前缀哈希机制压缩到了一个较短文件中。}
+  \begin{itemize}
+    \item \texttt{\detokenize{Block}} 维护块编号、引用计数、哈希值与块内 token。
+    \item \texttt{\detokenize{free_block_ids}} 与 \texttt{\detokenize{used_block_ids}} 体现了显式的块生命周期管理。
+    \item \texttt{\detokenize{hash_to_block_id}} 为前缀块复用提供查找入口。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：课堂阅读建议}
+  \Core{阅读 \texttt{\detokenize{BlockManager}} 时，建议按“能否分配、如何分配、何时回收、何时哈希”四个问题组织。}
+  \begin{itemize}
+    \item \texttt{\detokenize{can_allocate()}} 体现了前缀缓存命中与新块需求估算。
+    \item \texttt{\detokenize{allocate()}} 和 \texttt{\detokenize{deallocate()}} 对应块表构造与引用计数回收。
+    \item \texttt{\detokenize{hash_blocks()}} 则把完整块写回全局哈希表，为后续复用建立条件。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture05_examples.tex}
+
+\begin{frame}{课堂讨论}
+  \Core{KV 管理不仅涉及显存节约，更直接关系到系统可扩展性。}
+  \begin{itemize}
+    \item 为什么 KV 不应被视为 attention 的临时中间量？
+    \item 为什么分块管理可以扩大系统控制空间？
+    \item 当前缀复用进入系统后，正确性与收益之间有什么张力？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{理解 KV 管理机制，是分析 vLLM 一类系统如何将调度收益扩展到更高并发的前提。}
+  \begin{itemize}
+    \item KV 是容量问题，也是调度问题。
+    \item 后续状态统一视角会继续扩展这一点。
+  \end{itemize}
+\end{frame}
+
+\end{document}

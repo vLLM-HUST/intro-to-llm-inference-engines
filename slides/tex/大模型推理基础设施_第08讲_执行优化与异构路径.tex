@@ -1,0 +1,111 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 8 讲 执行优化与异构路径}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲将执行优化问题从局部算子提速推进到执行路径与资源放置层面。}
+  \begin{itemize}
+    \item 理解 I/O、放置与批处理如何共同决定执行收益。
+    \item 分析 FlexGen 与 PowerInfer 的系统意义。
+    \item 理解异构执行路径为何需要预测、放置与执行协同。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{执行优化不只是算子提速}
+  \Core{执行优化的对象是整条数据路径，而不是单个 kernel 的局部时间。}
+  \begin{itemize}
+    \item 算子融合与图执行。
+    \item launch 开销与动态形状管理。
+    \item 内存布局、带宽限制与通信重叠。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{执行优化中的常见误判}
+  \Core{仅依据 GPU 利用率或 kernel 时间判断优化方向，往往会忽略路径组织对 serving 系统性能的主导作用。}
+  \begin{itemize}
+    \item 数据放置方式会改写 I/O 代价。
+    \item 动态 batch 会改变形状和 launch 模式。
+    \item 通信和计算是否重叠会直接影响端到端表现。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{FlexGen 的启发}
+  \Core{FlexGen 把“单卡运行超大模型”重新定义为 I/O-aware 的系统设计问题。}
+  \begin{itemize}
+    \item GPU、CPU、磁盘之间的数据放置共同决定收益。
+    \item 仅仅把模型 offload 并不足够。
+    \item 放置策略、访问顺序和压缩必须协同设计。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{FlexGen 的关键贡献}
+  \Core{FlexGen 的关键贡献在于将资源层次利用转化为可系统优化的主体问题。}
+  \begin{itemize}
+    \item 权重、KV 和中间状态可以采用不同层次策略。
+    \item I/O 访问顺序本身决定性能上界。
+    \item 批处理大小与存储层级设计相互耦合。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{PowerInfer 的启发}
+  \Core{PowerInfer 表明，异构执行路径设计需要围绕预测、放置与执行协同展开。}
+  \begin{itemize}
+    \item 热点神经元与冷神经元可采用不同放置策略。
+    \item 收益依赖激活分布和跨设备代价。
+    \item 异构执行需要结构性观察，而不是事后搬运。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{PowerInfer 的关键贡献}
+  \Core{PowerInfer 将模型内部激活分布转化为可用于调度与放置决策的系统信息。}
+  \begin{itemize}
+    \item 热点神经元留在 GPU，冷部分交给其他层级。
+    \item 收益依赖预测质量和跨设备代价。
+    \item 这说明模型结构特征可以进入系统路径设计。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么局部加速常常不能兑现}
+  \Core{如果没有看清主导瓶颈和全链路代价，再高的局部提速也可能被系统其他部分吃掉。}
+  \begin{itemize}
+    \item kernel 更快不等于 P99 更低。
+    \item 放置更省显存不等于成本更优。
+    \item 必须把局部机制放回端到端链路验证。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{执行优化应如何报告收益}
+  \Core{执行优化的报告方式应该同时交代局部机制、路径变化和端到端结果。}
+  \begin{itemize}
+    \item 局部数据说明改了什么。
+    \item 过程数据说明路径为什么变了。
+    \item 端到端指标说明收益是否真的被用户感知到。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture08_examples.tex}
+
+\begin{frame}{课堂讨论}
+  \Core{执行优化的核心在于系统组织能力，而非局部编码能力本身。}
+  \begin{itemize}
+    \item 为什么异构执行路径设计不等于简单 offload？
+    \item 为什么 I/O-aware 设计会改变最优 batch 与放置策略？
+    \item 什么时候局部加速最容易被全链路抵消？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{执行优化同时涉及路径组织、资源放置与实验验证。}
+  \begin{itemize}
+    \item 真正重要的是端到端收益的稳定兑现。
+    \item 异构执行讨论将自然通向下一讲的平台适配问题。
+  \end{itemize}
+\end{frame}
+
+\end{document}
