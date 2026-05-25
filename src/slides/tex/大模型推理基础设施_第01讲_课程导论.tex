@@ -1,0 +1,202 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+
+\LectureMeta{第 1 讲 课程导论}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲建立课程导论的基本框架，包括研究对象、课程定位与后续 14 讲主线。}
+  \begin{itemize}
+    \item 区分模型能力、服务能力与系统能力三个分析层次。
+    \item 建立“请求 - 状态 - 调度 - 指标”的基本观察框架。
+    \item 说明课程讲义、实验与教学代码之间的联动关系。
+    \item 给出后续讲次共享的问题地图。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{教学样例与课程落点}
+  \Core{nano-vllm-hust 在课程中主要作为最小教学样例使用；课程最终目标是支持学生进入 vllm-hust 的优化与开发场景。}
+  \begin{itemize}
+    \item 前几讲以 nano-vllm-hust 为载体建立请求路径、调度控制点与 KV 状态对象的基本认识。
+    \item 该样例用于说明系统主线，而不作为课程长期停留的唯一代码对象。
+    \item 后续代码导读、实验扩展与课程项目将逐步过渡到更真实的 vllm-hust 开发语境。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么值得独立成课}
+  \Core{大模型进入真实在线服务后，研究重点会从“能否生成”转向“能否稳定、经济、可验证地提供服务”。}
+  \begin{itemize}
+    \item 长上下文、RAG、智能体工作流与多租户负载共同改变了请求形态。
+    \item TTFT、P99、goodput、成本与稳定性构成核心服务指标集合。
+    \item 系统收益主要取决于全链路组织，而非局部 kernel 或单层算子的单点提速。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{从模型问题到系统问题}
+  \Core{同一模型在不同运行时、调度策略和状态管理机制下，可能呈现出显著不同的服务质量。}
+  \begin{itemize}
+    \item 模型层主要关注能力边界、精度与泛化表现。
+    \item 系统层主要关注排队、缓存、执行路径、资源治理与回归稳定性。
+    \item 因而课程的分析单位是服务系统，而非单一网络层或单篇算法论文。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程分析对象示意}
+  \Core{本课程的分析对象是由请求、状态、控制点与结果指标共同构成的在线推理闭环。}
+  \centering
+  \begin{tikzpicture}[
+    every node/.style={font=\scriptsize, align=center},
+    box/.style={draw=DeepBlue, rounded corners, thick, fill=white, minimum width=1.72cm, minimum height=0.9cm},
+    line/.style={-Latex, thick, draw=DeepBlue},
+    node distance=0.45cm and 0.45cm
+  ]
+    \node[box] (req) {用户请求\\Prompt / Params};
+    \node[box, right=of req] (queue) {请求队列\\Admission};
+    \node[box, right=of queue] (sched) {调度器\\Batch / Priority};
+    \node[box, right=of sched] (exec) {执行路径\\Prefill / Decode};
+    \node[box, right=of exec] (metric) {结果指标\\TTFT / P99 / Goodput};
+    \node[box, below=1.0cm of sched] (state) {状态对象\\KV / Memory / Cache};
+    \draw[line] (req) -- (queue);
+    \draw[line] (queue) -- (sched);
+    \draw[line] (sched) -- (exec);
+    \draw[line] (exec) -- (metric);
+    \draw[line] (sched) -- (state);
+    \draw[line] (state) -- (exec);
+    \draw[line] (state.west) -| (queue.south);
+  \end{tikzpicture}
+  \par\vspace{0.5em}
+  \raggedright
+  \fbox{\parbox{0.9\textwidth}{\small 课程重点是这些对象之间的约束关系，而不是把推理问题缩成一次前向计算。}}
+\end{frame}
+
+\begin{frame}{课程边界}
+  \Core{本课程关注在线推理服务系统，而不是训练系统或纯算法优化。}
+  \begin{itemize}
+    \item 分析请求进入、调度、执行与回收的完整路径。
+    \item 分析 KV Cache、知识缓存与会话记忆等状态对象。
+    \item 分析执行路径、异构平台与实验验证方法。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程不重点展开的内容}
+  \Core{为保持系统问题定义的清晰性，课程将若干相关但非核心议题置于讲授边界之外。}
+  \begin{itemize}
+    \item 不系统展开预训练、RLHF 与参数高效微调。
+    \item 不将提示工程或应用层工作流设计作为主体内容。
+    \item 不将单个 kernel 调优等同于整门系统课程。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{统一视角：状态化系统}
+  \Core{本课程将大模型推理系统表述为“持续携带状态的在线服务系统”。}
+  \begin{itemize}
+    \item 模型参数之外，还存在 KV Cache、知识缓存、会话记忆与调度元数据。
+    \item 状态会跨时间、跨请求与跨设备持续传播。
+    \item 调度、缓存与执行路径因此形成连续耦合关系。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{状态化系统的含义}
+  \Core{状态化系统是指其当前执行决策同时受到当前请求与历史遗留状态的共同约束。}
+  \[
+    \text{Service Behavior}_t = f(\text{Request}_t, \text{State}_{t-1}, \text{Policy}_t)
+  \]
+  \begin{itemize}
+    \item KV 会影响后续 decode 路径与显存占用。
+    \item 会话历史会改变 prompt 长度、状态规模与排队压力。
+    \item 运行时统计信息又会反向影响调度与资源治理。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{时延分解及其系统含义}
+  \Core{首 token 时延与端到端生成时间均由多个系统环节共同决定，而非单一算子性能的直接映射。}
+  \[
+    \text{TTFT} = T_{\text{queue}} + T_{\text{schedule}} + T_{\text{prefill}} + T_{\text{return}}
+  \]
+  \[
+    T_{\text{end-to-end}} = \text{TTFT} + N_{\text{out}} \cdot T_{\text{decode-step}} + T_{\text{stream}}
+  \]
+  \begin{itemize}
+    \item 若排队或状态驻留构成主导项，单个算子优化通常无法直接改善用户体验。
+    \item 这也是后续课程分别讨论工作负载、调度、KV 与验证方法的原因。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程主线}
+  \Core{课程沿着工作负载、调度、状态管理、执行路径和验证方法五条线展开。}
+  \begin{enumerate}
+    \item 工作负载与评价指标视角
+    \item 请求生命周期分解
+    \item 调度、KV 与状态管理机制
+    \item 异构执行、平台适配与实验方法
+    \item 开源系统实践与课程项目
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{课程问题地图}
+  \Core{整门课都围绕一个总问题展开：如何在动态负载、持续状态和异构约束下构建稳定可验证的推理服务。}
+  \begin{itemize}
+    \item 工作负载定义问题边界。
+    \item 调度决定系统控制点。
+    \item 状态组织决定容量与复用空间。
+    \item 执行路径决定收益能否兑现。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程组织方式}
+  \Core{课程组织采用“概念讲解 + 论文精读 + 代码导读 + 实验验证 + 课程项目”的闭环结构。}
+  \begin{itemize}
+    \item 平时阅读与课堂讨论
+    \item 论文精读报告
+    \item 最小复现实验或代码导读
+    \item 课程项目中期与最终汇报
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{四层材料如何配合}
+  \Core{整门课按“讲义定问题、tutorial 定路径、实验定证据、代码定控制点”的顺序推进。}
+  \begin{itemize}
+    \item 讲义与课件首先建立工作负载、调度、状态与执行路径四条主线。
+    \item Tutorials 将同一问题先落到 nano-vLLM-HUST 的最小代码对象和日志观察点，再为进入 vllm-hust 做准备。
+    \item 课程实验要求学生围绕统一模板提交调用链、表格、日志与可否定解释。
+    \item 教学代码同时提供参考实现、student\_exercises、assignment 包与 TA 汇总脚本，以保持讲授、实践与提交的一致性。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程产出要求}
+  \Core{课程产出强调三点：可复查、可复用、可继续推进。}
+  \begin{itemize}
+    \item 系统论文精读报告一份。
+    \item 代码导读或最小复现实验记录一份。
+    \item 课程项目及最终汇报材料一套。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture01_examples.tex}
+
+\begin{frame}{课堂讨论}
+  \Core{课堂讨论围绕系统边界、用户感知与状态瓶颈三个维度展开。}
+  \begin{itemize}
+    \item 大模型服务问题为何不能简化为“将模型部署出去”。
+    \item 用户感知到的“卡顿”通常对应哪些系统现象。
+    \item 哪些状态对象更容易成为瓶颈放大器。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{本讲完成了研究对象由“模型”向“服务系统”的转换，并给出了后续讲次共享的分析框架。}
+  \begin{itemize}
+    \item 研究对象是完整服务链路，而非单一模型。
+    \item 研究目标是稳定且可验证的系统收益。
+    \item 后续各讲均将回到“状态对象 + 控制点 + 收益链路”的分析框架。
+  \end{itemize}
+\end{frame}
+
+\end{document}

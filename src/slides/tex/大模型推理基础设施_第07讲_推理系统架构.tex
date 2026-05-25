@@ -1,0 +1,140 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 7 讲 推理系统架构}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲从架构层面理解现代推理 runtime，并建立论文机制与真实代码边界之间的对应关系。}
+  \begin{itemize}
+    \item 区分控制面与数据面。
+    \item 识别调度器、执行器、KV 管理器和通信层。
+    \item 理解为什么日志、脚本与回归也是系统组成部分。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{典型推理系统的部件}
+  \Core{一个现代 serving runtime 至少包括请求入口、调度器、执行器、缓存层和监控层。}
+  \begin{itemize}
+    \item API server 与 tokenizer
+    \item scheduler 与 admission control
+    \item model runner 与 kernel/runtime 层
+    \item KV manager、通信层与 metrics/logging
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么架构图不能只画模块名}
+  \Core{好的架构理解不仅要知道“有哪些模块”，还要知道请求、状态和控制信号如何在模块间流动。}
+  \begin{itemize}
+    \item 请求路径回答“谁先被调用”。
+    \item 状态路径回答“哪些对象长期存在”。
+    \item 控制路径回答“谁在决定系统行为”。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{控制面与数据面}
+  \Core{控制面决定做什么，数据面决定怎么做。}
+  \begin{itemize}
+    \item 控制面关注准入、路由、优先级、配额和反馈。
+    \item 数据面关注 token 计算、状态驻留、kernel 执行和通信。
+    \item 不区分两者，问题定义就容易混乱。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{控制面典型问题}
+  \Core{控制面的核心是资源治理和服务目标兑现。}
+  \begin{itemize}
+    \item 什么时候接收新请求。
+    \item 怎样分配配额和优先级。
+    \item 什么时候扩容、限流或改变路由。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{数据面典型问题}
+  \Core{数据面的核心是执行路径、状态驻留与通信组织。}
+  \begin{itemize}
+    \item 哪些 token 被算、以什么批次被算。
+    \item KV 和其他状态如何分配、迁移和释放。
+    \item kernel、图执行和并行通信如何被组织。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么要进入真实代码库}
+  \Core{只有进入代码，才能真正理解论文机制在系统中落在哪些接口和模块上。}
+  \begin{itemize}
+    \item 请求生命周期在哪里开始与结束。
+    \item KV block 在哪里分配和回收。
+    \item 指标输出如何与论文图表对应。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：用 nano-vllm-hust 建立最小架构图}
+  \Core{\texttt{\detokenize{nano-vllm-hust}} 可以把请求入口、调度、KV 管理和执行路径落到一套足够小的代码结构上。}
+  \begin{itemize}
+    \item 请求入口：\texttt{\detokenize{nanovllm/engine/llm_engine.py}}
+    \item 调度与状态推进：\texttt{\detokenize{nanovllm/engine/scheduler.py}}
+    \item KV 块管理：\texttt{\detokenize{nanovllm/engine/block_manager.py}}
+    \item 执行与 KV 准备：\texttt{\detokenize{nanovllm/engine/model_runner.py}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：从架构图到代码导读任务}
+  \Core{以 \texttt{\detokenize{nano-vllm-hust}} 为例，代码导读可以先收束到一条最小主路径。}
+  \begin{itemize}
+    \item 从 \texttt{\detokenize{LLMEngine.generate()}} 进入全局驱动循环。
+    \item 从 \texttt{\detokenize{Scheduler.schedule()}} 观察控制面如何选择当前执行对象。
+    \item 从 \texttt{\detokenize{ModelRunner.run()}} 观察数据面如何准备输入、block table 与采样输出。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{代码导读的最低要求}
+  \Core{一次合格的代码导读，应能够将关键函数与系统职责清晰对应起来。}
+  \begin{itemize}
+    \item 哪个函数负责接收请求。
+    \item 哪个循环负责组织批次。
+    \item 哪个模块负责状态分配和统计输出。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{辅助模块的重要性}
+  \Core{脚本、日志与回归流程共同决定系统结果能否被复现和比较。}
+  \begin{itemize}
+    \item benchmark 配置决定实验边界。
+    \item 日志与指标决定你是否真的理解系统行为。
+    \item 回归脚本决定结果是否可持续维护。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课堂练习}
+  \Core{课堂练习可先做一次最小代码导读，建立架构与实现之间的映射关系。}
+  \begin{itemize}
+    \item 定位请求入口。
+    \item 定位调度循环。
+    \item 定位 KV 分配和回收逻辑。
+    \item 定位 metrics 输出点。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture07_examples.tex}
+
+\begin{frame}{本讲总结}
+  \Core{架构视角是统一论文、代码与实验分析的关键桥梁。}
+  \begin{itemize}
+    \item 系统研究不能只停留在机制名词。
+    \item 理解模块边界，才能设计可落地项目。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{对应 Tutorial}
+  \Core{本讲对应 Tutorial 6。先独立作答，再对照下一页参考答案。}
+  \begin{itemize}
+    \item 文件：\texttt{\detokenize{build/tutorials/Tutorial_06_推理系统架构.pdf}}
+    \item 动手运行、日志记录与提交要求统一查看 \texttt{\detokenize{build/experiments/}} 和对应 experiment 源目录下的 \texttt{\detokenize{assignment_spring-2026/}}。
+  \end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,10 +1,10 @@
 .preview/
 .tectonic-cache/
-slides/.tectonic/
-slides/.cache/
-slides/.local_cache/
-slides/.local_config/
-slides/.local_tmp/
+src/slides/.tectonic/
+src/slides/.cache/
+src/slides/.local_cache/
+src/slides/.local_config/
+src/slides/.local_tmp/
 
 *.aux
 *.fdb_latexmk

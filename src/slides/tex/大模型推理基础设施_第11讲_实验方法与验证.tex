@@ -1,0 +1,129 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 11 讲 实验方法与可验证性}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲讨论实验设计与验证方法，并说明测量能力本身构成系统研究能力的重要部分。}
+  \begin{itemize}
+    \item 理解 workload、对照组和指标选择。
+    \item 区分端到端指标与局部探针。
+    \item 学会识别不可信实验结论。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{实验设计的最小要素}
+  \Core{一个最小可信实验至少需要 workload、对照组、指标和环境说明四部分。}
+  \begin{itemize}
+    \item 输入分布和服务场景是什么。
+    \item 比较对象和控制变量是什么。
+    \item 主要指标与辅助探针分别是什么。
+    \item 环境和配置是否可复现。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{workload 设计的重要性}
+  \Core{workload 决定实验实际测量的问题对象；若输入分布与服务场景不匹配，结论将整体偏移。}
+  \begin{itemize}
+    \item 长上下文和短上下文应区分。
+    \item 在线动态到达和离线批处理不能混用。
+    \item RAG 和普通对话的链路结构本身就不同。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{端到端指标与局部探针}
+  \Core{端到端指标告诉你用户感受到什么，局部探针告诉你系统里发生了什么。}
+  \begin{itemize}
+    \item TTFT、P99、goodput 属于端到端指标。
+    \item batch 大小、KV 占用、GPU 利用率属于局部探针。
+    \item 研究中通常两类数据都必须报告。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么仅报告端到端指标并不足够}
+  \Core{仅报告端到端数字可以描述结果现象，但通常不足以解释其形成原因。}
+  \begin{itemize}
+    \item P99 上升可能来自队列，也可能来自通信。
+    \item throughput 下降可能来自 KV 容量，也可能来自调度保守。
+    \item 探针指标帮助建立因果解释链。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{常见实验陷阱}
+  \Core{很多看起来漂亮的结果，问题并不在数字，而在实验边界没有说清。}
+  \begin{itemize}
+    \item 只报告最好一次，不报告波动。
+    \item 输入分布不合理，无法代表目标场景。
+    \item 对照组配置不公平或热身不足。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程项目中的实验设计}
+  \Core{课程项目中的常见问题在于实验计划模糊，从而导致结果缺乏解释力。}
+  \begin{itemize}
+    \item 先选主指标，再补探针指标。
+    \item 先写预期会否定当前假设的结果。
+    \item 先定义最小可跑场景，再扩到完整 workload。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{实验草案的基本结构}
+  \Core{实验开始之前，应先明确整体结构，而非在执行过程中临时补充设计。}
+  \begin{itemize}
+    \item 主问题和待验证假设。
+    \item 实验组、对照组与控制变量。
+    \item 主要指标、辅助探针和失败标准。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：用 nano-vllm-hust 组织最小 benchmark}
+  \Core{\texttt{\detokenize{bench.py}} 已经包含最小实验记录需要的配置、warmup 和结果汇总结构。}
+  \begin{itemize}
+    \item 它显式设定随机种子、请求数量、输入长度与输出长度分布。
+    \item 它先执行一次 warmup，再进入正式测量。
+    \item 它最终输出总 token、总时间与 throughput，便于说明最小实验记录格式。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：教学版实验任务如何设计}
+  \Core{结合 \texttt{\detokenize{student_exercises/README.md}}，可以把实验教学拆成“参考实现阅读 + TODO 补全 + 结果解释”三段。}
+  \begin{itemize}
+    \item 先在参考实现中理解控制点。
+    \item 再在 \texttt{\detokenize{student_exercises/bench.py}} 或相关练习文件中补全任务。
+    \item 最后要求学生提交结构化实验记录，而不只是运行截图。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture11_examples.tex}
+
+\begin{frame}{课堂讨论}
+  \Core{实验的目标在于判断系统假设是否成立，而非单纯证明预设观点。}
+  \begin{itemize}
+    \item 为什么单次最好结果价值很低？
+    \item 什么时候局部探针最能帮助解释端到端现象？
+    \item 哪些结果一旦出现，就说明当前机制假设应该被放弃？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{缺乏规范实验设计时，机制难以转化为可信的系统结论。}
+  \begin{itemize}
+    \item 验证方法本身就是研究贡献的一部分。
+    \item 下一讲将把这些方法落到真实代码与复现实验上。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{对应 Tutorial}
+  \Core{本讲对应 Tutorial 10。先独立作答，再对照下一页参考答案。}
+  \begin{itemize}
+    \item 文件：\texttt{\detokenize{build/tutorials/Tutorial_10_实验方法与验证.pdf}}
+    \item 动手运行、日志记录与提交要求统一查看 \texttt{\detokenize{build/experiments/}} 和对应 experiment 源目录下的 \texttt{\detokenize{assignment_spring-2026/}}。
+  \end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,37 @@
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{xcolor}
+
+\definecolor{SheetLine}{RGB}{90, 105, 125}
+\definecolor{SheetText}{RGB}{65, 75, 88}
+
+\setlength{\headheight}{15pt}
+
+\fancypagestyle{sheetstyle}{
+  \fancyhf{}
+  \fancyhead[L]{\footnotesize\textsf{\textcolor{SheetText}{大模型推理基础设施}}}
+  \fancyhead[C]{\footnotesize\textsf{\textcolor{SheetText}{Experimental Sheet / Project Sheet}}}
+  \fancyhead[R]{\footnotesize\textsf{\textcolor{SheetText}{\thepage/\pageref*{LastPage}}}}
+  \fancyfoot[L]{\footnotesize\textsf{\textcolor{SheetText}{nano-vLLM 实验课}}}
+  \fancyfoot[R]{\footnotesize\textsf{\textcolor{SheetText}{Spring 2026}}}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \renewcommand{\headrule}{\hbox to\headwidth{\color{SheetLine}\leaders\hrule height \headrulewidth\hfill}}
+  \renewcommand{\footrule}{\hbox to\headwidth{\color{SheetLine}\leaders\hrule height \footrulewidth\hfill}}
+}
+
+\pagestyle{sheetstyle}
+\thispagestyle{sheetstyle}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\footnotesize\textsf{\textcolor{SheetText}{大模型推理基础设施}}}
+  \fancyhead[C]{\footnotesize\textsf{\textcolor{SheetText}{Experimental Sheet / Project Sheet}}}
+  \fancyhead[R]{\footnotesize\textsf{\textcolor{SheetText}{\thepage/\pageref*{LastPage}}}}
+  \fancyfoot[L]{\footnotesize\textsf{\textcolor{SheetText}{nano-vLLM 实验课}}}
+  \fancyfoot[R]{\footnotesize\textsf{\textcolor{SheetText}{Spring 2026}}}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \renewcommand{\headrule}{\hbox to\headwidth{\color{SheetLine}\leaders\hrule height \headrulewidth\hfill}}
+  \renewcommand{\footrule}{\hbox to\headwidth{\color{SheetLine}\leaders\hrule height \footrulewidth\hfill}}
+}

@@ -1,0 +1,137 @@
+\input{大模型推理基础设施_课件样式.tex}
+
+\LectureMeta{第 6 讲 状态管理与记忆组织}{研究生课程课件}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{教学目标}
+  \Core{本讲讨论推理系统中状态对象的保存、搬运、共享与复用问题。}
+  \begin{itemize}
+    \item 理解 DistServe 的阶段解耦。
+    \item 理解 RAGCache 的知识对象缓存。
+    \item 建立 KV、知识块、会话记忆的统一状态视角。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{为什么状态问题会升级}
+  \Core{当服务进入多轮交互、RAG 和智能体工作流后，状态不再是一次性中间结果。}
+  \begin{itemize}
+    \item 状态会跨请求、跨轮次持续存在。
+    \item 状态对象可能被搬运到不同设备和不同阶段。
+    \item 状态复用收益和一致性代价需要一起考虑。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{状态对象有哪些类型}
+  \Core{从系统角度看，不同状态对象的差别主要体现在生成方式、驻留时间和复用条件上。}
+  \begin{itemize}
+    \item 引擎内部状态：KV、激活、调度元数据。
+    \item 外部知识状态：检索结果、知识块、索引缓存。
+    \item 长程交互状态：会话历史、智能体记忆和工具上下文。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{DistServe 的启发}
+  \Core{DistServe 说明 prefill 和 decode 的分离可以带来收益，但状态传输会成为新的系统代价。}
+  \begin{itemize}
+    \item prefill 偏重算力，decode 偏重低排队时延和状态驻留。
+    \item 解耦后可分别扩容和优化。
+    \item 状态传输与协调复杂度随之出现。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{DistServe 的系统启示}
+  \Core{DistServe 的重要意义在于将阶段差异重新建模为资源配置与状态传递问题。}
+  \begin{itemize}
+    \item prefill 和 decode 不应强迫共享同一资源池。
+    \item 一旦分离，状态搬运和阶段协同就进入主路径。
+    \item 因此“解耦”本身不会免费带来收益。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{RAGCache 的启发}
+  \Core{RAGCache 说明外部知识一旦进入在线推理链路，就会变成系统内部必须管理的缓存对象。}
+  \begin{itemize}
+    \item 知识块注入会扩大 prefill 和 KV 压力。
+    \item 热知识块存在跨请求复用机会。
+    \item 检索与推理之间需要新的状态组织和重叠机制。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{RAGCache 的系统启示}
+  \Core{RAGCache 将知识注入过程转化为状态缓存与流水重叠问题。}
+  \begin{itemize}
+    \item 热知识块可以跨请求复用。
+    \item 检索与推理需要联合优化而非串行拼接。
+    \item 外部知识对象必须进入运行时视角。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{统一状态对象视角}
+  \Core{KV、知识缓存和会话记忆虽然服务不同语义目标，但在系统上都属于长期存在且可复用的状态对象。}
+  \begin{itemize}
+    \item 不同点在于复用条件、正确性要求和驻留时间。
+    \item 相同点在于都需要考虑存储、调度、访问与回收。
+    \item 统一视角有助于形成更强的系统抽象。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{统一视角的研究价值}
+  \Core{如果我们能把这些对象放进同一抽象框架，就有机会统一讨论存储、调度、迁移和复用。}
+  \begin{itemize}
+    \item 统一度量对象价值与代价。
+    \item 统一考虑驻留层级和回收策略。
+    \item 统一分析对调度器和执行路径的影响。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：在 nano-vllm-hust 中观察状态对象}
+  \Core{\texttt{\detokenize{nanovllm/engine/sequence.py}} 把请求状态、token 序列和 KV 相关元数据收在了同一个运行时对象里。}
+  \begin{itemize}
+    \item \texttt{\detokenize{Sequence}} 同时包含请求状态、token 序列和采样配置。
+    \item \texttt{\detokenize{status}}、\texttt{\detokenize{num_cached_tokens}} 与 \texttt{\detokenize{block_table}} 体现了运行时状态的不同维度。
+    \item \texttt{\detokenize{append_token()}}、\texttt{\detokenize{__getstate__()}} 与 \texttt{\detokenize{__setstate__()}} 说明状态对象会随阶段推进和跨进程序列化而变化。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{源码穿插：Sequence 如何承载状态对象}
+  \Core{通过 \texttt{\detokenize{Sequence}} 可以把“状态对象”从抽象概念落实到运行时最小承载单元。}
+  \begin{itemize}
+    \item 它既保存 prompt 与 completion 的边界，也保存调度阶段与缓存进度。
+    \item \texttt{\detokenize{num_blocks}}、\texttt{\detokenize{last_block_num_tokens}} 等属性把逻辑请求与物理块管理关联起来。
+    \item 这一设计有助于学生理解状态对象为何会同时受到调度、KV 管理和执行路径的共同影响。
+  \end{itemize}
+\end{frame}
+
+\input{supplements/lecture06_examples.tex}
+
+\begin{frame}{课堂讨论}
+  \Core{状态管理的关键难点，在于缓存对象如何稳定纳入系统控制环。}
+  \begin{itemize}
+    \item 为什么知识缓存不能被简单看成外挂组件？
+    \item 当状态搬运进入主路径后，如何权衡收益与代价？
+    \item 会话记忆在系统层面与 KV 有哪些相同点和差异？
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{本讲总结}
+  \Core{从 DistServe 到 RAGCache，相关系统工作的共同主题都是将状态作为一等对象进行设计。}
+  \begin{itemize}
+    \item 状态管理是推理基础设施的核心问题之一。
+    \item 后续架构与异构执行讨论都要继续围绕状态展开。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{对应 Tutorial}
+  \Core{本讲对应 Tutorial 5。先独立作答，再对照下一页参考答案。}
+  \begin{itemize}
+    \item 文件：\texttt{\detokenize{build/tutorials/Tutorial_05_状态管理与记忆组织.pdf}}
+    \item 动手运行、日志记录与提交要求统一查看 \texttt{\detokenize{build/experiments/}} 和对应 experiment 源目录下的 \texttt{\detokenize{assignment_spring-2026/}}。
+  \end{itemize}
+\end{frame}
+
+\end{document}

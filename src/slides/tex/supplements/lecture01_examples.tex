@@ -1,0 +1,115 @@
+\begin{frame}{课程对象与导论课的统一判断框架}
+  \Core{导论部分将研究对象界定为在线推理服务系统，并用对象、控制点、指标和证据构成基本分析框架。}
+  \begin{columns}[T,totalwidth=\textwidth]
+    \column{0.46\textwidth}
+    \begin{block}{课程对象}
+      \begin{itemize}
+        \item 课堂观察单位不再局限于网络层，而是请求对象、控制点、状态对象与结果指标。
+        \item 同一模型在不同 runtime、调度器与 KV 管理策略下，会呈现不同的服务质量。
+      \end{itemize}
+    \end{block}
+    \column{0.5\textwidth}
+    \begin{block}{分析框架}
+      \begin{enumerate}
+        \item 长期存在的系统对象。
+        \item 真正改变行为的控制点。
+        \item 端到端指标的变化方向。
+        \item 支撑解释的日志、表格和代码证据。
+      \end{enumerate}
+    \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{例子：传统部署经验的局限}
+  \Core{从分类模型到大模型在线服务，系统主导矛盾已由“单次前向吞吐”转向“跨轮状态组织”。}
+  \begin{tabular}{p{0.24\textwidth}p{0.25\textwidth}p{0.35\textwidth}}
+    \toprule
+    场景 & 主要特征 & 主导系统问题 \\
+    \midrule
+    传统 CV / NLP 服务 & 一次前向、输入输出短 & 吞吐、批处理、资源利用率 \\
+    早期小模型对话 & 有生成过程，但状态较小 & 短任务排队、基础流式返回 \\
+    大模型在线服务 & 长上下文、连续 decode、状态驻留 & 调度、状态管理、尾时延与稳定性 \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{例子：真实服务中的典型问题}
+  \Core{许多服务失效并非源于模型无法生成，而是源于系统对状态与并发的承载能力不足。}
+  \begin{tabular}{p{0.25\textwidth}p{0.28\textwidth}p{0.31\textwidth}}
+    \toprule
+    现象 & 直接表现 & 更可能追查的系统对象 \\
+    \midrule
+    晚高峰突然超时 & TTFT 和 P99 同时恶化 & 队列、准入、调度策略 \\
+    显存未满却无法扩容 & 理论容量未用尽先失去弹性 & KV 块管理、碎片、预留策略 \\
+    换一套 runtime 行为大变 & 同一模型服务质量差异明显 & 请求组织、状态路径、执行栈 \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{代码例子：从 nano-vllm 到 vllm-hust}
+  \Core{nano-vllm-hust 用于建立最小控制路径的理解；相同的分析方法将进一步迁移到 vllm-hust 的优化与开发任务中。}
+  \begin{columns}[T,totalwidth=\textwidth]
+    \column{0.48\textwidth}
+    \begin{block}{入口代码}
+      {\ttfamily\small
+      \detokenize{from nanovllm import LLM, SamplingParams}\par
+      \detokenize{llm = LLM(model_path, enforce_eager=True)}\par
+      \detokenize{outputs = llm.generate(prompts, sampling_params)}\par
+      }
+    \end{block}
+    \column{0.48\textwidth}
+    \begin{block}{代码观察点与迁移方向}
+      \begin{itemize}
+        \item \texttt{LLM.generate} 对应接口封装还是更深层 engine 入口。
+        \item 请求状态首次被持有的对象位置。
+        \item 从 nano-vllm 到 vllm-hust 的方法迁移位置。
+      \end{itemize}
+    \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{代码例子：最小日志的观察价值}
+  \Core{导论阶段的插桩应以支撑主路径判断为主要目标，而不以初始阶段覆盖全部细节为目标。}
+  \begin{columns}[T,totalwidth=\textwidth]
+    \column{0.44\textwidth}
+    \begin{block}{最小日志样式}
+      {\ttfamily\small
+      \detokenize{print(request_id, prompt_len, stage)}\par
+      \detokenize{print(batch_size, running_size)}\par
+      }
+    \end{block}
+    \column{0.54\textwidth}
+    \begin{block}{观察价值}
+      \begin{itemize}
+        \item 请求进入、执行与返回这条主路径可以被直接确认。
+        \item 阶段日志、状态探针与 benchmark 记录可以在后续实验中逐步增加。
+        \item 这也是课程实验组织观察点的基本方式。
+      \end{itemize}
+    \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{常见误读与讨论任务}
+  \Core{本页用于区分常见误读，并将讨论收束到对象、控制点与证据三个层面。}
+  \begin{columns}[T,totalwidth=\textwidth]
+    \column{0.52\textwidth}
+    \begin{block}{三种常见误读}
+      \begin{itemize}
+        \item 输出慢说明模型不够强。
+        \item 换更快 kernel 就能解决服务问题。
+        \item 设备利用率低就一定是算力浪费。
+      \end{itemize}
+    \end{block}
+    \column{0.44\textwidth}
+    \begin{block}{讨论任务}
+      \begin{enumerate}
+        \item 判断一次“卡顿”更接近排队、状态还是执行路径问题。
+        \item 在 \texttt{example.py} 到 \texttt{llm\_engine.py} 之间指出最值得优先阅读的两个函数。
+      \end{enumerate}
+    \end{block}
+  \end{columns}
+  \vspace{0.4em}
+  \begin{block}{讨论收束问题}
+    课程为何先从系统边界切入，而不是直接从单篇机制论文切入。
+  \end{block}
+\end{frame}
