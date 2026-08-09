@@ -128,6 +128,24 @@
   \end{block}
 \end{frame}
 
+\begin{frame}{研究案例：MLP Materialization 的负结果为什么有价值}
+  \Core{profiler-driven optimization 的第一课：不要只优化一个看起来显眼、但不在主导路径上的算子。}
+  \begin{itemize}
+    \item 实测 serving path 中反复出现 \texttt{\detokenize{MatMulV2 -> SwiGlu -> MatMulV2}}。
+    \item profiler 显示 \texttt{\detokenize{SwiGlu}} 约占 1.08\% device op time，而 \texttt{\detokenize{MatMulV2}} 约占 86.72\%。
+    \item naive 单 op / inplace 优化难以带来端到端收益，下一步应看 MLP boundary、materialization 与 writeback。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{研究案例：执行路径优化要问三个问题}
+  \Core{一个优化没有兑现时，课程里要训练学生沿路径定位，而不是简单说“实现不够好”。}
+  \begin{enumerate}
+    \item 它减少的是 kernel time、launch、I/O、状态搬运，还是等待？
+    \item 这个局部变化是否落在 TTFT、TPOT 或 throughput 的主导路径上？
+    \item profiler、trace 和端到端结果是否互相解释，还是互相矛盾？
+  \end{enumerate}
+\end{frame}
+
 \begin{frame}{课堂练习：用路径语言解释一次优化（1）}
   \Core{执行优化课最重要的能力，是把“优化点”翻译成“路径改变”。}
 \begin{block}{练习一}
