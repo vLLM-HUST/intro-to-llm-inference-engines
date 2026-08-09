@@ -130,6 +130,42 @@
   \end{block}
 \end{frame}
 
+\begin{frame}{课程项目题目池：KV 与状态方向}
+  \Core{真实研究题目可以拆成适合课程项目的最小版本，重点是对象、控制点和验证路径清楚。}
+  \begin{itemize}
+    \item KV-Delta：比较 full-image handoff 与 delta handoff，解释 bytes 与 E2E 的关系。
+    \item Segment Reuse：构造 raw negative 与 aligned positive，检查 commit ledger 与 correctness。
+    \item Tiered KV：实现 movement log guard 或 restore reject reason summary。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程项目题目池：执行路径与异构方向}
+  \Core{执行路径项目不要求学生发明大系统，要求他们能用 profiler 和 trace 证明瓶颈在哪里。}
+  \begin{itemize}
+    \item MLP Materialization：用 profiler 判断单算子优化是否值得继续。
+    \item Decode Selector：设计一页 claim ledger，区分 selection policy、routing regime 与端到端指标。
+    \item KV-plane：整理机制、baseline 和 workload provenance，判断当前证据能否支撑论文主线。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程项目题目池：调度与编排方向}
+  \Core{调度与编排项目最容易夸大，因此必须提前写出 strongest baseline 和失败条件。}
+  \begin{itemize}
+    \item Topology-aware placement：比较 locality、pressure、session affinity 和 remote path 的取舍。
+    \item Semantic MapReduce：区分 orchestration、coverage 与 reducer quality 三类 claim。
+    \item shared workload provenance：为一个现有 benchmark 补 source、commit、adapter 和 failed-run 记录。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{课程项目交付：一页 claim ledger}
+  \Core{最终汇报不只交代码和图，还要交一页能让别人复查的 claim ledger。}
+  \begin{itemize}
+    \item 每个 claim 对应 artifact、baseline、workload、指标和设备。
+    \item 每个 failed / blocked / invalid run 都要说明原因。
+    \item 最后一行写：如果继续做，最小且最有价值的下一步是什么。
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{课堂练习：把你的题目压缩到一句话（1）}
   \Core{一个能做完的课程项目，往往都能被压缩成一句短而硬的问题句。}
 \begin{block}{练习一}

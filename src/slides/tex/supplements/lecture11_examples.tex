@@ -130,6 +130,33 @@
   \end{block}
 \end{frame}
 
+\begin{frame}{研究案例：shared workload 不是“拿来就能跑”}
+  \Core{真实 benchmark 的 provenance 包括 workload 来源，也包括 adapter 如何把它变成当前系统可运行的输入。}
+  \begin{itemize}
+    \item KV-Delta 中，shared workload 元数据里的 prompt length 并不等于 Qwen tokenizer token 数。
+    \item 原始请求真实 token 数超过 \texttt{\detokenize{max_model_len}}，导致 completion endpoint 返回 400。
+    \item 正确做法是记录 token-budget 裁剪、deterministic subset、submodule commit 和失败 artifact。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{研究案例：同一实验报告必须保留失败 run}
+  \Core{failed / blocked run 不是噪音，而是解释系统边界和后续工作的证据。}
+  \begin{itemize}
+    \item full 40-request shared case 能通过请求阶段，但 consumer trace/save-load 后段过重。
+    \item 因此改用 deterministic first-8 subset 完成 m=2/4/8 canonical，不等于完整 workload 已经解决。
+    \item 课程要求：把 full-40 标为 blocked，把 first-8 标为 shared subset，不得混写。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{研究案例：claim ledger 的最小字段}
+  \Core{每个课程项目都应把结果写成可审计 claim，而不是只贴一张性能图。}
+  \begin{itemize}
+    \item Claim：当前结论能说到什么程度。
+    \item Evidence：artifact path、workload source、baseline、指标和设备。
+    \item Boundary：invalid/failed/blocked run、未覆盖 workload、尚未解释的反例。
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{课堂练习：写一页可信实验卡片（1）}
   \Core{实验方法训练最好用一页纸完成：问题、对照、指标、失败条件。}
 \begin{block}{练习一}

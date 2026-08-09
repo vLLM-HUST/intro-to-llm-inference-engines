@@ -130,6 +130,33 @@
   \end{block}
 \end{frame}
 
+\begin{frame}{研究案例：KV-Delta 说明状态迁移不是只看字节}
+  \Core{KV 迁移优化的第一层收益是减少重复状态传输，但系统最终仍要看用户可见的端到端路径。}
+  \begin{itemize}
+    \item repeated movement 中，DeltaKV 相比 full-image handoff 可显著减少重复 KV image。
+    \item 一组 shared workload 子集上，m=2/4/8 的端到端收益约为 4.6\%、32.2\%、48.2\%。
+    \item 同时 TTFT / disruption 仍可能变差，说明瓶颈转移到 consumer install、prefetch handoff 与调度等待。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{研究案例：Segment Reuse 的正确打开方式}
+  \Core{前缀/片段复用必须先通过 correctness gate，再谈性能收益。}
+  \begin{itemize}
+    \item raw shared workload 能通过正确性检查，但因为 block boundary 不满足而没有真实 stitch commit。
+    \item aligned workload 能触发 \texttt{\detokenize{stitch_committed=1}}，并通过输出等价检查。
+    \item 但它仍输给 native prefix baseline：机制可行不等于性能已经成立。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{研究案例：Tiered KV Cache 为什么需要 invalid-run guard}
+  \Core{多级 KV 管理中，最危险的不是结果为负，而是把没有真实 movement 的 run 写成优化收益。}
+  \begin{itemize}
+    \item live spill / restore 可能引入额外延迟，no-movement control 是必要对照。
+    \item restore 可能因为 \texttt{\detokenize{pressure_floor_reject}} 或 \texttt{\detokenize{prefix_chain_incomplete}} 被拒绝。
+    \item movement log guard 的教学意义：先证明机制真的发生，再解释性能结果。
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{课堂练习：把 KV 问题翻译成系统因果链（1）}
   \Core{KV 这一讲不应该只留下术语，而应该留下至少一条学生自己能复述的因果链。}
 \begin{block}{练习一}
