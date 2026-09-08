@@ -6,10 +6,11 @@
 \usepackage{amsmath}
 \usepackage{booktabs}
 
-\definecolor{DeepBlue}{RGB}{25,74,122}
-\definecolor{SoftInk}{RGB}{53,59,66}
-\definecolor{PaperBg}{RGB}{249,248,245}
-\definecolor{PanelBlue}{RGB}{236,243,249}
+% Projector-safe palette: high contrast on common lecture-room projectors.
+\definecolor{DeepBlue}{RGB}{11,58,102}
+\definecolor{SoftInk}{RGB}{31,41,51}
+\definecolor{PaperBg}{RGB}{255,255,255}
+\definecolor{PanelBlue}{RGB}{226,237,247}
 
 \setbeamercolor{normal text}{fg=SoftInk,bg=PaperBg}
 \setbeamercolor{structure}{fg=DeepBlue}
@@ -38,7 +39,7 @@
 
 \newcommand{\ResearchSources}[1]{
   \begin{frame}{本讲参考资料}
-    \small
+    \normalsize
     \begin{itemize}
       #1
     \end{itemize}
