@@ -75,3 +75,23 @@ footer { display: flex; justify-content: space-between; gap: 2rem; padding: 2rem
 @media (max-width: 980px) { .site-header { grid-template-columns: 1fr auto; } nav { display: none; } .hero { grid-template-columns: 1fr; } .material-grid,.practice-grid { grid-template-columns: 1fr; } .material-card.featured { transform: none; } .syllabus-list a { grid-template-columns: 52px 1fr 24px; } .syllabus-list small { grid-column: 2; } .repository-strip { grid-template-columns: 1fr; align-items: start; } }
 @media (max-width: 620px) { .site-header { min-height: 66px; gap: 1rem; } .header-link { font-size: .8rem; } .hero { min-height: auto; padding-top: 5rem; } h1 { font-size: clamp(3.1rem,17vw,5rem); } .course-facts>div { grid-template-columns: 40px 1fr; } .request-path { grid-template-columns: repeat(7,170px); } .syllabus-list a { grid-template-columns: 42px 1fr 20px; padding-inline: 0; } footer { flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.downloads-page { background: var(--paper); }
+.downloads-main { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0 104px; }
+.downloads-intro { max-width: 800px; margin-bottom: 64px; }
+.downloads-intro h1 { margin: 8px 0 18px; font-size: clamp(44px, 7vw, 86px); line-height: .96; letter-spacing: -.055em; }
+.downloads-intro>p:last-child { color: var(--muted); font-size: 18px; line-height: 1.75; }
+.download-group { padding: 36px 0; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+.download-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+.download-heading h2 { margin: 0; font-size: clamp(28px, 3vw, 42px); }
+.download-heading span { color: var(--muted); font-size: 14px; white-space: nowrap; }
+.download-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.download-list a { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 68px; padding: 14px 18px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; transition: border-color .18s ease, transform .18s ease; }
+.download-list a:hover { border-color: var(--cyan); transform: translateY(-1px); }
+.download-list strong { font-size: 15px; line-height: 1.45; }
+.download-list span { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+@media (max-width: 760px) {
+  .downloads-main { width: min(100% - 28px, 1160px); padding-top: 48px; }
+  .download-list { grid-template-columns: 1fr; }
+  .download-list a { align-items: flex-start; }
+}

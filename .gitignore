@@ -19,3 +19,6 @@ src/slides/.local_tmp/
 
 .DS_Store
 Thumbs.db
+
+# Generated public download bundle for courses.sage.org.ai
+dist/downloads/
