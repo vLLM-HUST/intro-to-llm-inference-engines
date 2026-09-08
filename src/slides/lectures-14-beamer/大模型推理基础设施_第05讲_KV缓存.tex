@@ -30,7 +30,7 @@
   \Core{随着上下文更长、并发更高、交互更持续，KV 已经从实现细节变成系统一等约束。}
   \begin{itemize}
     \item 长上下文让单请求状态膨胀。
-    \item 在线服务让状态必须跨轮驻留。
+    \item 在线服务要求 KV 状态跨自回归解码步保留；是否跨对话轮次复用取决于会话路由与前缀缓存机制。
     \item 多租户与动态到达让分配与回收更频繁。
   \end{itemize}
 \end{frame}
@@ -127,11 +127,13 @@
   \end{itemize}
 \end{frame}
 
+\LectureFiveSources
+
 \begin{frame}{对应 Tutorial}
-  \Core{本讲对应 Tutorial 4。先独立作答，再对照下一页参考答案。}
+  \Core{本讲对应 Tutorial 4。先独立作答，再使用对应 Tutorial 的教师讨论要点核对。}
   \begin{itemize}
     \item 文件：\texttt{\detokenize{build/tutorials/Tutorial_04_KV_Cache与状态组织.pdf}}
-    \item 动手运行、日志记录与提交要求统一查看 \texttt{\detokenize{build/experiments/}} 和对应 experiment 源目录下的 \texttt{\detokenize{assignment_spring-2026/}}。
+    \item 动手运行、日志记录与提交要求统一查看 \texttt{\detokenize{build/experiments/}} 和对应 experiment 源目录下的 \texttt{\detokenize{assignment_spring-2027/}}。
   \end{itemize}
 \end{frame}
 

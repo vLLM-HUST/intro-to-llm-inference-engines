@@ -128,16 +128,17 @@
   \end{block}
 \end{frame}
 
-\begin{frame}{研究案例：MLP Materialization 的负结果为什么有价值}
+\begin{frame}{课程研究案例（内部实验）：MLP Materialization}
   \Core{profiler-driven optimization 的第一课：不要只优化一个看起来显眼、但不在主导路径上的算子。}
   \begin{itemize}
     \item 实测 serving path 中反复出现 \texttt{\detokenize{MatMulV2 -> SwiGlu -> MatMulV2}}。
-    \item profiler 显示 \texttt{\detokenize{SwiGlu}} 约占 1.08\% device op time，而 \texttt{\detokenize{MatMulV2}} 约占 86.72\%。
-    \item naive 单 op / inplace 优化难以带来端到端收益，下一步应看 MLP boundary、materialization 与 writeback。
+    \item 内部 profile 显示矩阵乘法主导该路径，SwiGLU 只占较小比例；未归档实验条件前不引用具体百分比。
+    \item 单算子或 inplace 优化未必带来端到端收益，下一步应检查 MLP 边界、materialization 与 writeback。
   \end{itemize}
+  \InternalCaseNote
 \end{frame}
 
-\begin{frame}{研究案例：执行路径优化要问三个问题}
+\begin{frame}{执行路径优化的证据问题}
   \Core{一个优化没有兑现时，课程里要训练学生沿路径定位，而不是简单说“实现不够好”。}
   \begin{enumerate}
     \item 它减少的是 kernel time、launch、I/O、状态搬运，还是等待？

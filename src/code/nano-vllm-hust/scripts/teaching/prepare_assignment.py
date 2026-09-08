@@ -72,7 +72,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--course-tag",
-        default="spring-2026",
+        default="spring-2027",
         help="Short course tag used in the output directory name.",
     )
     parser.add_argument(

@@ -27,11 +27,11 @@
 
 ### 4.2 本节材料
 
-- 理论配套：`build/tutorials/Tutorial_04_KV_Cache与状态组织.pdf`
-- 参考代码：`src/code/nano-vllm-hust/nanovllm/engine/block_manager.py`
-- 相关状态对象：`src/code/nano-vllm-hust/nanovllm/engine/sequence.py`
-- 学生练习：`src/code/nano-vllm-hust/student_exercises/nanovllm/engine/block_manager.py`
-- 作业包：`src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2026/`
+- 理论配套：\CoursePath{build/tutorials/Tutorial_04_KV_Cache与状态组织.pdf}
+- 参考代码：\CoursePath{src/code/nano-vllm-hust/nanovllm/engine/block_manager.py}
+- 相关状态对象：\CoursePath{src/code/nano-vllm-hust/nanovllm/engine/sequence.py}
+- 学生练习：\CoursePath{src/code/nano-vllm-hust/student_exercises/nanovllm/engine/block_manager.py}
+- 作业包：\CoursePath{src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2027/}
 
 ## 5. 提交内容
 

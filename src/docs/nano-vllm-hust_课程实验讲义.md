@@ -2,7 +2,7 @@
 
 ## 一、实验讲义定位
 
-本讲义配合“大模型推理基础设施”课程使用，目标是把课堂中讲解的请求生命周期、调度、KV 状态管理与实验验证方法，落实到 `src/code/nano-vllm-hust` 这一教学代码库中。
+本讲义配合《大模型推理系统与实践》课程使用，目标是把课堂中讲解的请求生命周期、调度、KV 状态管理与实验验证方法，落实到 `src/code/nano-vllm-hust` 这一教学代码库中。
 
 该代码库同时包含两层内容：
 
@@ -28,11 +28,11 @@
 
 | 对应讲次 | tutorial / 实验 | 参考实现 | 学生练习与作业包 | 主要交付 |
 | --- | --- | --- | --- | --- |
-| 第 2 讲 | Tutorial 1（工作负载与评价指标） / `build/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/sheet.pdf` | `src/code/nano-vllm-hust/example.py`、`src/code/nano-vllm-hust/nanovllm/llm.py`、`src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py` | `src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2026/` | 场景-指标分析；最小运行记录与代码地图 |
-| 第 3 讲 | Tutorial 2 / `build/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/sheet.pdf` | `src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py`、`src/code/nano-vllm-hust/nanovllm/engine/sequence.py` | `src/code/nano-vllm-hust/student_exercises/nanovllm/engine/llm_engine.py`、`src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2026/` | 生命周期时序图、长短 prompt 对比表 |
-| 第 4 讲 | Tutorial 3 / `build/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/sheet.pdf` | `src/code/nano-vllm-hust/nanovllm/engine/scheduler.py` | `src/code/nano-vllm-hust/student_exercises/nanovllm/engine/scheduler.py`、`src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2026/` | batch 观测日志、调度对比表 |
-| 第 5 讲 | Tutorial 4 / `build/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/sheet.pdf` | `src/code/nano-vllm-hust/nanovllm/engine/block_manager.py`、`src/code/nano-vllm-hust/nanovllm/engine/sequence.py` | `src/code/nano-vllm-hust/student_exercises/nanovllm/engine/block_manager.py`、`src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2026/` | KV 生命周期图、状态容量分析 |
-| 第 11 讲 | Tutorial 10 / `build/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/sheet.pdf` | `src/code/nano-vllm-hust/bench.py` | `src/code/nano-vllm-hust/student_exercises/bench.py`、`src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2026/` | 最小复现实验包、结果表、边界说明 |
+| 第 2 讲 | Tutorial 1（工作负载与评价指标） / `build/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/sheet.pdf` | `src/code/nano-vllm-hust/example.py`、`src/code/nano-vllm-hust/nanovllm/llm.py`、`src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py` | `src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2027/` | 场景-指标分析；最小运行记录与代码地图 |
+| 第 3 讲 | Tutorial 2 / `build/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/sheet.pdf` | `src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py`、`src/code/nano-vllm-hust/nanovllm/engine/sequence.py` | `src/code/nano-vllm-hust/student_exercises/nanovllm/engine/llm_engine.py`、`src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2027/` | 生命周期时序图、长短 prompt 对比表 |
+| 第 4 讲 | Tutorial 3 / `build/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/sheet.pdf` | `src/code/nano-vllm-hust/nanovllm/engine/scheduler.py` | `src/code/nano-vllm-hust/student_exercises/nanovllm/engine/scheduler.py`、`src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2027/` | batch 观测日志、调度对比表 |
+| 第 5 讲 | Tutorial 4 / `build/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/sheet.pdf` | `src/code/nano-vllm-hust/nanovllm/engine/block_manager.py`、`src/code/nano-vllm-hust/nanovllm/engine/sequence.py` | `src/code/nano-vllm-hust/student_exercises/nanovllm/engine/block_manager.py`、`src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2027/` | KV 生命周期图、状态容量分析 |
+| 第 11 讲 | Tutorial 10 / `build/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/sheet.pdf` | `src/code/nano-vllm-hust/bench.py` | `src/code/nano-vllm-hust/student_exercises/bench.py`、`src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2027/` | 最小复现实验包、结果表、边界说明 |
 
 ### 1. 请求生命周期
 
@@ -112,7 +112,7 @@
 
 1. 先阅读 tutorial 文档，明确本次只回答哪一个系统问题。
 2. 先阅读 `build/experiments/nano-vLLM实验课/` 中对应 experiment 的 `sheet.pdf`；如需继续修改，再进入 `src/experiments/nano-vLLM实验课/` 中对应目录查看 `sheet.md`。
-3. 再看同一 experiment 源目录中的 `assignment_spring-2026/README.md`，确认 starter 文件和提交模板。
+3. 再看同一 experiment 源目录中的 `assignment_spring-2027/README.md`，确认 starter 文件和提交模板。
 4. 完成 `src/code/nano-vllm-hust/student_exercises/` 中与本次实验对应的 TODO。
 5. 把代码改动、日志和解释一起整理回作业包中的报告模板，而不是把代码和结果分开提交。
 

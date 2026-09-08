@@ -27,11 +27,11 @@ This code repository only needs to map the five practice-linked sessions that ha
 
 | Practice-linked tutorial | Related lectures | Tutorial focus | Reference files | Matching practice surface |
 | --- | --- | --- | --- | --- |
-| 1 | Lecture 2, Lecture 7 | Code map and request entry understanding | `example.py`, `nanovllm/llm.py`, `nanovllm/engine/llm_engine.py` | `src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2026/` |
-| 2 | Lecture 3 | Lifecycle boundary judgment | `nanovllm/engine/llm_engine.py`, `nanovllm/engine/sequence.py` | `student_exercises/nanovllm/engine/llm_engine.py`, `src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2026/` |
-| 3 | Lecture 4 | Scheduling control-point judgment | `nanovllm/engine/scheduler.py` | `student_exercises/nanovllm/engine/scheduler.py`, `src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2026/` |
-| 4 | Lecture 5 | KV organization and cache reasoning | `nanovllm/engine/block_manager.py`, `nanovllm/engine/sequence.py` | `student_exercises/nanovllm/engine/block_manager.py`, `src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2026/` |
-| 10 | Lecture 11 | Experiment-credibility judgment | `bench.py` | `student_exercises/bench.py`, `src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2026/` |
+| 1 | Lecture 2, Lecture 7 | Code map and request entry understanding | `example.py`, `nanovllm/llm.py`, `nanovllm/engine/llm_engine.py` | `src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2027/` |
+| 2 | Lecture 3 | Lifecycle boundary judgment | `nanovllm/engine/llm_engine.py`, `nanovllm/engine/sequence.py` | `student_exercises/nanovllm/engine/llm_engine.py`, `src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2027/` |
+| 3 | Lecture 4 | Scheduling control-point judgment | `nanovllm/engine/scheduler.py` | `student_exercises/nanovllm/engine/scheduler.py`, `src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2027/` |
+| 4 | Lecture 5 | KV organization and cache reasoning | `nanovllm/engine/block_manager.py`, `nanovllm/engine/sequence.py` | `student_exercises/nanovllm/engine/block_manager.py`, `src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2027/` |
+| 10 | Lecture 11 | Experiment-credibility judgment | `bench.py` | `student_exercises/bench.py`, `src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2027/` |
 
 The table above intentionally separates the tutorial focus from the matching practice surface. Tutorials are for understanding and judgment; `student_exercises/` and assignment packages are for hands-on practice.
 
@@ -57,7 +57,7 @@ The course materials are intended to be read as one loop instead of treating tut
 
 Teaching assistants can use the helper scripts under `scripts/teaching/`.
 
-- `python3 scripts/teaching/prepare_assignment.py 3 --course-tag 2026-spring`
+- `python3 scripts/teaching/prepare_assignment.py 3 --course-tag spring-2027`
 	creates a distributable tutorial assignment from `student_exercises/`.
 - `python3 scripts/teaching/collect_benchmark_results.py submissions/tutorial5 --output summaries/tutorial5.csv`
 	aggregates student benchmark CSV files into one grading table.

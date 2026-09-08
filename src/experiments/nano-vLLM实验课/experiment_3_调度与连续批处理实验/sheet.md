@@ -27,10 +27,10 @@
 
 ### 4.2 本节材料
 
-- 理论配套：`build/tutorials/Tutorial_03_调度与连续批处理观察.pdf`
-- 参考代码：`src/code/nano-vllm-hust/nanovllm/engine/scheduler.py`
-- 学生练习：`src/code/nano-vllm-hust/student_exercises/nanovllm/engine/scheduler.py`
-- 作业包：`src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2026/`
+- 理论配套：\CoursePath{build/tutorials/Tutorial_03_调度与连续批处理观察.pdf}
+- 参考代码：\CoursePath{src/code/nano-vllm-hust/nanovllm/engine/scheduler.py}
+- 学生练习：\CoursePath{src/code/nano-vllm-hust/student_exercises/nanovllm/engine/scheduler.py}
+- 作业包：\CoursePath{src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2027/}
 
 ## 5. 提交内容
 

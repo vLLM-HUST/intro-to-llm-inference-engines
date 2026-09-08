@@ -27,11 +27,11 @@
 
 ### 4.2 本节材料
 
-- 理论配套：`build/tutorials/Tutorial_10_实验方法与验证.pdf`
-- 参考代码：`src/code/nano-vllm-hust/bench.py`
-- 学生练习：`src/code/nano-vllm-hust/student_exercises/bench.py`
-- 作业包：`src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2026/`
-- 结果汇总脚本：`src/code/nano-vllm-hust/scripts/teaching/collect_benchmark_results.py`
+- 理论配套：\CoursePath{build/tutorials/Tutorial_10_实验方法与验证.pdf}
+- 参考代码：\CoursePath{src/code/nano-vllm-hust/bench.py}
+- 学生练习：\CoursePath{src/code/nano-vllm-hust/student_exercises/bench.py}
+- 作业包：\CoursePath{src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2027/}
+- 结果汇总脚本：\CoursePath{src/code/nano-vllm-hust/scripts/teaching/collect_benchmark_results.py}
 
 ## 5. 提交内容
 

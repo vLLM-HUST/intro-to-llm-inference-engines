@@ -130,31 +130,34 @@
   \end{block}
 \end{frame}
 
-\begin{frame}{研究案例：同一个结果可以支撑不同强度的 claim}
+\begin{frame}{课程研究案例（内部实验）：主张强度}
   \Core{系统论文写作不是把结果写满，而是把 claim 压到证据能够承受的范围。}
   \begin{itemize}
     \item KV-Delta 可说：repeated movement 下减少重复 KV image，并在 m 增大时改善 E2E。
     \item 不能直接说：所有迁移指标都改善，因为 TTFT / disruption 仍有反例。
     \item 课堂问题：如果只保留一句贡献，该写成 protocol win、transport win 还是 install-path win？
   \end{itemize}
+  \InternalCaseNote
 \end{frame}
 
-\begin{frame}{研究案例：负结果也可以成为系统论文材料}
+\begin{frame}{课程研究案例（内部实验）：负结果}
   \Core{负结果不是失败汇报，而是帮助读者理解系统边界的证据。}
   \begin{itemize}
     \item Segment Reuse：能 commit 但输给 native prefix，说明 committed path 成本尚未压过强 baseline。
     \item Tiered KV：movement/restore 触发条件不足或代价过高，说明 admission policy 是核心问题。
     \item MLP Materialization：单算子占比过小，说明优化目标应转向边界与写回路径。
   \end{itemize}
+  \InternalCaseNote
 \end{frame}
 
-\begin{frame}{研究案例：Semantic MapReduce 的 claim 边界}
+\begin{frame}{课程研究案例（内部实验）：Semantic MapReduce}
   \Core{SAGE 案例适合训练学生区分 orchestration claim、coverage claim 和 LLM quality claim。}
   \begin{itemize}
     \item 可以说：workflow / stream / semantic reduce 能组织大规模分析证据链。
     \item 需要谨慎：coverage 不足时 F1 下降，不能简单归因于 LLM reducer 不好。
     \item 不应声称：SAGE 已经替代 Spark/Flink/Ray 或已经证明所有 LLM reducer 稳定获胜。
   \end{itemize}
+  \InternalCaseNote
 \end{frame}
 
 \begin{frame}{例子：工程量大不等于研究贡献大（1）}

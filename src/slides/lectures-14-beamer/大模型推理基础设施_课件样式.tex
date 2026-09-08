@@ -25,9 +25,30 @@
 }
 
 \newcommand{\LectureMeta}[2]{
-  \title{大模型推理基础设施}
+  \title{大模型推理系统与实践}
   \subtitle{#1}
   \author{张书豪}
   \institute{华中科技大学计算机学院}
-  \date{#2}
+  \date{2027 · #2}
 }
+
+\newcommand{\PaperRef}[3]{
+  \item \textbf{#1}（#2）\hfill\href{#3}{原文链接}
+}
+
+\newcommand{\ResearchSources}[1]{
+  \begin{frame}{本讲参考资料}
+    \small
+    \begin{itemize}
+      #1
+    \end{itemize}
+    \vspace{0.3em}
+    \textcolor{SoftInk}{课件中的论文数字均指作者在特定模型、硬件和工作负载下报告的结果，不代表无条件性能。}
+  \end{frame}
+}
+
+\newcommand{\InternalCaseNote}{
+  \small\textcolor{SoftInk}{说明：本页为课程研究案例或教学假设，不代表已发表论文结论；只有在实验包给出模型、硬件、工作负载和原始记录时，数字才可作为结果引用。}
+}
+
+\input{课程参考资料.tex}

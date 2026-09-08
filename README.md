@@ -1,8 +1,8 @@
-# 《大模型推理引擎入门》
+# 《大模型推理系统与实践》
 
 English repository slug: `intro-to-llm-inference-engines`
 
-本仓库是“大模型推理基础设施”课程材料的唯一维护与发布源，同时维护配套的 Nano-vLLM 教学代码与实验说明。个人主页和其他网站只提供到本仓库的引用，不再复制保存课件。
+本仓库是《大模型推理系统与实践》课程材料的唯一维护与发布源，同时维护配套的 Nano-vLLM 教学代码与实验说明。个人主页和其他网站只提供到本仓库的引用，不再复制保存课件。所有版本的术语、算例、论文出处和课程边界以 `src/docs/2027/课程内容基线.md` 为准。
 
 仓库现采用明确的 `src/` 与 `build/` 分层：`src/` 保存可维护的源文件与课程说明，`build/` 保存正式导出的 PPTX/PDF；外部页面直接引用本仓库中的发布件。
 
@@ -12,6 +12,7 @@ English repository slug: `intro-to-llm-inference-engines`
 - `src/tutorials/`：tutorial Markdown 源码、Pandoc 过滤器与构建入口。
 - `src/experiments/nano-vLLM实验课/`：experimental sheet、project sheet 与 assignment 源目录。
 - `src/docs/`：课程简介、讲义提纲、教师讲稿与实验说明文档。
+- `src/docs/2027/课程内容基线.md`：三套课件共同使用的正式名称、术语、算例、研究案例账本与讲次映射。
 - `src/code/nano-vllm-hust/`：课程使用的 Nano-vLLM 教学 fork 与实验素材。
 - `build/slides/2027/course-overview/`：中英文单文件课程介绍 PPTX，适合两小时快速介绍。
 - `build/slides/2027/lectures-8-pptx/`：8 讲主课程版 PPTX，每讲 2 小时。

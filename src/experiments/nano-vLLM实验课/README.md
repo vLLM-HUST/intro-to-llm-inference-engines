@@ -2,7 +2,7 @@
 
 ## 定位
 
-本目录承接《大模型推理基础设施》课程的实验课部分。这里的材料按实验单的方式组织：文档直接面向学生，能够独立支撑一次完整实验，不依赖教师口头补充才能完成。
+本目录承接《大模型推理系统与实践》课程的实验课部分。这里的材料按实验单的方式组织：文档直接面向学生，能够独立支撑一次完整实验，不依赖教师口头补充才能完成。
 
 每份实验单原则上都应包含以下模块：
 
@@ -26,20 +26,20 @@
 
 1. `experiment_1_最小运行与代码地图/`
 	- `sheet.md`
-	- `assignment_spring-2026/`
+	- `assignment_spring-2027/`
 	- `archive/`
 2. `experiment_2_请求生命周期观察/`
 	- `sheet.md`
-	- `assignment_spring-2026/`
+	- `assignment_spring-2027/`
 3. `experiment_3_调度与连续批处理实验/`
 	- `sheet.md`
-	- `assignment_spring-2026/`
+	- `assignment_spring-2027/`
 4. `experiment_4_KV状态与缓存组织实验/`
 	- `sheet.md`
-	- `assignment_spring-2026/`
+	- `assignment_spring-2027/`
 5. `experiment_5_指标观测与最小复现实验/`
 	- `sheet.md`
-	- `assignment_spring-2026/`
+	- `assignment_spring-2027/`
 6. `project_课程项目实验说明/`
 	- `sheet.md`
 
@@ -71,6 +71,6 @@
 ## 目录结构
 
 - 根目录：`README.md`、`Makefile`、`pandoc/` 与各个 experiment / project 源目录。
-- 各个 `experiment_*` 目录：`sheet.md` 与对应 `assignment_spring-2026/`。
+- 各个 `experiment_*` 目录：`sheet.md` 与对应 `assignment_spring-2027/`。
 - `project_课程项目实验说明/`：项目说明源文件。
 - 正式 PDF：统一输出到 `build/experiments/nano-vLLM实验课/`。

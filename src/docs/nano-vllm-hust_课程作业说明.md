@@ -2,7 +2,7 @@
 
 ## 一、说明
 
-本说明面向“大模型推理基础设施”课程的学生与助教，配合 `nano-vllm-hust` 教学代码库使用。
+本说明面向《大模型推理系统与实践》课程的学生与助教，配合 `nano-vllm-hust` 教学代码库使用。
 
 课程实践部分现在采用“tutorial 理解练习 + experiment 实验课 + assignment 作业包”三层组织。三者围绕同一课程主线联动，但不再要求编号完全一一对应：tutorial 从第 2 讲到第 14 讲逐讲展开，共 13 份；experiment 与 assignment 仍保留 5 个实践包，用于承接关键讲次的动手训练与提交评分。
 
@@ -10,11 +10,11 @@
 
 本轮课程作业包已生成在以下目录中：
 
-- `src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2026`
-- `src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2026`
-- `src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2026`
-- `src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2026`
-- `src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2026`
+- `src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2027`
+- `src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2027`
+- `src/experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2027`
+- `src/experiments/nano-vLLM实验课/experiment_4_KV状态与缓存组织实验/assignment_spring-2027`
+- `src/experiments/nano-vLLM实验课/experiment_5_指标观测与最小复现实验/assignment_spring-2027`
 
 每个作业目录通常包含：
 
@@ -84,7 +84,7 @@ assignment 作业包服务于 experiment 层，而不是 tutorial 层。需要�
 
 ```bash
 cd src/code/nano-vllm-hust
-python3 scripts/teaching/prepare_assignment.py 3 --course-tag spring-2026 --force
+python3 scripts/teaching/prepare_assignment.py 3 --course-tag spring-2027 --force
 ```
 
 默认输出目录为各个 experiment 目录下的 `assignment_<course-tag>/`。

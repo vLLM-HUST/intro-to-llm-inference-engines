@@ -27,11 +27,11 @@
 
 ### 4.2 本节材料
 
-- 理论配套：`build/tutorials/Tutorial_02_请求生命周期与PrefillDecode.pdf`
-- 参考代码：`src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py`
-- 状态对象：`src/code/nano-vllm-hust/nanovllm/engine/sequence.py`
-- 学生练习：`src/code/nano-vllm-hust/student_exercises/nanovllm/engine/llm_engine.py`
-- 作业包：`src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2026/`
+- 理论配套：\CoursePath{build/tutorials/Tutorial_02_请求生命周期与PrefillDecode.pdf}
+- 参考代码：\CoursePath{src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py}
+- 状态对象：\CoursePath{src/code/nano-vllm-hust/nanovllm/engine/sequence.py}
+- 学生练习：\CoursePath{src/code/nano-vllm-hust/student_exercises/nanovllm/engine/llm_engine.py}
+- 作业包：\CoursePath{src/experiments/nano-vLLM实验课/experiment_2_请求生命周期观察/assignment_spring-2027/}
 
 ### 4.3 环境检查
 
@@ -110,7 +110,7 @@
 
 请填写下表：
 
-| case | prompt_len | output_len | total_latency | TTFT | avg_decode_step | prefill 是否主导 | 解释 |
+| case | prompt_len | output_len | total_latency | TTFT | avg_step | prefill 是否主导 | 解释 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | short |  |  |  |  |  |  |  |
 | long |  |  |  |  |  |  |  |
@@ -187,7 +187,7 @@
 
 ### 12.3 长短输入对照表
 
-| case | prompt_len | output_len | total_latency | TTFT | avg_decode_step | prefill 是否主导 | 解释 |
+| case | prompt_len | output_len | total_latency | TTFT | avg_step | prefill 是否主导 | 解释 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | short |  |  |  |  |  |  |  |
 | long |  |  |  |  |  |  |  |

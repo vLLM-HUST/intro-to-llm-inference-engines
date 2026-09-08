@@ -35,12 +35,12 @@
 
 ### 4.2 本节材料
 
-- 理论配套：`build/tutorials/Tutorial_01_工作负载与评价指标.pdf`
-- 教学代码：`src/code/nano-vllm-hust/`
-- 参考入口：`src/code/nano-vllm-hust/example.py`
-- 封装入口：`src/code/nano-vllm-hust/nanovllm/llm.py`
-- 主控制路径：`src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py`
-- 作业包：`src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2026/`
+- 理论配套：\CoursePath{build/tutorials/Tutorial_01_工作负载与评价指标.pdf}
+- 教学代码：\CoursePath{src/code/nano-vllm-hust/}
+- 参考入口：\CoursePath{src/code/nano-vllm-hust/example.py}
+- 封装入口：\CoursePath{src/code/nano-vllm-hust/nanovllm/llm.py}
+- 主控制路径：\CoursePath{src/code/nano-vllm-hust/nanovllm/engine/llm_engine.py}
+- 作业包：\CoursePath{src/experiments/nano-vLLM实验课/experiment_1_最小运行与代码地图/assignment_spring-2027/}
 
 ### 4.3 环境检查
 
@@ -74,7 +74,7 @@
 
 完成以下动作：
 
-1. 打开 `src/code/nano-vllm-hust/example.py`。
+1. 打开 \CoursePath{src/code/nano-vllm-hust/example.py}。
 2. 检查模型路径、运行环境与依赖。
 3. 运行一次单请求或双请求的最小生成示例。
 4. 记录输入 prompt、输出长度和是否成功返回。

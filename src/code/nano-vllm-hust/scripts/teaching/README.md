@@ -13,13 +13,13 @@ Create an experiment-specific assignment skeleton from `student_exercises/`.
 Example:
 
 ```bash
-python3 scripts/teaching/prepare_assignment.py 3 --course-tag 2026-spring
+python3 scripts/teaching/prepare_assignment.py 3 --course-tag spring-2027
 ```
 
 This creates:
 
-- `../../../../experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_2026-spring/starter/`
-- `../../../../experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_2026-spring/submission_template/`
+- `../../../../experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2027/starter/`
+- `../../../../experiments/nano-vLLM实验课/experiment_3_调度与连续批处理实验/assignment_spring-2027/submission_template/`
 - an experiment-specific `README.md`
 
 ### `collect_benchmark_results.py`

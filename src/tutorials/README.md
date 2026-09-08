@@ -1,4 +1,4 @@
-# 大模型推理基础设施 Tutorials 总览
+# 《大模型推理系统与实践》Tutorials 总览
 
 `src/tutorials/` 只放 tutorial 源材料，不混入实验说明。Markdown 源文件统一放在 `md/`，正式导出的 PDF 统一输出到仓库根目录下的 `build/tutorials/`。
 
