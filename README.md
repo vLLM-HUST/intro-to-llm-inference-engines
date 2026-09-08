@@ -2,9 +2,9 @@
 
 English repository slug: `intro-to-llm-inference-engines`
 
-本仓库用于集中维护“大模型推理基础设施”课程相关授课材料，以及配套的 Nano-vLLM 教学代码与实验说明。
+本仓库是“大模型推理基础设施”课程材料的唯一维护与发布源，同时维护配套的 Nano-vLLM 教学代码与实验说明。个人主页和其他网站只提供到本仓库的引用，不再复制保存课件。
 
-仓库现采用明确的 `src/` 与 `build/` 分层：`src/` 只放可维护的源文件，`build/` 只放正式导出的 PDF，便于内部维护与向 public-site 同步公开材料。
+仓库现采用明确的 `src/` 与 `build/` 分层：`src/` 保存可维护的源文件与课程说明，`build/` 保存正式导出的 PPTX/PDF；外部页面直接引用本仓库中的发布件。
 
 ## 仓库内容
 
@@ -13,13 +13,14 @@ English repository slug: `intro-to-llm-inference-engines`
 - `src/experiments/nano-vLLM实验课/`：experimental sheet、project sheet 与 assignment 源目录。
 - `src/docs/`：课程简介、讲义提纲、教师讲稿与实验说明文档。
 - `src/code/nano-vllm-hust/`：课程使用的 Nano-vLLM 教学 fork 与实验素材。
-- `build/slides/`：正式导出的 lecture PDF 与 handout PDF。
+- `build/slides/2027/`：2027 年首次开课使用的 8 讲 PPTX，以及中英文两小时快速介绍版。
+- `build/slides/lectures/` 与 `build/slides/handouts/`：早期 PDF 课件与讲义导出件。
 - `build/tutorials/`：正式导出的 tutorial PDF。
 - `build/experiments/`：正式导出的 experimental sheet / project sheet PDF。
 
 ## 使用建议
 
-- 日常授课内容优先参考 `build/slides/`、`build/tutorials/` 与 `build/experiments/` 下的正式 PDF，以及 `src/docs/` 中的讲义和说明文档。
+- 2027 年正式授课内容以 `build/slides/2027/` 下的 PPTX 为准；配套说明位于 `src/docs/2027/`。早期 PDF、tutorial 和实验材料仍按原目录保存。
 - 需要修改课件源码时，进入 `src/slides/tex/`；需要重新生成 PDF 时，在仓库根目录执行 `make` 或进入对应 `src/` 子目录执行 `make`。
 - 理论讨论与知识问答优先参考 `src/tutorials/md/`。
 - 代码实践、课程实验和作业说明优先参考 `src/code/nano-vllm-hust/` 与 `src/experiments/nano-vLLM实验课/`。
@@ -28,6 +29,7 @@ English repository slug: `intro-to-llm-inference-engines`
 ## 维护原则
 
 - 保持课程材料、实验说明和教学代码在同一仓库内同步演进。
+- 对外只发布仓库链接；不得再向个人主页仓库复制 PPTX、PDF 或其他课程材料。
 - 保持 `src/tutorials/` 与 `src/experiments/` 分工清楚：前者讲理论与问题，后者讲实验与操作。
 - `src/code/` 目录以 `nano-vllm-hust/` 这一套教学代码为唯一主入口，不再保留额外的对照代码树作为课程仓库正式组成部分。
 - 区分源文件与构建缓存，避免将本地 LaTeX 缓存作为正式内容提交。
