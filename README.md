@@ -2,6 +2,8 @@
 
 English repository slug: `intro-to-llm-inference-engines`
 
+课程主页：[courses.sage.org.ai](https://courses.sage.org.ai/)
+
 本仓库是《大模型推理系统与实践》课程材料的唯一维护与发布源，同时维护配套的 Nano-vLLM 教学代码与实验说明。个人主页和其他网站只提供到本仓库的引用，不再复制保存课件。所有版本的术语、算例、论文出处和课程边界以 `src/docs/2027/课程内容基线.md` 为准。
 
 仓库现采用明确的 `src/` 与 `build/` 分层：`src/` 保存可维护的源文件与课程说明，`build/` 保存正式导出的 PPTX/PDF；外部页面直接引用本仓库中的发布件。

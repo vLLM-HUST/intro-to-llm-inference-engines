@@ -1,0 +1,9 @@
+{
+  "name": "intro-to-llm-inference-engines-course-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node src/site/build.mjs",
+    "dev": "node src/site/dev.mjs"
+  }
+}
