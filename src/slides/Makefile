@@ -1,7 +1,7 @@
-TEX_DIR := tex
+TEX_DIR := lectures-14-beamer
 TECTONIC ?= tectonic
 ROOT_DIR := ../..
-LECTURE_OUT_DIR := $(ROOT_DIR)/build/slides/lectures
+LECTURE_OUT_DIR := $(ROOT_DIR)/build/slides/2027/lectures-14-beamer
 HANDOUT_OUT_DIR := $(ROOT_DIR)/build/slides/handouts
 STYLE_FILE := $(TEX_DIR)/大模型推理基础设施_课件样式.tex
 HANDOUT_FILE := $(TEX_DIR)/大模型推理基础设施_课程导论讲义.tex

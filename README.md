@@ -8,20 +8,22 @@ English repository slug: `intro-to-llm-inference-engines`
 
 ## 仓库内容
 
-- `src/slides/`：课件 LaTeX 源码与构建入口。
+- `src/slides/lectures-14-beamer/`：14 讲细分版的 LaTeX Beamer 源码；`src/slides/Makefile` 是构建入口。
 - `src/tutorials/`：tutorial Markdown 源码、Pandoc 过滤器与构建入口。
 - `src/experiments/nano-vLLM实验课/`：experimental sheet、project sheet 与 assignment 源目录。
 - `src/docs/`：课程简介、讲义提纲、教师讲稿与实验说明文档。
 - `src/code/nano-vllm-hust/`：课程使用的 Nano-vLLM 教学 fork 与实验素材。
-- `build/slides/2027/`：2027 年首次开课使用的 8 讲 PPTX，以及中英文两小时快速介绍版。
-- `build/slides/lectures/` 与 `build/slides/handouts/`：早期 PDF 课件与讲义导出件。
+- `build/slides/2027/course-overview/`：中英文单文件课程介绍 PPTX，适合两小时快速介绍。
+- `build/slides/2027/lectures-8-pptx/`：8 讲主课程版 PPTX，每讲 2 小时。
+- `build/slides/2027/lectures-14-beamer/`：14 讲细分版 LaTeX Beamer 的正式 PDF 导出件。
+- `build/slides/handouts/`：补充讲义导出件，不作为第四套课程入口。
 - `build/tutorials/`：正式导出的 tutorial PDF。
 - `build/experiments/`：正式导出的 experimental sheet / project sheet PDF。
 
 ## 使用建议
 
-- 2027 年正式授课内容以 `build/slides/2027/` 下的 PPTX 为准；配套说明位于 `src/docs/2027/`。早期 PDF、tutorial 和实验材料仍按原目录保存。
-- 需要修改课件源码时，进入 `src/slides/tex/`；需要重新生成 PDF 时，在仓库根目录执行 `make` 或进入对应 `src/` 子目录执行 `make`。
+- 2027 年正式课件分为课程介绍、8 讲版和 14 讲版三套入口；8 讲版是每讲 2 小时的主授课节奏，14 讲版是主题粒度更细的 Beamer 版本，两者不是新旧替代关系。
+- 需要修改 14 讲版时，进入 `src/slides/lectures-14-beamer/`；需要重新生成 PDF 时，在仓库根目录执行 `make` 或进入 `src/slides/` 执行 `make`。
 - 理论讨论与知识问答优先参考 `src/tutorials/md/`。
 - 代码实践、课程实验和作业说明优先参考 `src/code/nano-vllm-hust/` 与 `src/experiments/nano-vLLM实验课/`。
 - `.preview/` 与 `.tectonic-cache/` 属于本地构建缓存，不作为长期维护内容。
@@ -37,7 +39,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 ## 提交前清单
 
-- 确认 `src/` 中只保留源文件，`build/` 中只保留正式导出的 PDF。
+- 确认 `src/` 中只保留源文件，`build/` 中只保留正式导出的 PPTX/PDF。
 - 确认 `src/tutorials/` 中不再承载详细实验课讲义，实验流程类文档统一放在 `src/experiments/`。
 - 确认 `src/code/nano-vllm-hust/` 不再携带内层 `.git/` 元数据，避免提交成 gitlink。
 - 确认 `.preview/`、`.tectonic-cache/` 以及 LaTeX 中间文件未进入待提交列表。
