@@ -13,6 +13,8 @@ for (const file of ["index.html", "styles.css", "app.js"]) {
   await cp(path.join(sourceDir, file), path.join(outputDir, file));
 }
 
+await cp(path.join(sourceDir, "assets"), path.join(outputDir, "assets"), { recursive: true });
+
 const downloadGroups = [
   { id: "overview", title: "两小时快速介绍", source: "build/slides/2027/course-overview", extensions: [".pptx"] },
   { id: "lectures", title: "八讲主课程", source: "build/slides/2027/lectures-8-pptx", extensions: [".pptx"] },

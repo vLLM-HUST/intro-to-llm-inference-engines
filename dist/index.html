@@ -13,7 +13,7 @@
   <a class="skip-link" href="#main">跳到主要内容</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="返回课程主页顶部"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a>
-    <nav aria-label="主导航"><a href="#materials">课程材料</a><a href="#syllabus">八讲主线</a><a href="#path">推理全过程</a><a href="#practice">实验实践</a></nav>
+    <nav aria-label="主导航"><a href="#materials">课程材料</a><a href="#walkthrough">推理图解</a><a href="#syllabus">八讲主线</a><a href="#practice">实验实践</a></nav>
     <a class="header-link" href="downloads/">下载课件 ↓</a>
   </header>
 
@@ -48,6 +48,73 @@
       <ol class="request-path">
         <li><span>01</span><strong>输入</strong><small>聊天模板与 Tokenizer</small></li><li><span>02</span><strong>准入</strong><small>等待队列与资源检查</small></li><li><span>03</span><strong>调度</strong><small>Token、KV 与执行预算</small></li><li><span>04</span><strong>Prefill</strong><small>处理上下文并建立 KV</small></li><li><span>05</span><strong>Decode</strong><small>逐步生成并更新状态</small></li><li><span>06</span><strong>返回</strong><small>采样、流式输出与释放</small></li><li><span>07</span><strong>验证</strong><small>TTFT、TPOT、P99、Goodput</small></li>
       </ol>
+    </section>
+
+    <section class="section walkthrough-section" id="walkthrough">
+      <div class="section-heading walkthrough-heading"><p class="eyebrow">Visual walkthrough</p><h2>一张图读懂大模型推理流程</h2><p>这张图从文本输入一直画到流式输出。阅读时要同时沿着两条线走：模型内部怎样算出下一个 Token，以及服务系统怎样组织许多请求反复执行这个过程。</p></div>
+
+      <div class="pipeline-study">
+        <figure class="pipeline-figure">
+          <a href="assets/llm-inference-pipeline.jpg" target="_blank" rel="noreferrer" aria-label="在新窗口查看大模型推理流程原图">
+            <img src="assets/llm-inference-pipeline.jpg" width="1103" height="1517" loading="lazy" alt="大模型推理流程手绘图：从输入、分词、词嵌入和 Transformer 层，经过语言模型头、采样与可选的推测解码，最后反分词并流式返回文本">
+          </a>
+          <figcaption>概念总览图。点击可查看大图；右侧说明补齐服务系统视角，并标出图中参数与实现细节的适用边界。</figcaption>
+        </figure>
+
+        <div class="pipeline-notes">
+          <article class="concept-block accent-cyan">
+            <p class="concept-index">01 · 两个计算阶段</p>
+            <h3>Prefill 建立上下文，Decode 逐步生成</h3>
+            <p><strong>Prefill</strong> 一次处理提示词中的多个位置，为每一层建立 KV Cache。长提示词会显著影响首 Token 延迟，但究竟更偏计算还是访存瓶颈，还取决于序列长度、批大小、算子与硬件。</p>
+            <p><strong>Decode</strong> 每轮为每条序列生成一个新 Token，再把新的 K/V 追加到缓存。单条序列存在严格的前后依赖；系统通常把多条序列连续批处理，以提高设备利用率。</p>
+          </article>
+
+          <article class="concept-block accent-violet">
+            <p class="concept-index">02 · 图外的系统循环</p>
+            <h3>一次前向计算不等于一次在线推理</h3>
+            <p>真实服务还要经过聊天模板、准入队列、调度、批次构造、模型执行、采样、流式返回与资源释放。每个调度步都会重新决定哪些请求运行，以及给它们分配多少 Token 预算和 KV 页面。</p>
+            <p class="decode-loop"><span>选请求</span><i>→</i><span>读权重与 KV</span><i>→</i><span>前向计算</span><i>→</i><span>采样</span><i>→</i><span>更新状态</span><i>→</i><span>流式返回</span></p>
+          </article>
+
+          <article class="concept-block accent-green">
+            <p class="concept-index">03 · 最重要的运行时状态</p>
+            <h3>KV Cache 随活跃序列持续变化</h3>
+            <p>KV Cache 保存每层历史 Token 的 Key 和 Value，避免 Decode 时重复计算全部历史。它通常随上下文长度增长，也是并发容量的重要约束。分页分配可减少碎片，前缀缓存可复用重复上下文；GQA、MQA、量化精度也会改变单 Token 的缓存占用。</p>
+          </article>
+
+          <aside class="accuracy-note" aria-label="读图校正">
+            <p class="concept-index">读图校正</p>
+            <h3>把结构记住，不要把示例数字背成定律</h3>
+            <ul>
+              <li>Token 切分和 ID 由具体 Tokenizer 决定；图中的单词边界和编号只是示意。</li>
+              <li><code>d_model = 4096</code>、128K 词表和 96 层不是所有模型的固定配置，也不能据此推断闭源模型结构。</li>
+              <li>现代模型可能使用 RMSNorm、SwiGLU、RoPE 与 GQA，图中的 LayerNorm、ReLU 和标准多头注意力只是常见教学抽象。</li>
+              <li>FlashAttention 精确计算注意力并减少 HBM 读写；量化则压缩权重或缓存。二者都不会替代采样步骤。</li>
+              <li>推测解码是可选优化。草稿模型提出候选，目标模型并行验证；接受规则必须与所选算法匹配，不能简单理解为逐词对错。</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+
+      <div class="stage-reading" aria-labelledby="stage-reading-title">
+        <div class="stage-reading-intro"><p class="eyebrow">Nine stages</p><h3 id="stage-reading-title">按图逐步阅读</h3><p>前六步回答“下一个 Token 怎样产生”，后三步回答“怎样更快并正确地交付给用户”。</p></div>
+        <ol class="stage-grid">
+          <li><span>01</span><div><strong>输入与模板</strong><p>系统消息、角色和用户文本先序列化为模型约定的提示格式，同时确定最大长度、停止条件和采样配置。</p></div></li>
+          <li><span>02</span><div><strong>Tokenizer</strong><p>文本被编码为 Token ID。Token 不等同于单词，空格、标点、中文字符和字节回退都会影响切分。</p></div></li>
+          <li><span>03</span><div><strong>嵌入与位置</strong><p>词表查找把 ID 变成向量；RoPE 等位置机制让注意力区分顺序。输出形状通常是序列长度乘隐藏维度。</p></div></li>
+          <li><span>04</span><div><strong>Transformer 层</strong><p>每层依次组合归一化、因果自注意力、残差连接和 MLP。注意力读取历史状态，MLP 对每个位置变换特征。</p></div></li>
+          <li><span>05</span><div><strong>LM Head 与 Logits</strong><p>最后一层隐藏状态映射到词表大小的分数。Decode 通常只需要最后位置的 Logits，而不是重新输出所有位置。</p></div></li>
+          <li><span>06</span><div><strong>采样</strong><p>温度、Top-k、Top-p 和重复惩罚共同改变候选分布；贪心解码直接选择最高分 Token，是其中一个特例。</p></div></li>
+          <li><span>07</span><div><strong>推测解码（可选）</strong><p>小模型或其他草稿机制先提出多个候选，目标模型一次验证一段，从而减少目标模型串行执行的轮数。</p></div></li>
+          <li><span>08</span><div><strong>反分词</strong><p>新 ID 被增量还原为文本。实现要处理 UTF-8 字节边界、特殊 Token，以及不能立即显示的不完整字符。</p></div></li>
+          <li><span>09</span><div><strong>流式输出与收尾</strong><p>服务端发送可显示片段，并记录 TTFT、TPOT/ITL 与端到端延迟；遇到 EOS、长度上限、停止串或取消后释放资源。</p></div></li>
+        </ol>
+      </div>
+
+      <div class="research-links" aria-label="相关研究阅读">
+        <p><strong>沿着图继续读论文</strong><span>这些工作分别展开注意力访存、KV 管理、推测解码和 Prefill/Decode 资源隔离。</span></p>
+        <div><a href="https://openreview.net/pdf?id=H4DqfPSibmx" target="_blank" rel="noreferrer">FlashAttention · NeurIPS 2022 ↗</a><a href="https://doi.org/10.1145/3600006.3613165" target="_blank" rel="noreferrer">PagedAttention · SOSP 2023 ↗</a><a href="https://proceedings.mlr.press/v202/leviathan23a.html" target="_blank" rel="noreferrer">Speculative Decoding · ICML 2023 ↗</a><a href="https://www.usenix.org/conference/osdi24/presentation/zhong-yinmin" target="_blank" rel="noreferrer">DistServe · OSDI 2024 ↗</a></div>
+      </div>
     </section>
 
     <section class="section" id="syllabus">
