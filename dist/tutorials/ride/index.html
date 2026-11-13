@@ -20,6 +20,29 @@
       <h1>RIDE 实践教程</h1>
       <p>从启动控制平面开始，用一个独立的 Controller 练习插件注册、打包和部署。先在 CPU 上跑通，再接入已有 Ray 集群和真实模型。</p>
     </div>
+    <section class="tutorial-section" id="demo">
+      <h2>演示：4 个请求同时进入限流层</h2>
+      <p>Controller 的并发上限设为 1。客户端同时发出 4 个请求，CPU 模型替身暂时扣住第一个响应，直到另外 3 个请求进入等待。随后放开后端，观察请求逐个完成。</p>
+      <ol>
+        <li><strong>等待时</strong>：<code>active=1</code>，<code>waiting=3</code>。</li>
+        <li><strong>完成后</strong>：4 个请求都返回 <code>hello</code>，失败数为 0，峰值并发为 1。</li>
+        <li><strong>停止并恢复</strong>：Controller 停止后，模型替身的健康检查仍通过。RIDE 启动新的 Controller Job，下一次请求再次返回 <code>hello</code>。</li>
+      </ol>
+      <h3>在自己的电脑上复跑</h3>
+      <p>完成下面的<a href="#install">固定版本安装</a>并激活虚拟环境，然后<a href="concurrency-demo.py" download>下载演示脚本</a>并运行。脚本使用独立的本地端口和临时状态，自动启动和清理本次演示进程。</p>
+      <pre><code>python concurrency-demo.py</code></pre>
+      <details>
+        <summary>查看本地实测输出</summary>
+        <pre><code>ready: {"max_concurrency": 1}
+while waiting: {"active": 1, "waiting": 3}
+responses: ["hello", "hello", "hello", "hello"]
+after completion: {"active": 0, "waiting": 0, "completed": 4, "failed": 0, "peak_active": 1, "queued_total": 3}
+after stop: {"controller": "STOPPED", "model": "ok"}
+after restart: {"new_job_id": true, "response": "hello"}</code></pre>
+      </details>
+      <p>2026 年 10 月的 Ascend 910B 实测使用 Qwen3-0.6B。4 个并发请求全部成功，峰值后端并发为 1，累计排队 3 次，恢复后再次推理成功。该记录验证非流式请求的限流和生命周期。<a href="https://github.com/vLLM-HUST/ride-controller-demo/blob/ed8b0fd234050c519e6d0479d7a539eabb086dfb/results/npu-20261011/summary.json">查看真机验收记录</a></p>
+    </section>
+
     <ol class="tutorial-contents">
       <li><a href="#start">启动 RIDE 并发送第一个请求</a></li>
       <li><a href="#develop">制作独立 Controller 插件</a></li>
@@ -30,7 +53,7 @@
       <h2>1. 启动 RIDE 并发送第一个请求</h2>
       <p>RIDE 管理 Controller 和模型服务的生命周期。以限流 Controller 为例，管理命令发往 RIDE，请求沿「客户端 → 限流层 → 模型」转发。以下练习使用 Python 3.10+ 和 Bash，在同一台机器的三个终端操作，无需 Ray 或加速卡。</p>
 
-      <h3>安装固定版本</h3>
+      <h3 id="install" class="tutorial-anchor">安装固定版本</h3>
       <pre><code>git clone https://github.com/vLLM-HUST/ride.git
 git clone https://github.com/vLLM-HUST/ride-controller-demo.git
 git -C ride checkout e4fb25ec6920624c29f1ad2f261a6e8a4e55755b

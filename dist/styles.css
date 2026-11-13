@@ -158,3 +158,5 @@ footer { display: flex; justify-content: space-between; gap: 2rem; padding: 2rem
 .tutorial-main :not(pre)>code { padding: .1em .25em; color: var(--navy); background: #e7edf6; }
 
 .tutorial-header { grid-template-columns: 1fr auto; }
+.tutorial-anchor { scroll-margin-top: 90px; }
+.tutorial-main summary { cursor: pointer; font-weight: 700; }
