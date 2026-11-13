@@ -14,6 +14,7 @@ for (const file of ["index.html", "styles.css", "app.js"]) {
 }
 
 await cp(path.join(sourceDir, "assets"), path.join(outputDir, "assets"), { recursive: true });
+await cp(path.join(sourceDir, "tutorials"), path.join(outputDir, "tutorials"), { recursive: true });
 
 const downloadGroups = [
   { id: "overview", title: "两小时快速介绍", source: "build/slides/2027/course-overview", extensions: [".pptx"] },

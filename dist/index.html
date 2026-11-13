@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>大模型推理系统与实践｜LLM Inference Systems and Practice</title>
-  <meta name="description" content="华中科技大学《大模型推理系统与实践》课程主页。2027 年首次开课，提供课程课件与 vLLM-HUST MOD 插件制作流程。">
+  <meta name="description" content="华中科技大学《大模型推理系统与实践》课程主页。2027 年首次开课，提供课程课件、vLLM-HUST MOD 插件制作流程和 RIDE 实践教程。">
   <link rel="canonical" href="https://courses.sage.org.ai/">
-  <link rel="stylesheet" href="styles.css?v=20261113b">
+  <link rel="stylesheet" href="styles.css?v=20261113-ride">
   <script src="app.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="返回课程主页顶部"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a>
-    <nav aria-label="主导航"><a href="#materials">课程材料</a><a href="#walkthrough">推理图解</a><a href="#syllabus">八讲主线</a><a href="#practice">MOD 插件</a></nav>
+    <nav aria-label="主导航"><a href="#materials">课程材料</a><a href="#walkthrough">推理图解</a><a href="#syllabus">八讲主线</a><a href="#practice">MOD 插件</a><a href="#ride">RIDE 教程</a></nav>
     <a class="header-link" href="downloads/">下载课件 ↓</a>
   </header>
 
@@ -141,7 +141,15 @@
       <p><a href="https://vllm-hust.sage.org.ai/">浏览 MOD 目录</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv">BidKV 示例</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-dev-hub">开发环境与服务管理</a></p>
     </section>
 
-    
+
+    <section class="section practice-section" id="ride">
+      <div class="section-heading"><h2>RIDE 实践教程</h2><p>从本地运行入手，学习用 RIDE 管理模型服务和独立 Controller。</p></div>
+      <div class="practice-grid">
+        <article><h3><a href="tutorials/ride/#start">启动 RIDE</a></h3><p>启动管理进程和 Controller，用 CPU 模型替身跑通请求、状态查询、停止与恢复。</p></article>
+        <article><h3><a href="tutorials/ride/#develop">制作 Controller 插件</a></h3><p>实现策略进程和适配器，注册 Python 入口，核对实际生效的配置。</p></article>
+        <article><h3><a href="tutorials/ride/#package">打包、部署与验收</a></h3><p>构建并验证 wheel，在已有 Ray 集群部署，保存 Job 和请求证据。</p></article>
+      </div>
+    </section>
   </main>
 
   <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院 · 张书豪</p><p><a href="downloads/">公开课件下载</a> · <a href="https://github.com/intellistream/intro-to-llm-inference-engines">课程仓库（需权限）</a></p></footer>

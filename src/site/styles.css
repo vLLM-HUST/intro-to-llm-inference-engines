@@ -142,3 +142,19 @@ footer { display: flex; justify-content: space-between; gap: 2rem; padding: 2rem
 }
 
 @media (max-width: 620px) { .materials-heading { flex-wrap: wrap; } .material-shortcuts { margin-left: auto; } }
+
+#ride { padding-top: 0; scroll-margin-top: 90px; }
+#ride .practice-grid h3 { margin-top: 0; }
+.tutorial-main { max-width: 860px; overflow-wrap: anywhere; }
+.tutorial-main .downloads-intro { margin-bottom: 2rem; }
+.tutorial-main .downloads-intro h1 { font-size: clamp(2.25rem, 6vw, 4.5rem); line-height: 1.1; }
+.tutorial-contents { padding-left: 1.5rem; }
+.tutorial-contents li { margin-bottom: .45rem; }
+.tutorial-section { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+.tutorial-section h3 { margin-top: 1.8rem; }
+.tutorial-main a { color: #214c9b; text-underline-offset: .2em; }
+.tutorial-main pre { overflow-x: auto; padding: 1rem 1.25rem; border-radius: .35rem; color: #edf5ff; background: var(--navy); overflow-wrap: normal; }
+.tutorial-main pre code { font-size: .875rem; }
+.tutorial-main :not(pre)>code { padding: .1em .25em; color: var(--navy); background: #e7edf6; }
+
+.tutorial-header { grid-template-columns: 1fr auto; }
