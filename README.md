@@ -17,7 +17,7 @@ English repository slug: `intro-to-llm-inference-engines`
 - `src/docs/2027/课程内容基线.md`：三套课件共同使用的正式名称、术语、算例、研究案例账本与讲次映射。
 - `src/code/nano-vllm-hust/`：课程使用的 Nano-vLLM 教学 fork 与实验素材。
 - `build/slides/2027/course-overview/`：中英文单文件课程介绍 PPTX，适合两小时快速介绍。
-- `build/slides/2027/lectures-8-pptx/`：8 讲主课程版 PPTX，每讲 2 小时。
+- `build/slides/2027/lectures-8-pptx/`：8 讲主课程版 PPTX，每讲对应 2 学时。
 - `build/slides/2027/lectures-14-beamer/`：14 讲细分版 LaTeX Beamer 的正式 PDF 导出件。
 - `build/slides/handouts/`：补充讲义导出件，不作为第四套课程入口。
 - `build/tutorials/`：正式导出的 tutorial PDF。
@@ -25,7 +25,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 ## 使用建议
 
-- 2027 年正式课件分为课程介绍、8 讲版和 14 讲版三套入口；8 讲版是每讲 2 小时的主授课节奏，14 讲版是主题粒度更细的 Beamer 版本，两者不是新旧替代关系。
+- 2027 年正式课件分为课程介绍、8 讲版和 14 讲版三套入口；8 讲版按主题组织，每讲对应 2 学时。课程共 16 学时，每次 4 节连排，共 4 次授课；14 讲版是主题粒度更细的 Beamer 版本，两者不是新旧替代关系。
 - 需要修改 14 讲版时，进入 `src/slides/lectures-14-beamer/`；需要重新生成 PDF 时，在仓库根目录执行 `make` 或进入 `src/slides/` 执行 `make`。
 - 理论讨论与知识问答优先参考 `src/tutorials/md/`。
 - 代码实践、课程实验和作业说明优先参考 `src/code/nano-vllm-hust/` 与 `src/experiments/nano-vLLM实验课/`。
