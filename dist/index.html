@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>大模型推理系统与实践｜LLM Inference Systems and Practice</title>
-  <meta name="description" content="华中科技大学《大模型推理系统与实践》课程主页。2027 年首次开课，提供两小时课程介绍、8 讲主课程、14 讲细分版、实验与教学代码。">
+  <meta name="description" content="华中科技大学《大模型推理系统与实践》课程主页。2027 年首次开课，提供课程课件与 vLLM-HUST MOD 插件制作流程。">
   <link rel="canonical" href="https://courses.sage.org.ai/">
   <link rel="stylesheet" href="styles.css?v=20261113b">
   <script src="app.js" defer></script>
@@ -13,7 +13,7 @@
   <a class="skip-link" href="#main">跳到主要内容</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="返回课程主页顶部"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a>
-    <nav aria-label="主导航"><a href="#materials">课程材料</a><a href="#walkthrough">推理图解</a><a href="#syllabus">八讲主线</a><a href="#practice">实验实践</a></nav>
+    <nav aria-label="主导航"><a href="#materials">课程材料</a><a href="#walkthrough">推理图解</a><a href="#syllabus">八讲主线</a><a href="#practice">MOD 插件</a></nav>
     <a class="header-link" href="downloads/">下载课件 ↓</a>
   </header>
 
@@ -34,9 +34,9 @@
     </section>
 
     <section class="section" id="materials">
-      <div class="section-heading materials-heading"><div><p class="eyebrow">Choose a route</p><h2>课程内容与材料</h2><p>课件按八个主题组织，配有实验和阅读材料。</p></div><div class="material-shortcuts"><a class="details-link" href="downloads/#overview" aria-label="查看中英文课程快速介绍" title="中英文课程快速介绍"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="12" rx="1.5"></rect><path d="M8 21h8M12 17v4M10 9l5 2-5 2z"></path></svg><span>快速介绍</span></a><a class="details-link" href="downloads/#beamer" aria-label="查看十四讲详细材料" title="十四讲详细材料"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h10l4 4V20.5H5z"></path><path d="M15 3.5v4h4M8 12h8M8 15h8M8 18h5"></path></svg><span>详细材料</span></a></div></div>
+      <div class="section-heading materials-heading"><div><p class="eyebrow">Choose a route</p><h2>课程内容与材料</h2><p>课件按八个主题组织，并介绍 MOD 插件制作。</p></div><div class="material-shortcuts"><a class="details-link" href="downloads/#overview" aria-label="查看中英文课程快速介绍" title="中英文课程快速介绍"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="12" rx="1.5"></rect><path d="M8 21h8M12 17v4M10 9l5 2-5 2z"></path></svg><span>快速介绍</span></a><a class="details-link" href="downloads/#beamer" aria-label="查看详细课件" title="详细课件"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h10l4 4V20.5H5z"></path><path d="M15 3.5v4h4M8 12h8M8 15h8M8 18h5"></path></svg><span>详细材料</span></a></div></div>
       <div class="material-grid">
-        <article class="material-card violet"><p class="card-index">8 LECTURES</p><h3>八讲主课程</h3><p>2027 年课程共 16 学时，分 4 次授课，每次 4 节连排。八讲课件按主题组织，每讲对应 2 学时。</p><div class="card-links"><a href="#syllabus">查看八讲结构 ↓</a><a href="downloads/#lectures">全部 PPTX ↓</a></div></article>
+        <article class="material-card violet"><p class="card-index">8 LECTURES</p><h3>八讲主课程</h3><p>2027 年课程共 16 学时，分 4 次授课，每次 4 节连排。八讲课件按主题组织，每讲对应 2 学时。</p><div class="card-links"><a href="#syllabus">查看八讲结构 ↓</a><a href="downloads/#lectures">已发布课件 ↓</a></div></article>
       </div>
     </section>
 
@@ -115,7 +115,7 @@
     </section>
 
     <section class="section" id="syllabus">
-      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲主课程</h2><p>课程涵盖推理机制、系统架构、执行优化、实验方法与开源实践。</p></div>
+      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲主课程</h2><p>课程涵盖推理机制、系统架构、执行优化、实验方法与 MOD 插件制作。</p></div>
       <div class="syllabus-list">
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC01%E8%AE%B2_%E8%AF%BE%E7%A8%8B%E5%AF%BC%E8%AE%BA%E4%B8%8E%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87.pptx" download><span>01</span><strong>课程导论与评价指标</strong><small>请求边界 · TTFT · TPOT · P99 · Goodput</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC02%E8%AE%B2_%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8EPrefillDecode.pptx" download><span>02</span><strong>请求生命周期与 Prefill / Decode</strong><small>Transformer 路径 · 状态演化 · 逐步生成</small><b>↓</b></a>
@@ -124,17 +124,21 @@
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC05%E8%AE%B2_%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.pptx" download><span>05</span><strong>推理系统架构与代码阅读</strong><small>Runtime · Worker · Kernel · 可观测性</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC06%E8%AE%B2_%E6%89%A7%E8%A1%8C%E4%BC%98%E5%8C%96%E4%B8%8E%E5%BC%82%E6%9E%84%E5%B9%B3%E5%8F%B0%E9%80%82%E9%85%8D.pptx" download><span>06</span><strong>执行优化与异构平台适配</strong><small>Roofline · Attention · 量化 · 并行通信</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC07%E8%AE%B2_%E8%AE%BA%E6%96%87%E6%AF%94%E8%BE%83%E4%B8%8E%E5%AE%9E%E9%AA%8C%E9%AA%8C%E8%AF%81.pptx" download><span>07</span><strong>论文比较与实验验证</strong><small>工作负载 · Baseline · 控制变量 · 证据边界</small><b>↓</b></a>
-        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC08%E8%AE%B2_%E5%BC%80%E6%BA%90%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE.pptx" download><span>08</span><strong>开源实践与课程项目</strong><small>Issue · PR · 测试 · 实验复现</small><b>↓</b></a>
+        <a href="#practice"><span>08</span><strong>vLLM-HUST MOD 插件制作</strong><small>接口 · 实现 · 测试 · 评测</small><b>→</b></a>
       </div>
     </section>
 
     <section class="section practice-section" id="practice">
-      <div class="section-heading"><p class="eyebrow">Practice</p><h2>从课件走向系统实践</h2></div>
+      <div class="section-heading"><p class="eyebrow">vLLM-HUST MOD</p><h2>制作推理优化插件</h2><p>以 vLLM-HUST 为运行环境，围绕具体推理问题设计、实现和验证一个 MOD。</p></div>
       <div class="practice-grid">
-        <article><span>CODE</span><h3>Nano-vLLM 教学代码</h3><p>沿着请求入口、调度器、KV 管理和模型执行路径阅读一套最小可运行实现。</p><a href="https://github.com/intellistream/intro-to-llm-inference-engines/tree/main/src/code/nano-vllm-hust">查看教学代码（需权限）↗</a></article>
-        <article><span>LAB</span><h3>实验与课程项目</h3><p>通过环境配置、运行实验和结果分析，熟悉推理系统的评测方法。</p><a href="downloads/#experiments">下载实验 PDF ↓</a></article>
-        <article><span>READ</span><h3>Tutorial 与研究案例</h3><p>结合 vLLM、SGLang、DistServe、Mooncake、FlashInfer 等工作理解机制边界。</p><a href="downloads/#tutorials">下载 Tutorial PDF ↓</a></article>
+        <article><span>01</span><h3>确定优化问题</h3><p>选择请求调度、KV 缓存或模型执行等场景，说明目标负载、优化指标和适用条件。</p></article>
+        <article><span>02</span><h3>选择接入方式</h3><p>阅读运行时和现有 MOD 的接口，确定扩展点、输入输出、依赖与配置。先检查所选版本实际支持的接口。</p></article>
+        <article><span>03</span><h3>实现与注册</h3><p>将优化逻辑组织为独立模块，按所选接口实现适配和注册，并提供安装与启用方法。</p></article>
+        <article><span>04</span><h3>验证功能</h3><p>运行单元测试与集成测试，检查插件加载、关闭和异常处理，并比较启用前后的推理结果。</p></article>
+        <article><span>05</span><h3>评测与记录</h3><p>固定模型、硬件、负载与基线，测量吞吐和时延，记录配置、运行命令与结果。</p></article>
+        <article><span>06</span><h3>整理与分享</h3><p>说明适用范围、已验证的功能和性能结果，提供代码、测试及复现说明。</p></article>
       </div>
+      <p><a href="https://vllm-hust.sage.org.ai/">浏览 MOD 目录</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv">BidKV 示例</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-dev-hub">开发环境与服务管理</a></p>
     </section>
 
     
