@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vLLM-HUST MOD 开发教程｜大模型推理系统与实践</title>
+  <meta name="description" content="以 BidKV 为例，学习 vLLM-HUST 引擎 MOD 的接口、清单、测试与验证。">
+  <link rel="canonical" href="https://courses.sage.org.ai/tutorials/mod/">
+  <link rel="stylesheet" href="../../styles.css?v=20261113-ride">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到教程正文</a>
+  <header class="site-header tutorial-header">
+    <a class="brand" href="../../"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a>
+    <a class="header-link" href="../../#practice">返回课程主页</a>
+  </header>
+  <main class="downloads-main tutorial-main" id="main">
+    <div class="downloads-intro">
+      <h1>vLLM-HUST MOD 开发教程</h1>
+      <p>以 BidKV 调度策略为例，学习如何选择引擎接口、实现插件、注册清单，并验证运行效果。</p>
+    </div>
+    <ol class="tutorial-contents">
+      <li><a href="#start">准备源码并运行 CPU 测试</a></li>
+      <li><a href="#develop">实现和注册引擎 MOD</a></li>
+      <li><a href="#package">打包、部署与验收</a></li>
+    </ol>
+    <section class="tutorial-section" id="start">
+      <h2>1. 准备源码并运行 CPU 测试</h2>
+      <p>BidKV 研究 KV 缓存压力下的请求抢占选择。先用固定提交阅读代码并运行评分逻辑测试。以下步骤使用 Python 3.10 或更高版本，在本机虚拟环境中执行。</p>
+      <pre><code>git clone https://github.com/vLLM-HUST/vllm-hust-bidkv.git
+cd vllm-hust-bidkv
+git checkout a55d5a8b3733fa59e2980b726f7b2230d6d2f63e
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
+python -m pytest tests/test_scoring.py -q</code></pre>
+      <p>本教程在 CPU 环境运行上述评分测试，27 项通过。测试覆盖策略评分逻辑。引擎插件加载和设备运行需要后续步骤。</p>
+      <p><a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/tree/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e">固定版本源码</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/tests/test_scoring.py">评分测试</a></p>
+    </section>
+    <section class="tutorial-section" id="develop">
+      <h2>2. 实现和注册引擎 MOD</h2>
+      <h3>选择接口并实现策略</h3>
+      <p>先选定要改变的引擎行为，确认宿主版本提供的扩展点及其输入、输出和所有权。BidKV 的适配器实现 <code>vllm.preemption-policy.v1</code>，提供候选请求选择策略。请求状态、抢占执行及 KV 清理由引擎负责。以自己选择的版本为准核对接口。</p>
+      <p>从 <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/src/bidkv/adapters/vllm_hust/selector.py">BidKV 策略适配器</a>入手，阅读策略类、候选选择和放弃选择时的返回值。为自己的 MOD 定义配置项，覆盖空候选、非法配置、失败回退和停用状态。</p>
+      <h3>声明清单和注册入口</h3>
+      <p>固定版本的 <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/src/bidkv/manifests/vllm-hust-extension-v0.3.json">BidKV 清单</a>声明扩展标识、宿主版本范围、协议、实现对象、资源声明与启用配置。<a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/pyproject.toml">pyproject.toml</a> 通过 <code>vllm_hust.extension_bundles</code> 注册静态清单。自己的插件应使用独立标识和实际支持的版本范围。</p>
+      <p>阅读并修改策略后，增加单元测试和宿主接口测试。注册与发现清单只说明插件可被识别，还需要在兼容的引擎中验证启用和调用。</p>
+    </section>
+    <section class="tutorial-section" id="package">
+      <h2>3. 打包、部署与验收</h2>
+      <h3>构建并检查插件</h3>
+      <p>记录源码提交及依赖版本，在独立环境构建和安装插件。以下命令针对本教程中的 BidKV 源码目录。</p>
+      <pre><code>python -m pip install build
+python -m build --wheel
+python -m pip check</code></pre>
+      <p>在准备好的兼容环境安装 wheel 和 vLLM-HUST Extension Manager，按所用版本的说明检查扩展。以下标识为 BidKV 示例，宿主与协议版本须满足清单约束。</p>
+      <pre><code>vllm-hust-ext extension inspect org.vllm-hust.bidkv
+vllm-hust-ext extension validate org.vllm-hust.bidkv
+vllm-hust-ext extension status org.vllm-hust.bidkv</code></pre>
+      <h3>验证运行与评测</h3>
+      <p>在已准备的引擎环境，按清单检查宿主、协议、模型和硬件兼容性，再通过管理器启用扩展并启动测试服务。记录引擎版本、加载的策略类、启动参数与日志；使用能触发目标策略的负载，核对策略调用计数和结果。比较关闭与启用时的输出和行为，检查停用、失败回退及服务恢复。</p>
+      <p>性能比较应固定模型、硬件、请求负载和基线，记录吞吐、时延、错误及原始结果。策略未被调用时，应将该轮结果标记为未触发。CPU 测试、本机验证和设备上的运行效果应分别记录。</p>
+      <p><a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/README.md">BidKV 安装与验证说明</a> · <a href="https://github.com/vLLM-HUST/extension-manager">Extension Manager</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-dev-hub">开发环境</a></p>
+    </section>
+  </main>
+  <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院</p><p><a href="../../#practice">返回 MOD 教程入口</a></p></footer>
+</body>
+</html>
