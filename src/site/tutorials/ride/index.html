@@ -51,7 +51,7 @@ after restart: {"new_job_id": true, "response": "hello"}</code></pre>
 
     <section class="tutorial-section" id="start">
       <h2>1. 启动 RIDE 并发送第一个请求</h2>
-      <p>RIDE 管理 Controller 和模型服务的生命周期。以限流 Controller 为例，管理命令发往 RIDE，请求沿「客户端 → 限流层 → 模型」转发。以下练习使用 Python 3.10+ 和 Bash，在同一台机器的三个终端操作，无需 Ray 或加速卡。</p>
+      <p>RIDE 管理 Controller 和模型服务的生命周期。以限流 Controller 为例，管理命令发往 RIDE，请求沿「客户端 → 限流层 → 模型」转发。以下练习使用 Linux 或 Windows 上的 WSL、Python 3.10+ 和 Bash，在同一环境的三个终端操作，无需 Ray 或加速卡。</p>
 
       <h3 id="install" class="tutorial-anchor">安装固定版本</h3>
       <pre><code>git clone https://github.com/vLLM-HUST/ride.git
