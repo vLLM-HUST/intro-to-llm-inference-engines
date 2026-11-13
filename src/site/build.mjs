@@ -81,7 +81,7 @@ const downloadsPage = `<!doctype html>
 <body class="downloads-page">
   <header class="site-header"><a class="brand" href="../"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a><a class="header-link" href="../">返回课程主页</a></header>
   <main class="downloads-main">
-    <section class="downloads-intro"><p class="eyebrow">Public course materials</p><h1>课程材料下载</h1><p>这里公开发布正式 PPTX 与 PDF。源码、教学代码和版本历史仍保存在私有课程仓库中。</p></section>
+    <section class="downloads-intro"><p class="eyebrow">Public course materials</p><h1>课程材料下载</h1><p>下载课程课件、阅读材料和实验资料。</p></section>
     ${downloadSections}
   </main>
   <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院 · 张书豪</p></footer>

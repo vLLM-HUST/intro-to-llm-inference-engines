@@ -23,40 +23,39 @@
         <p class="eyebrow">华中科技大学 · 2027 年首次开课</p>
         <h1>大模型推理系统<br><span>与实践</span></h1>
         <p class="english-title">LLM Inference Systems and Practice</p>
-        <p class="lede">从一次请求出发，理解队列、调度、Prefill、Decode、KV Cache、执行路径与结果指标如何组成一个可验证的在线推理系统。</p>
-        <div class="hero-actions"><a class="button primary" href="#materials">选择课程版本</a><a class="button secondary" href="downloads/">全部公开课件 ↓</a></div>
+        <p class="lede">学习大模型推理的基本原理与系统实现，涵盖请求调度、KV 缓存、推理优化和性能评测。</p>
+        <div class="hero-actions"><a class="button primary" href="#materials">查看课程内容</a><a class="button secondary" href="downloads/">全部公开课件 ↓</a></div>
       </div>
       <aside class="course-facts" aria-label="课程信息">
         <div><span>01</span><p><strong>16 学时</strong>共 16 节课，每次 4 节连排，共 4 次</p></div>
         <div><span>02</span><p><strong>课程材料</strong>中英速览、8 讲 PPTX 与详细资料</p></div>
-        <div><span>03</span><p><strong>完整闭环</strong>概念、代码、实验与证据链</p></div>
-        <div><span>04</span><p><strong>唯一来源</strong>课程仓库统一维护与发布</p></div>
+        <div><span>03</span><p><strong>授课教师</strong>张书豪</p></div>
       </aside>
     </section>
 
     <section class="section" id="materials">
-      <div class="section-heading materials-heading"><div><p class="eyebrow">Choose a route</p><h2>按你的时间选择材料</h2><p>围绕八个主题学习大模型推理系统。</p></div><div class="material-shortcuts"><a class="details-link" href="downloads/#overview" aria-label="查看中英文课程快速介绍" title="中英文课程快速介绍"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="12" rx="1.5"></rect><path d="M8 21h8M12 17v4M10 9l5 2-5 2z"></path></svg><span>快速介绍</span></a><a class="details-link" href="downloads/#beamer" aria-label="查看十四讲详细材料" title="十四讲详细材料"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h10l4 4V20.5H5z"></path><path d="M15 3.5v4h4M8 12h8M8 15h8M8 18h5"></path></svg><span>详细材料</span></a></div></div>
+      <div class="section-heading materials-heading"><div><p class="eyebrow">Choose a route</p><h2>课程内容与材料</h2><p>课件按八个主题组织，配有实验和阅读材料。</p></div><div class="material-shortcuts"><a class="details-link" href="downloads/#overview" aria-label="查看中英文课程快速介绍" title="中英文课程快速介绍"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="12" rx="1.5"></rect><path d="M8 21h8M12 17v4M10 9l5 2-5 2z"></path></svg><span>快速介绍</span></a><a class="details-link" href="downloads/#beamer" aria-label="查看十四讲详细材料" title="十四讲详细材料"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h10l4 4V20.5H5z"></path><path d="M15 3.5v4h4M8 12h8M8 15h8M8 18h5"></path></svg><span>详细材料</span></a></div></div>
       <div class="material-grid">
         <article class="material-card violet"><p class="card-index">8 LECTURES</p><h3>八讲主课程</h3><p>2027 年课程共 16 学时，分 4 次授课，每次 4 节连排。八讲课件按主题组织，每讲对应 2 学时。</p><div class="card-links"><a href="#syllabus">查看八讲结构 ↓</a><a href="downloads/#lectures">全部 PPTX ↓</a></div></article>
       </div>
     </section>
 
     <section class="section dark-section" id="path">
-      <div class="section-heading inverse"><p class="eyebrow">One request, end to end</p><h2>用一条请求串起整门课</h2><p>课程不把推理缩成一次前向计算，而是追踪请求、状态、控制点和指标的完整闭环。</p></div>
+      <div class="section-heading inverse"><p class="eyebrow">One request, end to end</p><h2>推理请求的处理过程</h2><p>从输入到输出，了解推理服务如何处理请求并评估性能。</p></div>
       <ol class="request-path">
         <li><span>01</span><strong>输入</strong><small>聊天模板与 Tokenizer</small></li><li><span>02</span><strong>准入</strong><small>等待队列与资源检查</small></li><li><span>03</span><strong>调度</strong><small>Token、KV 与执行预算</small></li><li><span>04</span><strong>Prefill</strong><small>处理上下文并建立 KV</small></li><li><span>05</span><strong>Decode</strong><small>逐步生成并更新状态</small></li><li><span>06</span><strong>返回</strong><small>采样、流式输出与释放</small></li><li><span>07</span><strong>验证</strong><small>TTFT、TPOT、P99、Goodput</small></li>
       </ol>
     </section>
 
     <section class="section walkthrough-section" id="walkthrough">
-      <div class="section-heading walkthrough-heading"><p class="eyebrow">Visual walkthrough</p><h2>一张图读懂大模型推理流程</h2><p>这张图从文本输入一直画到流式输出。阅读时要同时沿着两条线走：模型内部怎样算出下一个 Token，以及服务系统怎样组织许多请求反复执行这个过程。</p></div>
+      <div class="section-heading walkthrough-heading"><p class="eyebrow">Visual walkthrough</p><h2>一张图读懂大模型推理流程</h2><p>图中展示从文本输入到流式输出的主要步骤。下方说明模型计算和在线服务中的关键环节。</p></div>
 
       <div class="pipeline-study">
         <figure class="pipeline-figure">
           <a href="assets/llm-inference-pipeline.jpg" target="_blank" rel="noreferrer" aria-label="在新窗口查看大模型推理流程原图">
             <img src="assets/llm-inference-pipeline.jpg" width="1103" height="1517" loading="lazy" alt="大模型推理流程手绘图：从输入、分词、词嵌入和 Transformer 层，经过语言模型头、采样与可选的推测解码，最后反分词并流式返回文本">
           </a>
-          <figcaption>概念总览图。点击可查看大图；右侧说明补齐服务系统视角，并标出图中参数与实现细节的适用边界。</figcaption>
+          <figcaption>推理流程示意图。点击查看大图。</figcaption>
         </figure>
 
         <div class="pipeline-notes">
@@ -68,21 +67,21 @@
           </article>
 
           <article class="concept-block accent-violet">
-            <p class="concept-index">02 · 图外的系统循环</p>
-            <h3>一次前向计算不等于一次在线推理</h3>
+            <p class="concept-index">02 · 在线推理服务</p>
+            <h3>请求调度与执行</h3>
             <p>真实服务还要经过聊天模板、准入队列、调度、批次构造、模型执行、采样、流式返回与资源释放。每个调度步都会重新决定哪些请求运行，以及给它们分配多少 Token 预算和 KV 页面。</p>
             <p class="decode-loop"><span>选请求</span><i>→</i><span>读权重与 KV</span><i>→</i><span>前向计算</span><i>→</i><span>采样</span><i>→</i><span>更新状态</span><i>→</i><span>流式返回</span></p>
           </article>
 
           <article class="concept-block accent-green">
-            <p class="concept-index">03 · 最重要的运行时状态</p>
+            <p class="concept-index">03 · 运行时状态</p>
             <h3>KV Cache 随活跃序列持续变化</h3>
             <p>KV Cache 保存每层历史 Token 的 Key 和 Value，避免 Decode 时重复计算全部历史。它通常随上下文长度增长，也是并发容量的重要约束。分页分配可减少碎片，前缀缓存可复用重复上下文；GQA、MQA、量化精度也会改变单 Token 的缓存占用。</p>
           </article>
 
-          <aside class="accuracy-note" aria-label="读图校正">
-            <p class="concept-index">读图校正</p>
-            <h3>把结构记住，不要把示例数字背成定律</h3>
+          <aside class="accuracy-note" aria-label="图中示例说明">
+            <p class="concept-index">图中示例说明</p>
+            <h3>模型结构与参数</h3>
             <ul>
               <li>Token 切分和 ID 由具体 Tokenizer 决定；图中的单词边界和编号只是示意。</li>
               <li><code>d_model = 4096</code>、128K 词表和 96 层不是所有模型的固定配置，也不能据此推断闭源模型结构。</li>
@@ -95,7 +94,7 @@
       </div>
 
       <div class="stage-reading" aria-labelledby="stage-reading-title">
-        <div class="stage-reading-intro"><p class="eyebrow">Nine stages</p><h3 id="stage-reading-title">按图逐步阅读</h3><p>前六步回答“下一个 Token 怎样产生”，后三步回答“怎样更快并正确地交付给用户”。</p></div>
+        <div class="stage-reading-intro"><p class="eyebrow">Nine stages</p><h3 id="stage-reading-title">按图逐步阅读</h3><p>从输入处理、模型计算到结果返回，依次介绍各阶段的作用。</p></div>
         <ol class="stage-grid">
           <li><span>01</span><div><strong>输入与模板</strong><p>系统消息、角色和用户文本先序列化为模型约定的提示格式，同时确定最大长度、停止条件和采样配置。</p></div></li>
           <li><span>02</span><div><strong>Tokenizer</strong><p>文本被编码为 Token ID。Token 不等同于单词，空格、标点、中文字符和字节回退都会影响切分。</p></div></li>
@@ -110,13 +109,13 @@
       </div>
 
       <div class="research-links" aria-label="相关研究阅读">
-        <p><strong>沿着图继续读论文</strong><span>这些工作分别展开注意力访存、KV 管理、推测解码和 Prefill/Decode 资源隔离。</span></p>
+        <p><strong>推荐阅读</strong><span>这些工作分别展开注意力访存、KV 管理、推测解码和 Prefill/Decode 资源隔离。</span></p>
         <div><a href="https://openreview.net/pdf?id=H4DqfPSibmx" target="_blank" rel="noreferrer">FlashAttention · NeurIPS 2022 ↗</a><a href="https://doi.org/10.1145/3600006.3613165" target="_blank" rel="noreferrer">PagedAttention · SOSP 2023 ↗</a><a href="https://proceedings.mlr.press/v202/leviathan23a.html" target="_blank" rel="noreferrer">Speculative Decoding · ICML 2023 ↗</a><a href="https://www.usenix.org/conference/osdi24/presentation/zhong-yinmin" target="_blank" rel="noreferrer">DistServe · OSDI 2024 ↗</a></div>
       </div>
     </section>
 
     <section class="section" id="syllabus">
-      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲主课程</h2><p>从系统边界进入，经过机制、架构与优化，最后落到论文验证和开源项目。</p></div>
+      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲主课程</h2><p>课程涵盖推理机制、系统架构、执行优化、实验方法与开源实践。</p></div>
       <div class="syllabus-list">
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC01%E8%AE%B2_%E8%AF%BE%E7%A8%8B%E5%AF%BC%E8%AE%BA%E4%B8%8E%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87.pptx" download><span>01</span><strong>课程导论与评价指标</strong><small>请求边界 · TTFT · TPOT · P99 · Goodput</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC02%E8%AE%B2_%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8EPrefillDecode.pptx" download><span>02</span><strong>请求生命周期与 Prefill / Decode</strong><small>Transformer 路径 · 状态演化 · 逐步生成</small><b>↓</b></a>
@@ -125,22 +124,22 @@
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC05%E8%AE%B2_%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.pptx" download><span>05</span><strong>推理系统架构与代码阅读</strong><small>Runtime · Worker · Kernel · 可观测性</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC06%E8%AE%B2_%E6%89%A7%E8%A1%8C%E4%BC%98%E5%8C%96%E4%B8%8E%E5%BC%82%E6%9E%84%E5%B9%B3%E5%8F%B0%E9%80%82%E9%85%8D.pptx" download><span>06</span><strong>执行优化与异构平台适配</strong><small>Roofline · Attention · 量化 · 并行通信</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC07%E8%AE%B2_%E8%AE%BA%E6%96%87%E6%AF%94%E8%BE%83%E4%B8%8E%E5%AE%9E%E9%AA%8C%E9%AA%8C%E8%AF%81.pptx" download><span>07</span><strong>论文比较与实验验证</strong><small>工作负载 · Baseline · 控制变量 · 证据边界</small><b>↓</b></a>
-        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC08%E8%AE%B2_%E5%BC%80%E6%BA%90%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE.pptx" download><span>08</span><strong>开源实践与课程项目</strong><small>Issue · PR · 测试 · 可复现证据链</small><b>↓</b></a>
+        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC08%E8%AE%B2_%E5%BC%80%E6%BA%90%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE.pptx" download><span>08</span><strong>开源实践与课程项目</strong><small>Issue · PR · 测试 · 实验复现</small><b>↓</b></a>
       </div>
     </section>
 
     <section class="section practice-section" id="practice">
-      <div class="section-heading"><p class="eyebrow">Read · Run · Verify</p><h2>从课件走向系统实践</h2></div>
+      <div class="section-heading"><p class="eyebrow">Practice</p><h2>从课件走向系统实践</h2></div>
       <div class="practice-grid">
-        <article><span>CODE</span><h3>Nano-vLLM 教学代码</h3><p>沿着请求入口、调度器、KV 管理和模型执行路径阅读一套最小可运行实现。</p><a href="https://github.com/intellistream/intro-to-llm-inference-engines/tree/main/src/code/nano-vllm-hust">进入私有代码仓库（需权限）↗</a></article>
-        <article><span>LAB</span><h3>实验与课程项目</h3><p>从环境检查、最小复现到可审计实验记录，把系统主张落实为证据。</p><a href="downloads/#experiments">下载实验 PDF ↓</a></article>
+        <article><span>CODE</span><h3>Nano-vLLM 教学代码</h3><p>沿着请求入口、调度器、KV 管理和模型执行路径阅读一套最小可运行实现。</p><a href="https://github.com/intellistream/intro-to-llm-inference-engines/tree/main/src/code/nano-vllm-hust">查看教学代码（需权限）↗</a></article>
+        <article><span>LAB</span><h3>实验与课程项目</h3><p>通过环境配置、运行实验和结果分析，熟悉推理系统的评测方法。</p><a href="downloads/#experiments">下载实验 PDF ↓</a></article>
         <article><span>READ</span><h3>Tutorial 与研究案例</h3><p>结合 vLLM、SGLang、DistServe、Mooncake、FlashInfer 等工作理解机制边界。</p><a href="downloads/#tutorials">下载 Tutorial PDF ↓</a></article>
       </div>
     </section>
 
-    <section class="repository-strip"><div><p class="eyebrow">Single source of truth</p><h2>课程仓库维护，课程主页公开发布</h2><p>私有仓库保存 PPTX、PDF、源码和版本历史；课程主页同步发布正式 PPTX/PDF，任何人都可直接下载。</p></div><div class="repo-actions"><a class="button primary" href="downloads/">下载公开材料 ↓</a><a class="text-link" href="https://me.sage.org.ai/">张书豪个人主页 ↗</a></div></section>
+    
   </main>
 
-  <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院 · 张书豪</p><p><a href="downloads/">公开课件下载</a> · <a href="https://github.com/intellistream/intro-to-llm-inference-engines">私有课程仓库（需权限）</a></p></footer>
+  <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院 · 张书豪</p><p><a href="downloads/">公开课件下载</a> · <a href="https://github.com/intellistream/intro-to-llm-inference-engines">课程仓库（需权限）</a></p></footer>
 </body>
 </html>
