@@ -41,8 +41,8 @@ for (const group of downloadGroups) {
   const absoluteSource = path.join(repositoryRoot, group.source);
   const files = (await collectFiles(absoluteSource, group.extensions)).filter((file) => {
     const name = path.basename(file);
-    if (group.id === "lectures" && name.startsWith("第08讲_")) return false;
-    if (group.id === "beamer" && /第(12|13)讲_/.test(name)) return false;
+    if (group.id === "lectures" && /^第(07|08)讲_/.test(name)) return false;
+    if (group.id === "beamer" && /第(11|12|13)讲_/.test(name)) return false;
     return true;
   });
   const renderedFiles = [];
