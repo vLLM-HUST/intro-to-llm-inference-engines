@@ -115,7 +115,7 @@
     </section>
 
     <section class="section" id="syllabus">
-      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲主课程</h2><p>课程涵盖推理机制、系统架构、执行优化、实验方法与 MOD 插件制作。</p></div>
+      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲主课程</h2><p>课程涵盖推理机制、系统架构、执行优化、论文阅读与 MOD 插件开发。</p></div>
       <div class="syllabus-list">
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC01%E8%AE%B2_%E8%AF%BE%E7%A8%8B%E5%AF%BC%E8%AE%BA%E4%B8%8E%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87.pptx" download><span>01</span><strong>课程导论与评价指标</strong><small>请求边界 · TTFT · TPOT · P99 · Goodput</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC02%E8%AE%B2_%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8EPrefillDecode.pptx" download><span>02</span><strong>请求生命周期与 Prefill / Decode</strong><small>Transformer 路径 · 状态演化 · 逐步生成</small><b>↓</b></a>
@@ -123,13 +123,13 @@
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC04%E8%AE%B2_KV%E7%BC%93%E5%AD%98%E4%B8%8E%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86.pptx" download><span>04</span><strong>KV 缓存与状态管理</strong><small>容量 · 分页 · 复用 · 迁移 · 失效</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC05%E8%AE%B2_%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.pptx" download><span>05</span><strong>推理系统架构与代码阅读</strong><small>Runtime · Worker · Kernel · 可观测性</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC06%E8%AE%B2_%E6%89%A7%E8%A1%8C%E4%BC%98%E5%8C%96%E4%B8%8E%E5%BC%82%E6%9E%84%E5%B9%B3%E5%8F%B0%E9%80%82%E9%85%8D.pptx" download><span>06</span><strong>执行优化与异构平台适配</strong><small>Roofline · Attention · 量化 · 并行通信</small><b>↓</b></a>
-        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC07%E8%AE%B2_%E8%AE%BA%E6%96%87%E6%AF%94%E8%BE%83%E4%B8%8E%E5%AE%9E%E9%AA%8C%E9%AA%8C%E8%AF%81.pptx" download><span>07</span><strong>论文比较与实验验证</strong><small>工作负载 · Baseline · 控制变量 · 证据边界</small><b>↓</b></a>
+        <a href="#practice"><span>07</span><strong>论文阅读与性能评测</strong><small>工作负载 · 基线 · 评价指标</small><b>→</b></a>
         <a href="#practice"><span>08</span><strong>vLLM-HUST MOD 插件制作</strong><small>接口 · 实现 · 测试 · 评测</small><b>→</b></a>
       </div>
     </section>
 
     <section class="section practice-section" id="practice">
-      <div class="section-heading"><p class="eyebrow">vLLM-HUST MOD</p><h2>制作推理优化插件</h2><p>以 vLLM-HUST 为运行环境，围绕具体推理问题设计、实现和验证一个 MOD。</p></div>
+      <div class="section-heading"><p class="eyebrow">vLLM-HUST MOD</p><h2>制作推理优化插件</h2><p>课程实践围绕 vLLM-HUST MOD 开发，完成插件设计、实现和验证。</p></div>
       <div class="practice-grid">
         <article><span>01</span><h3>确定优化问题</h3><p>选择请求调度、KV 缓存或模型执行等场景，说明目标负载、优化指标和适用条件。</p></article>
         <article><span>02</span><h3>选择接入方式</h3><p>阅读运行时和现有 MOD 的接口，确定扩展点、输入输出、依赖与配置。先检查所选版本实际支持的接口。</p></article>
