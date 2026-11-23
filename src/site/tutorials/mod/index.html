@@ -96,6 +96,8 @@ vllm-hust-ext extension status org.vllm-hust.bidkv</code></pre>
       <h3 id="evaluation">验证运行与评测</h3>
       <p>在已准备的引擎环境，按清单检查宿主、协议、模型和硬件兼容性，再通过管理器启用扩展并启动测试服务。记录引擎版本、加载的策略类、启动参数与日志；使用能触发目标策略的负载，核对策略调用计数和结果。比较关闭与启用时的输出和行为，检查停用、失败回退及服务恢复。</p>
       <p>性能比较应固定模型、硬件、请求负载和基线，记录吞吐、时延、错误及原始结果。策略未被调用时，应将该轮结果标记为未触发。CPU 测试、本机验证和设备上的运行效果应分别记录。</p>
+      <h3>课堂练习</h3>
+      <p><a href="paired-requests.csv" download>下载配对请求数据（CSV）</a>。这是第 13–14 节的虚构教学数据。两组各 200 个请求，测量窗为 10 秒。按成功请求用 nearest-rank 计算 TTFT P99。统计同时满足 TTFT ≤ 500 ms 和 TPOT ≤ 60 ms 的成功请求数，除以 10 秒得到 Goodput。单独报告失败率。</p>
       <p><a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/README.md">BidKV 安装与验证说明</a> · <a href="https://vllm-hust.sage.org.ai/">MOD 目录</a> · <a href="https://github.com/vLLM-HUST/extension-manager">Extension Manager</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-dev-hub">开发环境</a></p>
     </section>
   </main>

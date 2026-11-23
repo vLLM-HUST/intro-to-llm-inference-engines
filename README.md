@@ -8,7 +8,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 学生可从 [vLLM-HUST 引擎 MOD 模板](https://github.com/vLLM-HUST/vllm-hust-mod-template)和 [RIDE Controller 模板](https://github.com/vLLM-HUST/ride-controller-template)创建个人项目仓库。
 
-**8 次授课，每次连上 2 节，共 16 节。** 第 1–3 次讲必要原理，第 4 次用[第 4 讲 PPTX](build/slides/2027/lectures-8-pptx/第04讲_开源实践与课程项目.pptx)和 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab)改 BidKV、跑 CPU 测试并选题。第 5–8 次全部用于实现、联调、评测、复现和答辩。[八次授课安排](src/docs/2027/课程安排.md) · [课件索引](build/slides/2027/README.md)
+**8 次授课，每次连上 2 节，每节 45 分钟，共 16 节。** 第 1–3 次讲必要原理，第 4 次用[第 4 讲 PPTX](build/slides/2027/lectures-8-pptx/第04讲_开源实践与课程项目.pptx)和 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab)改 BidKV、跑 CPU 测试并选题。第 5–8 次全部用于实现、联调、评测、复现和答辩。[八次授课安排](src/docs/2027/课程安排.md) · [课件索引](build/slides/2027/README.md)
 
 本仓库维护《大模型推理系统与实践》的正式课件、MOD 项目实验单和课程网站。术语、算例、论文出处和课程边界见[课程内容基线](src/docs/2027/课程内容基线.md)。
 
