@@ -10,7 +10,13 @@ const outputDir = path.join(repositoryRoot, "dist");
 const build = spawnSync(process.execPath, [path.join(sourceDir, "build.mjs")], { stdio: "inherit" });
 if (build.status !== 0) process.exit(build.status ?? 1);
 
-const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8" };
+const types = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".jpg": "image/jpeg",
+  ".pdf": "application/pdf",
+  ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+};
 const server = createServer((request, response) => {
   const pathname = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname);
   const relative = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");

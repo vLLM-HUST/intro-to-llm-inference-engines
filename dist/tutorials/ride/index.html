@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RIDE Control Plane Bonus｜大模型推理系统与实践</title>
+  <title>RIDE Control Plane 插件｜大模型推理系统与实践</title>
   <meta name="description" content="启动 RIDE，制作和打包独立 Controller 插件，并验证部署与请求链路。">
   <link rel="canonical" href="https://courses.sage.org.ai/tutorials/ride/">
   <link rel="stylesheet" href="../../styles.css">
@@ -97,7 +97,8 @@ ride describe controller tutorial-demo</code></pre>
 
     <section class="tutorial-section" id="develop">
       <h2>2. 制作独立 Controller 插件</h2>
-      <p>以 <code>ride-controller-demo</code> 为起点，在自己的仓库实现 Controller。这里的插件通过 Python 包的 <code>ride.controllers</code> 入口注册，由 RIDE 启动为独立进程。vLLM-HUST 的引擎内扩展接口见<a href="../../#practice">引擎 MOD 练习</a>。</p>
+      <p>打开<a href="https://github.com/vLLM-HUST/ride-controller-template">课程 Controller 模板仓库</a>，点击 <strong>Use this template</strong>，在自己的 GitHub 账号下创建仓库。按模板 README 跑通 CPU 请求和启停测试，再在 <code>src/course_ride_controller/policy.py</code> 实现自己的策略。模板通过 <code>ride.controllers</code> 注册，由 RIDE 托管为独立进程。</p>
+      <p>下面用 <code>ride-controller-demo</code> 限流示例说明如何实现和观测具体策略。</p>
 
       <h3>实现策略和观测接口</h3>
       <ul>

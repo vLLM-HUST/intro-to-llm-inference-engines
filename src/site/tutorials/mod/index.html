@@ -22,9 +22,10 @@
     <ol class="tutorial-contents">
       <li><a href="#start">首次实操前准备</a></li>
       <li><a href="#first-lab">入门实操：修改策略并写测试</a></li>
+      <li><a href="#project-repo">建立个人仓库</a></li>
       <li><a href="#develop">实现和注册引擎 MOD</a></li>
       <li><a href="#package">打包、部署与验收</a></li>
-      <li><a href="../assessment/#project-score">项目评分与提交要求</a></li>
+      <li><a href="../assessment/#project-score">评分标准</a></li>
     </ol>
     <section class="tutorial-section" id="start">
       <h2>首次实操前准备</h2>
@@ -66,6 +67,11 @@ python3 -m venv .venv
 .venv/bin/python -m pytest tests/test_vllm_hust_adapter.py -q
 git diff</code></pre>
       <p>此练习验证策略对固定输入的选择。插件加载、设备运行和性能影响在后续环节验证。</p>
+    </section>
+    <section class="tutorial-section" id="project-repo">
+      <h2>建立个人仓库</h2>
+      <p>BidKV 实操完成后，打开<a href="https://github.com/vLLM-HUST/vllm-hust-mod-template">引擎 MOD 模板仓库</a>，点击 <strong>Use this template</strong>，在自己的 GitHub 账号下创建仓库。先按 README 跑通 CPU 冒烟测试，再记录自己的选题和验收用例。</p>
+      <p>模板以抢占接口演示打包与注册。选择其他扩展点时，按目标宿主版本调整接口与清单。<a href="../assessment/#topic">查看选题提交要求</a></p>
     </section>
     <section class="tutorial-section" id="develop">
       <h2>2. 实现和注册引擎 MOD</h2>

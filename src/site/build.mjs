@@ -26,7 +26,7 @@ const downloadLabels = new Map([
   ["vLLM-HUST_MOD_个人项目实验单.pdf", "vLLM-HUST MOD 个人项目实验单"],
   ["LLM推理系统_两小时快速介绍.pptx", "中文课程介绍"],
   ["llm_inference_systems.pptx", "英文课程介绍"],
-  ["第02讲_请求生命周期与PrefillDecode.pptx", "第 2 讲 请求生命周期与 Prefill / Decode"],
+  ["第02讲_请求生命周期与PrefillDecode.pptx", "第 2 讲 · 请求生命周期与 Prefill / Decode"],
 ]);
 
 const repositoryOnlyLectures = new Set([
@@ -64,7 +64,9 @@ for (const group of downloadGroups) {
     await cp(sourceFile, destination);
     const bytes = (await stat(sourceFile)).size;
     const filename = path.basename(sourceFile);
-    const title = downloadLabels.get(filename) ?? path.basename(filename, path.extname(filename)).replaceAll("_", " ");
+    const title = downloadLabels.get(filename) ?? path.basename(filename, path.extname(filename))
+      .replaceAll("_", " ")
+      .replace(/^第0?([1-8])讲 /, "第 $1 讲 · ");
     renderedFiles.push({
       href: relative.split(path.sep).map(encodeURIComponent).join("/"),
       label: title,
@@ -78,6 +80,7 @@ for (const group of downloadGroups) {
 const downloadSections = renderedGroups.map((group) => `
     <section class="download-group" id="${group.id}">
       <div class="download-heading"><h2>${escapeHtml(group.title)}</h2></div>
+      ${group.id === "lectures" ? `<p>第 4、8 讲 PPTX 由课程另行发放。可在线查看<a href="../tutorials/mod/#first-lab">第 4 讲实操</a>和<a href="../tutorials/assessment/#delivery">第 8 讲交付要求</a>。</p>` : ""}
       <div class="download-list">
         ${group.files.map((file) => `<a href="${file.href}" download><strong>${escapeHtml(file.label)}</strong><span>${file.format} · ${file.size} ↓</span></a>`).join("\n        ")}
       </div>
@@ -97,7 +100,7 @@ const downloadsPage = `<!doctype html>
   <a class="skip-link" href="#main">跳到课程材料</a>
   <header class="site-header"><a class="brand" href="../"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a><a class="header-link" href="../">返回课程主页</a></header>
   <main class="downloads-main" id="main">
-    <section class="downloads-intro"><h1>课程材料下载</h1><p>第 4、8 讲 PPTX 通过<a href="https://github.com/intellistream/intro-to-llm-inference-engines">课程仓库</a>发放。可直接查看<a href="../tutorials/mod/#first-lab">第 4 讲实操</a>和<a href="../tutorials/assessment/#delivery">第 8 讲交付要求</a>。</p></section>
+    <div class="downloads-intro"><h1>课程材料下载</h1></div>
     ${downloadSections}
   </main>
   <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院 · 张书豪</p></footer>
