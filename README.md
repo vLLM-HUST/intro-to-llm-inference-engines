@@ -40,7 +40,3 @@ English repository slug: `intro-to-llm-inference-engines`
 - 确认 `.preview/`、`.tectonic-cache/` 以及 LaTeX 中间文件未进入待提交列表。
 - 若调整了目录或文件名，同步检查课程安排、项目实验单和网站下载入口。
 - 正式导出件统一位于 `build/`；LaTeX / Markdown 源码统一维护在 `src/`，本地临时构建产物不应混入提交。
-
-## 历史材料
-
-早期十四讲课件、逐讲题单、Nano-vLLM 代码和实验作业保存在[历史归档](archive/legacy-course/README.md)。

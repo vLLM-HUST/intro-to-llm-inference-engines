@@ -15,7 +15,6 @@ Support the full material lifecycle for the HUST course on LLM inference infrast
 - This repository is a teaching-material workspace, not a general software product repository.
 - The course is organized around one closed loop: slides and docs define the system problem, tutorials define the reasoning path, experiments define the evidence, and code defines the control points.
 - The 2027 course uses the eight PPTX lectures and one independent vLLM-HUST MOD project per student. The project is the full course grade.
-- The fourteen-lecture draft, Nano-vLLM teaching code, and old assignments are in `archive/legacy-course/` for historical reference.
 - The repository intentionally keeps theory, experiments, and runnable code in separate layers that should stay aligned but should not be merged together.
 
 ## Default Working Style
