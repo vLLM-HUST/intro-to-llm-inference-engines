@@ -2,9 +2,11 @@
 
 English repository slug: `intro-to-llm-inference-engines`
 
-课程主页：[courses.sage.org.ai](https://courses.sage.org.ai/)
+课程网站更新中。[2027 年授课安排](src/docs/2027/课程安排.md)和[八讲课件](build/slides/2027/README.md)可在本仓库查看。
 
 2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。为 yancan 负责的 Control Plane 另做一个 RIDE Controller 插件最多加 30 分。[考核与评分标准](src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
+
+学生可从 [vLLM-HUST 引擎 MOD 模板](https://github.com/vLLM-HUST/vllm-hust-mod-template)和 [RIDE Controller 模板](https://github.com/vLLM-HUST/ride-controller-template)创建个人项目仓库。
 
 **第 4 讲《开源实践与课程项目》开始制作 MOD。** 第 3 讲铺垫调度与 KV 抢占，随后用[第 4 讲 PPTX](build/slides/2027/lectures-8-pptx/第04讲_开源实践与课程项目.pptx)和 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab) 改 BidKV 策略并做 CPU 测试。第 5–7 讲支持插件联调与测量，第 8 讲比较实验结果并展示项目。[四次授课安排](src/docs/2027/课程安排.md) · [课件索引](build/slides/2027/README.md)
 

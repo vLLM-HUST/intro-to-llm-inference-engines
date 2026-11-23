@@ -29,6 +29,7 @@ const downloadLabels = new Map([
   ["第02讲_请求生命周期与PrefillDecode.pptx", "第 2 讲 · 请求生命周期与 Prefill / Decode"],
 ]);
 
+const courseRepository = "https://github.com/vLLM-HUST/intro-to-llm-inference-engines";
 const repositoryOnlyLectures = new Set([
   "第04讲_开源实践与课程项目.pptx",
   "第08讲_论文比较与实验验证.pptx",
@@ -51,27 +52,28 @@ const renderedGroups = [];
 
 for (const group of downloadGroups) {
   const absoluteSource = path.join(repositoryRoot, group.source);
-  const files = (await collectFiles(absoluteSource, group.extensions)).filter((file) => {
-    const name = path.basename(file);
-    if (group.id === "lectures" && repositoryOnlyLectures.has(name)) return false;
-    return true;
-  });
+  const files = await collectFiles(absoluteSource, group.extensions);
   const renderedFiles = [];
   for (const sourceFile of files) {
     const relative = path.relative(path.join(repositoryRoot, "build"), sourceFile);
-    const destination = path.join(publicRoot, relative);
-    await mkdir(path.dirname(destination), { recursive: true });
-    await cp(sourceFile, destination);
-    const bytes = (await stat(sourceFile)).size;
     const filename = path.basename(sourceFile);
+    const fromRepository = group.id === "lectures" && repositoryOnlyLectures.has(filename);
+    const encodedPath = relative.split(path.sep).map(encodeURIComponent).join("/");
+    if (!fromRepository) {
+      const destination = path.join(publicRoot, relative);
+      await mkdir(path.dirname(destination), { recursive: true });
+      await cp(sourceFile, destination);
+    }
+    const bytes = (await stat(sourceFile)).size;
     const title = downloadLabels.get(filename) ?? path.basename(filename, path.extname(filename))
       .replaceAll("_", " ")
       .replace(/^第0?([1-8])讲 /, "第 $1 讲 · ");
     renderedFiles.push({
-      href: relative.split(path.sep).map(encodeURIComponent).join("/"),
+      href: fromRepository ? `${courseRepository}/blob/main/build/${encodedPath}` : encodedPath,
       label: title,
       format: path.extname(sourceFile).slice(1).toUpperCase(),
-      size: `${(bytes / 1024 / 1024).toFixed(1)} MB`,
+      sourceLabel: fromRepository ? "GitHub" : `${(bytes / 1024 / 1024).toFixed(1)} MB`,
+      fromRepository,
     });
   }
   renderedGroups.push({ ...group, files: renderedFiles });
@@ -80,9 +82,8 @@ for (const group of downloadGroups) {
 const downloadSections = renderedGroups.map((group) => `
     <section class="download-group" id="${group.id}">
       <div class="download-heading"><h2>${escapeHtml(group.title)}</h2></div>
-      ${group.id === "lectures" ? `<p>第 4、8 讲 PPTX 由课程另行发放。可在线查看<a href="../tutorials/mod/#first-lab">第 4 讲实操</a>和<a href="../tutorials/assessment/#delivery">第 8 讲交付要求</a>。</p>` : ""}
       <div class="download-list">
-        ${group.files.map((file) => `<a href="${file.href}" download><strong>${escapeHtml(file.label)}</strong><span>${file.format} · ${file.size} ↓</span></a>`).join("\n        ")}
+        ${group.files.map((file) => `<a href="${file.href}"${file.fromRepository ? "" : " download"}><strong>${escapeHtml(file.label)}</strong><span>${file.format} · ${file.sourceLabel}</span></a>`).join("\n        ")}
       </div>
     </section>`).join("\n");
 
@@ -109,4 +110,4 @@ const downloadsPage = `<!doctype html>
 
 await writeFile(path.join(publicRoot, "index.html"), downloadsPage, "utf8");
 
-console.log(`Course site built in ${outputDir} with ${renderedGroups.reduce((sum, group) => sum + group.files.length, 0)} public downloads`);
+console.log(`Course site built in ${outputDir} with ${renderedGroups.reduce((sum, group) => sum + group.files.filter((file) => !file.fromRepository).length, 0)} public downloads`);
