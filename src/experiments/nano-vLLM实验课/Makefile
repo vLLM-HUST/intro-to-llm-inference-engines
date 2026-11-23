@@ -6,8 +6,7 @@ SHEET_DIRS := experiment_1_最小运行与代码地图 \
 	experiment_2_请求生命周期观察 \
 	experiment_3_调度与连续批处理实验 \
 	experiment_4_KV状态与缓存组织实验 \
-	experiment_5_指标观测与最小复现实验 \
-	project_课程项目实验说明
+	experiment_5_指标观测与最小复现实验
 MD_FILES := $(addsuffix /sheet.md,$(SHEET_DIRS))
 PDF_TARGETS := $(addprefix $(OUT_DIR)/,$(addsuffix /sheet.pdf,$(SHEET_DIRS)))
 

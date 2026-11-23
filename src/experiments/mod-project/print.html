@@ -1,0 +1,43 @@
+<style>
+  @page {
+    size: A4;
+    margin: 17mm 20mm 19mm;
+    @bottom-left {
+      content: "vLLM-HUST MOD 个人项目 · 2027";
+      color: #536071;
+      font: 8pt "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+    }
+    @bottom-right {
+      content: counter(page) " / " counter(pages);
+      color: #536071;
+      font: 8pt sans-serif;
+    }
+  }
+
+  html {
+    background: white;
+    color: #182438;
+    font: 10.5pt/1.55 "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+  }
+
+  body { margin: 0; max-width: none; padding: 0; }
+  h1, h2, h3 { color: #163563; line-height: 1.35; break-after: avoid; }
+  h1 { font-size: 22pt; margin: 0 0 10pt; }
+  h2 { font-size: 14pt; margin: 11pt 0 4pt; }
+  h3 { font-size: 11pt; margin: 7pt 0 3pt; }
+  p { margin: 3pt 0 5pt; orphans: 2; widows: 2; }
+  ol, ul { margin: 3pt 0 6pt; padding-left: 1.8em; }
+  li { margin: 1pt 0; }
+  table { display: table; width: 100%; border-collapse: collapse; margin: 5pt 0 8pt; break-inside: avoid; }
+  td, th { border: 1px solid #a8b5c6; padding: 4pt 5pt; text-align: left; vertical-align: top; }
+  th { background: #eaf0f7; }
+  pre {
+    margin: 3pt 0 6pt;
+    padding: 5pt 8pt;
+    white-space: pre-wrap;
+    border-left: 2pt solid #acbed5;
+    break-inside: avoid;
+  }
+  code { font: 9.5pt/1.5 "Cascadia Mono", "Microsoft YaHei", "Noto Sans CJK SC", monospace; }
+  .submission-template { break-before: page; }
+</style>

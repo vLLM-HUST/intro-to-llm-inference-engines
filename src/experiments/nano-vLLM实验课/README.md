@@ -40,10 +40,9 @@
 5. `experiment_5_指标观测与最小复现实验/`
 	- `sheet.md`
 	- `assignment_spring-2027/`
-6. `project_课程项目实验说明/`
-	- `sheet.md`
-
 正式发放版 PDF 不再与源码混放，而是统一输出到仓库根目录下的 `build/experiments/nano-vLLM实验课/`。
+
+课程考核使用 [vLLM-HUST MOD 个人项目实验单](../../../build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)。
 
 ## 建议使用顺序
 
@@ -62,15 +61,14 @@
 
 本目录支持直接导出正式发放版 PDF：
 
-1. 在本目录运行 `make`，会为每份实验单与项目说明生成同名 PDF。
+1. 在本目录运行 `make`，会为五份实验单生成对应的 PDF。
 2. 导出的 PDF 统一放在仓库根目录下的 `build/experiments/nano-vLLM实验课/`，便于集中发放与同步到 public-site。
 3. 如需清理导出文件，可运行 `make clean`。
 
-当前默认导出实验一到实验五，以及课程项目实验说明。
+当前默认导出实验一到实验五。
 
 ## 目录结构
 
-- 根目录：`README.md`、`Makefile`、`pandoc/` 与各个 experiment / project 源目录。
+- 根目录：`README.md`、`Makefile`、`pandoc/` 与各个实验源目录。
 - 各个 `experiment_*` 目录：`sheet.md` 与对应 `assignment_spring-2027/`。
-- `project_课程项目实验说明/`：项目说明源文件。
 - 正式 PDF：统一输出到 `build/experiments/nano-vLLM实验课/`。

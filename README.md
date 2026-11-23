@@ -4,7 +4,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 课程主页：[courses.sage.org.ai](https://courses.sage.org.ai/)
 
-2027 年每位学生独立完成一个 MOD，个人项目得分即课程总评，满分 100 分。[考核与评分标准](src/site/tutorials/assessment/index.html)列出分项评分和各讲提交要求。
+2027 年每位学生独立完成一个 MOD，个人项目得分即课程总评，满分 100 分。[考核与评分标准](src/site/tutorials/assessment/index.html)列出分项评分和各讲提交要求。[vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
 
 **第 4 讲《开源实践与课程项目》开始制作 MOD。** 第 3 讲铺垫调度与 KV 抢占，随后用[第 4 讲 PPTX](build/slides/2027/lectures-8-pptx/第04讲_开源实践与课程项目.pptx)和 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab) 改 BidKV 策略并做 CPU 测试。第 5–7 讲支持插件联调与测量，第 8 讲比较实验结果并展示项目。[四次授课安排](src/docs/2027/课程安排.md) · [三套课件索引](build/slides/2027/README.md)
 
@@ -16,7 +16,8 @@ English repository slug: `intro-to-llm-inference-engines`
 
 - `src/slides/lectures-14-beamer/`：14 讲细分版的 LaTeX Beamer 源码；`src/slides/Makefile` 是构建入口。
 - `src/tutorials/`：tutorial Markdown 源码、Pandoc 过滤器与构建入口。
-- `src/experiments/nano-vLLM实验课/`：experimental sheet、project sheet 与 assignment 源目录。
+- `src/experiments/nano-vLLM实验课/`：Nano-vLLM 教学实验单与作业源文件。
+- `src/experiments/mod-project/`：vLLM-HUST MOD 个人项目实验单源文件和打印样式。运行 `make -C src/experiments/mod-project` 以 Pandoc 和 Chromium 重新生成 PDF。
 - `src/docs/`：课程简介、讲义提纲、教师讲稿与实验说明文档。
 - `src/docs/2027/课程内容基线.md`：三套课件共同使用的正式名称、术语、算例、研究案例账本与讲次映射。
 - `src/code/nano-vllm-hust/`：课程使用的 Nano-vLLM 教学 fork 与实验素材。
