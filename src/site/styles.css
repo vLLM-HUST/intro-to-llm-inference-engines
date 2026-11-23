@@ -32,42 +32,62 @@ nav { display: flex; gap: 1.6rem; }
 nav a,.header-link { color: #dce8f6; text-decoration: none; font-size: .9rem; font-weight: 700; }
 nav a:hover,.header-link:hover { color: var(--cyan); }
 .header-link { justify-self: end; }
-.course-width { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
-.course-intro { background: var(--navy); color: #fff; padding: clamp(2.35rem,5vw,4rem) 0 clamp(2.5rem,5vw,4rem); }
-.course-meta { margin: 0 0 .75rem; color: var(--cyan); font-size: .92rem; font-weight: 700; }
-.course-intro h1 { margin: 0; font-size: clamp(2rem,5vw,4.55rem); letter-spacing: -.05em; }
-.course-summary { margin: 1rem 0 .55rem; color: #e7effa; font-size: clamp(1rem,1.8vw,1.2rem); }
-.course-factline { display: flex; flex-wrap: wrap; align-items: baseline; gap: .7rem; margin: 0; color: #adbed4; font-size: .92rem; }
-.course-block { padding: clamp(1.8rem,4vw,3rem) 0 0; }
-.course-heading { display: flex; flex-wrap: wrap; gap: .45rem 1.4rem; justify-content: space-between; align-items: baseline; margin-bottom: .9rem; }
-.course-heading h2 { margin: 0; font-size: clamp(1.5rem,3vw,2.15rem); }
-.course-heading a,.project-links a,.meeting-list a { font-weight: 700; }
-.project-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
-.project-card { display: flex; flex-direction: column; align-items: start; padding: clamp(1rem,2.5vw,1.65rem); background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--teal); border-radius: .6rem; }
-.bonus-project { background: #f7f7fd; border-top-color: #6254aa; }
-.project-score-label { display: flex; align-items: baseline; gap: .65rem; margin: 0 0 .5rem; color: var(--teal); font-weight: 700; }
-.bonus-project .project-score-label { color: #524498; }
-.project-score-label strong { font-size: 1.25rem; }
-.project-card h3 { margin: 0; font-size: clamp(1.23rem,2.3vw,1.65rem); }
-.project-card > p:not(.project-score-label) { margin: .55rem 0 1rem; color: var(--muted); }
-.project-links { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1rem; margin-top: auto; }
-.project-action { display: inline-flex; padding: .48rem .8rem; color: #fff; background: var(--teal); border-radius: .34rem; text-decoration: none; }
-.project-action:hover { background: #004d57; }
-.bonus-project .project-action { color: #41347f; background: #e9e5f8; }
-.bonus-project .project-action:hover { background: #ded8f4; }
+.course-home { --home-width: 1020px; --home-line: #dce4e9; background: #fff; }
+.course-home .site-header {
+  grid-template-columns: minmax(0,1fr) auto;
+  min-height: 62px;
+  gap: .6rem 1rem;
+  padding: .6rem max(1rem, calc((100% - var(--home-width)) / 2));
+  color: var(--ink);
+  background: #fff;
+  border-color: var(--home-line);
+}
+.course-home .brand { font-size: .9rem; white-space: nowrap; }
+.course-home .brand-mark { width: 30px; background: #e4f2f1; color: var(--teal); }
+.course-home nav { gap: clamp(.75rem,3vw,1.6rem); }
+.course-home nav a { color: var(--ink); white-space: nowrap; padding-block: .45rem; }
+.course-home nav a:hover,.course-home a:hover { color: var(--teal); }
+.course-width { width: min(var(--home-width), calc(100% - 40px)); margin-inline: auto; }
+.course-intro { padding: clamp(2.25rem,5vw,3.9rem) 0 clamp(2rem,4vw,3rem); }
+.course-meta { margin: 0 0 .55rem; color: var(--teal); font-size: .92rem; font-weight: 650; }
+.course-intro h1 { margin: 0; font-size: clamp(2rem,5vw,3.55rem); letter-spacing: -.04em; }
+.course-factline { margin: .6rem 0 0; color: var(--muted); }
+.course-block + .course-block { margin-top: clamp(1.85rem,4vw,2.75rem); }
+.course-heading {
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: baseline;
+  gap: .3rem .8rem; margin-bottom: .65rem;
+}
+.course-heading h2 { margin: 0; font-size: clamp(1.25rem,3vw,1.65rem); }
+.course-heading a,.project-links a,.meeting-list a { font-size: .92rem; font-weight: 650; }
+.project-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border: 1px solid var(--home-line); border-radius: .5rem; }
+.project-card { display: flex; flex-direction: column; align-items: start; padding: clamp(.95rem,2vw,1.45rem); }
+.bonus-project { border-inline-start: 1px solid var(--home-line); }
+.project-score-label { margin: 0 0 .25rem; color: var(--teal); font-size: .87rem; font-weight: 750; }
+.bonus-project .project-score-label { color: var(--muted); }
+.project-card h3 { margin: 0; font-size: clamp(1.12rem,2.5vw,1.4rem); text-wrap: pretty; }
+.project-card > p:not(.project-score-label) { margin: .38rem 0 .65rem; color: var(--muted); font-size: .94rem; }
+.project-links { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem 1rem; margin-top: auto; }
+.project-links a { padding-block: .25rem; }
+.project-links .project-action { color: var(--teal); }
 .meeting-list,.resource-list { margin: 0; padding: 0; list-style: none; }
-.meeting-list { border: 1px solid var(--line); border-radius: .6rem; overflow: clip; background: #fff; }
-.meeting-list li { display: grid; grid-template-columns: 8rem minmax(0,1fr) auto; align-items: center; gap: .65rem 1rem; padding: .85rem 1.1rem; }
-.meeting-list li + li { border-top: 1px solid var(--line); }
-.meeting-list .meeting-launch { background: #eaf7f6; }
-.meeting-number { font-weight: 750; }
-.meeting-number span { display: block; color: var(--muted); font-size: .83rem; font-weight: 500; }
-.meeting-list h3 { margin: 0; font-size: 1.04rem; }
-.meeting-list p { margin: .18rem 0 0; color: var(--muted); font-size: .91rem; }
-.course-resources { padding-bottom: 3.5rem; }
-.resource-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .75rem; }
-.resource-list a { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .25rem .75rem; height: 100%; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: .5rem; background: #fff; }
-.resource-list a span { color: var(--muted); font-size: .82rem; text-decoration: none; }
+.meeting-list li {
+  display: grid; grid-template-columns: 8.75rem minmax(0,1fr) auto;
+  align-items: baseline; gap: .2rem 1rem; padding: .6rem 0;
+  border-top: 1px solid var(--home-line);
+}
+.meeting-list li:last-child { border-bottom: 1px solid var(--home-line); }
+.meeting-number { font-size: .94rem; font-weight: 700; }
+.meeting-number span { margin-inline-start: .25rem; color: var(--muted); font-size: .84rem; font-weight: 500; }
+.meeting-topic { font-size: .95rem; }
+.course-resources { padding-bottom: 2.6rem; }
+.resource-list { display: flex; flex-wrap: wrap; gap: .35rem 1.5rem; font-size: .92rem; }
+.resource-list a { display: inline-block; padding-block: .25rem; }
+.course-home footer {
+  padding: .85rem max(1rem, calc((100% - var(--home-width)) / 2));
+  color: var(--muted); background: #fff; border-top: 1px solid var(--home-line);
+}
+.course-home footer a { color: var(--link); }
 footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .65rem 1.25rem; padding: 1.5rem max(1.25rem, calc((100% - 1120px) / 2)); color: #bdcce0; background: var(--navy); font-size: .86rem; }
 footer p { margin: 0; }
 footer a { color: var(--cyan); }
@@ -101,16 +121,17 @@ footer a { color: var(--cyan); }
 .inference-steps li + li { margin-top: .95rem; }
 @media (max-width: 740px) {
   .site-header { grid-template-columns: 1fr auto; gap: .4rem 1rem; }
-  .course-home nav { grid-column: 1 / -1; grid-row: 2; gap: 1.25rem; }
   html { scroll-padding-top: 104px; }
   .download-list,.inference-layout { grid-template-columns: 1fr; }
   .inference-figure { width: min(100%, 440px); }
 }
 @media (max-width: 580px) {
   .course-width,.downloads-main { width: calc(100% - 32px); }
-  .project-options,.resource-list { grid-template-columns: 1fr; }
-  .meeting-list li { grid-template-columns: 1fr; gap: .32rem; }
-  .meeting-number { display: flex; align-items: baseline; gap: .7rem; }
+  .project-options { grid-template-columns: 1fr; }
+  .bonus-project { border-inline-start: 0; border-top: 1px solid var(--home-line); }
+  .meeting-list li { grid-template-columns: minmax(0,1fr) auto; }
+  .meeting-topic { grid-row: 2; }
+  .meeting-list a { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
   .score-list { display: block; }
   .score-list dd { margin-bottom: .8rem; }
 }

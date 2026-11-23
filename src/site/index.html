@@ -13,89 +13,82 @@
   <header class="site-header">
     <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">IS</span><strong>LLM Inference</strong></a>
     <nav aria-label="主导航">
-      <a href="#practice">项目</a>
-      <a href="#syllabus">授课安排</a>
       <a href="tutorials/assessment/">评分标准</a>
+      <a href="downloads/">课件下载</a>
     </nav>
-    <a class="header-link" href="downloads/">下载课件</a>
   </header>
-  <main id="main">
+  <main class="course-width" id="main">
     <section class="course-intro" id="top">
-      <div class="course-width">
-        <p class="course-meta">华中科技大学计算机学院 · 2027</p>
-        <h1>大模型推理系统与实践</h1>
-        <p class="course-summary">学习请求调度、KV 缓存和推理评测。第 4 讲开始制作个人引擎 MOD。</p>
-        <p class="course-factline">张书豪授课 <span aria-hidden="true">·</span> 16 学时 / 4 次授课</p>
+      <p class="course-meta">华中科技大学计算机学院 · 2027</p>
+      <h1>大模型推理系统与实践</h1>
+      <p class="course-factline">张书豪 · 16 学时 / 4 次授课</p>
+    </section>
+
+    <section class="course-block" id="practice" aria-labelledby="project-title">
+      <div class="course-heading">
+        <h2 id="project-title">课程项目</h2>
+        <a href="tutorials/assessment/#submission">提交要求</a>
+      </div>
+      <div class="project-options">
+        <article class="project-card required-project">
+          <p class="project-score-label">必做 · 100 分</p>
+          <h3>vLLM-HUST 引擎 MOD</h3>
+          <p>每人独立完成一个。第 4 讲从 BidKV 实操开始。</p>
+          <div class="project-links">
+            <a class="project-action" href="tutorials/mod/#first-lab">开始实操</a>
+            <a href="https://github.com/vLLM-HUST/vllm-hust-mod-template" aria-label="引擎 MOD 项目模板">项目模板</a>
+          </div>
+        </article>
+        <article class="project-card bonus-project" id="ride">
+          <p class="project-score-label">选做 · 最多加 30 分</p>
+          <h3>RIDE Control Plane 插件</h3>
+          <p>额外开发一个 Controller，第 8 讲单独验收。</p>
+          <div class="project-links">
+            <a href="tutorials/ride/">开发教程</a>
+            <a href="https://github.com/vLLM-HUST/ride-controller-template" aria-label="RIDE Controller 项目模板">项目模板</a>
+          </div>
+        </article>
       </div>
     </section>
-    <div class="course-width">
-      <section class="course-block" id="practice" aria-labelledby="project-title">
-        <div class="course-heading">
-          <h2 id="project-title">课程项目</h2>
-          <a href="tutorials/assessment/#submission">项目提交要求</a>
-        </div>
-        <div class="project-options">
-          <article class="project-card required-project">
-            <p class="project-score-label">必做 <strong>100 分</strong></p>
-            <h3>vLLM-HUST 引擎 MOD</h3>
-            <p>每人独立完成一个。先做 BidKV 入门实操，再建个人仓库并选题。</p>
-            <div class="project-links">
-              <a class="project-action" href="tutorials/mod/#first-lab">开始实操</a>
-              <a href="tutorials/mod/#start">课前准备</a>
-              <a href="https://github.com/vLLM-HUST/vllm-hust-mod-template" aria-label="引擎 MOD 项目模板">项目模板</a>
-            </div>
-          </article>
-          <article class="project-card bonus-project" id="ride">
-            <p class="project-score-label">选做 <strong>最多 +30 分</strong></p>
-            <h3>RIDE Control Plane 插件</h3>
-            <p>为 yancan 负责的 Control Plane 再做一个 Controller 插件，第 8 讲单独验收。</p>
-            <div class="project-links">
-              <a class="project-action" href="tutorials/ride/">开发教程</a>
-              <a href="tutorials/assessment/#bonus">加分标准</a>
-              <a href="https://github.com/vLLM-HUST/ride-controller-template" aria-label="RIDE Controller 项目模板">项目模板</a>
-            </div>
-          </article>
-        </div>
-      </section>
 
-      <section class="course-block" id="syllabus" aria-labelledby="schedule-title">
-        <div class="course-heading">
-          <h2 id="schedule-title">授课安排</h2>
-          <a href="downloads/#lectures">课件下载</a>
-        </div>
-        <ol class="meeting-list">
-          <li>
-            <div class="meeting-number">第 1 次 <span>第 1–2 讲</span></div>
-            <div><h3>理解推理请求</h3><p>课程导论与评价指标 · 请求生命周期与 Prefill / Decode</p></div>
-          </li>
-          <li class="meeting-launch">
-            <div class="meeting-number">第 2 次 <span>第 3–4 讲</span></div>
-            <div><h3>第 4 讲开做 MOD</h3><p>请求调度与连续批处理 · 开源实践与课程项目</p></div>
-            <a href="tutorials/assessment/#topic">选题要求</a>
-          </li>
-          <li>
-            <div class="meeting-number">第 3 次 <span>第 5–6 讲</span></div>
-            <div><h3>第 6 讲提交联调记录</h3><p>KV 缓存与状态管理 · 推理系统架构与代码阅读</p></div>
-            <a href="tutorials/assessment/#integration">联调要求</a>
-          </li>
-          <li>
-            <div class="meeting-number">第 4 次 <span>第 7–8 讲</span></div>
-            <div><h3>第 8 讲交付与答辩</h3><p>执行优化与异构平台适配 · 论文比较与实验验证</p></div>
-            <a href="tutorials/assessment/#delivery">交付与答辩要求</a>
-          </li>
-        </ol>
-      </section>
+    <section class="course-block" id="syllabus" aria-labelledby="schedule-title">
+      <div class="course-heading">
+        <h2 id="schedule-title">授课安排</h2>
+        <a href="downloads/#lectures">八讲课件</a>
+      </div>
+      <ol class="meeting-list">
+        <li>
+          <div class="meeting-number">第 1 次 <span>第 1–2 讲</span></div>
+          <span class="meeting-topic">请求生命周期与评价指标</span>
+          <a href="tutorials/mod/#start">实操准备</a>
+        </li>
+        <li>
+          <div class="meeting-number">第 2 次 <span>第 3–4 讲</span></div>
+          <span class="meeting-topic">请求调度与 MOD 入门实操</span>
+          <a href="tutorials/assessment/#topic">第 4 讲选题</a>
+        </li>
+        <li>
+          <div class="meeting-number">第 3 次 <span>第 5–6 讲</span></div>
+          <span class="meeting-topic">KV 缓存与引擎架构</span>
+          <a href="tutorials/assessment/#integration">第 6 讲联调</a>
+        </li>
+        <li>
+          <div class="meeting-number">第 4 次 <span>第 7–8 讲</span></div>
+          <span class="meeting-topic">执行优化与实验验证</span>
+          <a href="tutorials/assessment/#delivery">第 8 讲交付与答辩</a>
+        </li>
+      </ol>
+    </section>
 
-      <section class="course-block course-resources" id="materials" aria-labelledby="resources-title">
-        <div class="course-heading"><h2 id="resources-title">课程材料</h2></div>
-        <ul class="resource-list">
-          <li><a href="downloads/#mod-project"><strong>个人项目实验单</strong><span>PDF</span></a></li>
-          <li><a href="downloads/#overview"><strong>两小时课程介绍</strong><span>中英文 PPTX</span></a></li>
-          <li id="walkthrough"><a id="path" href="tutorials/inference/"><strong>推理流程图解</strong><span>流程与论文阅读</span></a></li>
-        </ul>
-      </section>
-    </div>
+    <section class="course-block course-resources" id="materials" aria-labelledby="resources-title">
+      <div class="course-heading"><h2 id="resources-title">课程材料</h2></div>
+      <ul class="resource-list">
+        <li><a href="downloads/#mod-project">个人项目实验单</a></li>
+        <li><a href="downloads/#overview">中英文课程介绍</a></li>
+        <li id="walkthrough"><a id="path" href="tutorials/inference/">推理流程图解</a></li>
+      </ul>
+    </section>
   </main>
-  <footer><p>《大模型推理系统与实践》</p><p><a href="https://github.com/vLLM-HUST/intro-to-llm-inference-engines">课程仓库</a></p></footer>
+  <footer><p>华中科技大学计算机学院</p><p><a href="https://github.com/vLLM-HUST/intro-to-llm-inference-engines">课程仓库</a></p></footer>
 </body>
 </html>
