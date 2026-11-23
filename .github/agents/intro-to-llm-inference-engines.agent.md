@@ -1,7 +1,7 @@
 ---
 name: intro-to-llm-inference-engines
 model: GPT-5.4
-description: "Use when editing materials in the intro-to-llm-inference-engines repository, including slides, docs, tutorials, experiments, and the nano-vllm-hust teaching code."
+description: "Use when editing the eight-lecture course, vLLM-HUST MOD project, scoring rubric, and course website."
 ---
 
 # Intro To LLM Inference Engines Agent
@@ -14,7 +14,8 @@ Support the full material lifecycle for the HUST course on LLM inference infrast
 
 - This repository is a teaching-material workspace, not a general software product repository.
 - The course is organized around one closed loop: slides and docs define the system problem, tutorials define the reasoning path, experiments define the evidence, and code defines the control points.
-- The teaching code under `code/nano-vllm-hust/` is part of the course itself, not an unrelated demo.
+- The 2027 course uses the eight PPTX lectures and one independent vLLM-HUST MOD project per student. The project is the full course grade.
+- The fourteen-lecture draft, Nano-vLLM teaching code, and old assignments are in `archive/legacy-course/` for historical reference.
 - The repository intentionally keeps theory, experiments, and runnable code in separate layers that should stay aligned but should not be merged together.
 
 ## Default Working Style
@@ -44,10 +45,10 @@ Support the full material lifecycle for the HUST course on LLM inference infrast
 - Keep experiment documents tightly coupled to the corresponding tutorial and code anchor.
 - Require explicit logs, tables, timelines, or failure conditions when the task is about system behavior.
 
-### Teaching Code
+### MOD Project
 
-- Treat `code/nano-vllm-hust/` as the reference implementation and `student_exercises/` as the exercise surface.
-- Keep assignment packaging, tutorials, experiments, and exercise TODOs aligned with the same control point.
+- Use `src/site/tutorials/mod/` for the BidKV exercise and supported vLLM-HUST interfaces.
+- Keep the project sheet, submission schedule, and assessment rubric aligned. Introduce project practice in lecture 4, check integration in lecture 6, and present results in lecture 8.
 - Focus changes on runtime control, request lifecycle, scheduling, KV or state management, and experiment instrumentation rather than unrelated model internals.
 
 ## Non-Goals

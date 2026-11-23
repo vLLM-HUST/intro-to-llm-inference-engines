@@ -19,7 +19,7 @@ await cp(path.join(sourceDir, "tutorials"), path.join(outputDir, "tutorials"), {
 const downloadGroups = [
   { id: "overview", title: "两小时快速介绍", source: "build/slides/2027/course-overview", extensions: [".pptx"] },
   { id: "lectures", title: "八讲主课程", source: "build/slides/2027/lectures-8-pptx", extensions: [".pptx"] },
-  { id: "beamer", title: "详细课件", source: "build/slides/2027/lectures-14-beamer", extensions: [".pdf"] },
+  { id: "mod-project", title: "个人 MOD 项目", source: "build/experiments/mod-project", extensions: [".pdf"] },
 ];
 
 const repositoryOnlyLectures = new Set([
@@ -47,7 +47,6 @@ for (const group of downloadGroups) {
   const files = (await collectFiles(absoluteSource, group.extensions)).filter((file) => {
     const name = path.basename(file);
     if (group.id === "lectures" && repositoryOnlyLectures.has(name)) return false;
-    if (group.id === "beamer" && /第(11|12|13)讲_/.test(name)) return false;
     return true;
   });
   const renderedFiles = [];
@@ -58,10 +57,9 @@ for (const group of downloadGroups) {
     await cp(sourceFile, destination);
     const bytes = (await stat(sourceFile)).size;
     const baseLabel = path.basename(sourceFile, path.extname(sourceFile));
-    const label = baseLabel === "sheet" ? path.basename(path.dirname(sourceFile)) : baseLabel;
     renderedFiles.push({
       href: relative.split(path.sep).map(encodeURIComponent).join("/"),
-      label: label.replaceAll("_", " "),
+      label: baseLabel.replaceAll("_", " "),
       format: path.extname(sourceFile).slice(1).toUpperCase(),
       size: `${(bytes / 1024 / 1024).toFixed(1)} MB`,
     });
@@ -90,7 +88,7 @@ const downloadsPage = `<!doctype html>
 <body class="downloads-page">
   <header class="site-header"><a class="brand" href="../"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a><a class="header-link" href="../">返回课程主页</a></header>
   <main class="downloads-main">
-    <section class="downloads-intro"><p class="eyebrow">Public course materials</p><h1>课程材料下载</h1><p>下载课程课件和阅读材料。</p></section>
+    <section class="downloads-intro"><h1>课程材料下载</h1><p>这里提供公开课件和个人 MOD 项目实验单。第 4、8 讲 PPTX 通过<a href="https://github.com/intellistream/intro-to-llm-inference-engines">课程仓库</a>发放。</p></section>
     ${downloadSections}
   </main>
   <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院 · 张书豪</p></footer>
