@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -109,5 +109,21 @@ const downloadsPage = `<!doctype html>
 </html>`;
 
 await writeFile(path.join(publicRoot, "index.html"), downloadsPage, "utf8");
+
+if (process.env.COURSE_SITE_URL) {
+  const baseURL = new URL(process.env.COURSE_SITE_URL);
+  if (baseURL.protocol !== "https:" || baseURL.username || baseURL.password || baseURL.search || baseURL.hash) {
+    throw new Error("COURSE_SITE_URL must be an HTTPS site URL");
+  }
+  const canonicalRoot = baseURL.href.replace(/\/?$/, "/");
+  for (const file of await collectFiles(outputDir, [".html"])) {
+    const markup = await readFile(file, "utf8");
+    const updated = markup.replace(
+      'rel="canonical" href="https://courses.sage.org.ai/',
+      () => `rel="canonical" href="${escapeHtml(canonicalRoot)}`,
+    );
+    await writeFile(file, updated, "utf8");
+  }
+}
 
 console.log(`Course site built in ${outputDir} with ${renderedGroups.reduce((sum, group) => sum + group.files.filter((file) => !file.fromRepository).length, 0)} public downloads`);
