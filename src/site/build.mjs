@@ -22,6 +22,11 @@ const downloadGroups = [
   { id: "beamer", title: "详细课件", source: "build/slides/2027/lectures-14-beamer", extensions: [".pdf"] },
 ];
 
+const repositoryOnlyLectures = new Set([
+  "第04讲_开源实践与课程项目.pptx",
+  "第08讲_论文比较与实验验证.pptx",
+]);
+
 async function collectFiles(directory, extensions) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
@@ -41,7 +46,7 @@ for (const group of downloadGroups) {
   const absoluteSource = path.join(repositoryRoot, group.source);
   const files = (await collectFiles(absoluteSource, group.extensions)).filter((file) => {
     const name = path.basename(file);
-    if (group.id === "lectures" && /^第(07|08)讲_/.test(name)) return false;
+    if (group.id === "lectures" && repositoryOnlyLectures.has(name)) return false;
     if (group.id === "beamer" && /第(11|12|13)讲_/.test(name)) return false;
     return true;
   });

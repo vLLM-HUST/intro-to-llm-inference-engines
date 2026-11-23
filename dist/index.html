@@ -34,7 +34,7 @@
     </section>
 
     <section class="section practice-section" id="practice">
-      <div class="section-heading"><p class="eyebrow">vLLM-HUST MOD</p><h2>第二次授课开始制作 MOD</h2><p>学完请求生命周期、调度与 KV 抢占基础后，在第二次授课的后 2 学时修改 BidKV 的抢占规则并跑 CPU 测试。第三次打包和联调，第四次展示评测结果。</p><p><a class="text-link" href="tutorials/mod/#start">首次实操前准备</a> · <a class="text-link" href="tutorials/mod/#first-lab">MOD 入门实操</a></p></div>
+      <div class="section-heading"><p class="eyebrow">vLLM-HUST MOD</p><h2>第 4 讲开始制作 MOD</h2><p>学完请求生命周期、调度与 KV 抢占基础后，在第 4 讲修改 BidKV 的抢占规则并跑 CPU 测试。第 5–7 讲支持打包、联调和测量，第 8 讲展示评测结果。</p><p><a class="text-link" href="tutorials/mod/#start">首次实操前准备</a> · <a class="text-link" href="tutorials/mod/#first-lab">MOD 入门实操</a></p></div>
       <div class="practice-grid">
         <article><span>01</span><h3>确定优化问题</h3><p>选择请求调度、KV 缓存或模型执行等场景，说明目标负载、优化指标和适用条件。</p></article>
         <article><span>02</span><h3>选择接入方式</h3><p>阅读运行时和现有 MOD 的接口，确定扩展点、输入输出、依赖与配置。先检查所选版本实际支持的接口。</p></article>
@@ -128,16 +128,16 @@
     </section>
 
     <section class="section" id="syllabus">
-      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲课件</h2><p>第一次讲第 1、2 讲。第二次选讲第 3、4 讲后做 <a href="tutorials/mod/#first-lab">MOD 入门实操</a>，穿插第 8 讲的分支、补丁和测试。第三次用第 5–7 讲的架构、平台与实验方法完成实现和联调，第四次结合第 7、8 讲分析和展示结果。</p></div>
+      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲课件</h2><p>第 3 讲讲调度与抢占，第 4 讲做 <a href="tutorials/mod/#first-lab">MOD 入门实操</a>。第 5–7 讲支持状态分析、宿主联调和性能测量，第 8 讲分析对照结果并展示项目。</p></div>
       <div class="syllabus-list">
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC01%E8%AE%B2_%E8%AF%BE%E7%A8%8B%E5%AF%BC%E8%AE%BA%E4%B8%8E%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87.pptx" download><span>01</span><strong>课程导论与评价指标</strong><small>请求边界 · TTFT · TPOT · P99 · Goodput</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC02%E8%AE%B2_%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8EPrefillDecode.pptx" download><span>02</span><strong>请求生命周期与 Prefill / Decode</strong><small>Transformer 路径 · 状态演化 · 逐步生成</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC03%E8%AE%B2_%E8%AF%B7%E6%B1%82%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%BF%9E%E7%BB%AD%E6%89%B9%E5%A4%84%E7%90%86.pptx" download><span>03</span><strong>请求调度与连续批处理</strong><small>排队 · Token Budget · 抢占 · 公平性</small><b>↓</b></a>
-        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC04%E8%AE%B2_KV%E7%BC%93%E5%AD%98%E4%B8%8E%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86.pptx" download><span>04</span><strong>KV 缓存与状态管理</strong><small>容量 · 分页 · 复用 · 迁移 · 失效</small><b>↓</b></a>
-        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC05%E8%AE%B2_%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.pptx" download><span>05</span><strong>推理系统架构与代码阅读</strong><small>Runtime · Worker · Kernel · 可观测性</small><b>↓</b></a>
-        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC06%E8%AE%B2_%E6%89%A7%E8%A1%8C%E4%BC%98%E5%8C%96%E4%B8%8E%E5%BC%82%E6%9E%84%E5%B9%B3%E5%8F%B0%E9%80%82%E9%85%8D.pptx" download><span>06</span><strong>执行优化与异构平台适配</strong><small>Roofline · Attention · 量化 · 并行通信</small><b>↓</b></a>
-        <a href="tutorials/mod/#evaluation"><span>07</span><strong>论文阅读与性能评测</strong><small>工作负载 · 基线 · 评价指标</small><b>→</b></a>
-        <a href="tutorials/mod/#package"><span>08</span><strong>开源实践与课程项目</strong><small>插件打包 · 验证 · 展示</small><b>→</b></a>
+        <a href="tutorials/mod/#first-lab"><span>04</span><strong>开源实践与课程项目</strong><small>BidKV · 策略修改 · CPU 测试 · 项目启动</small><b>→</b></a>
+        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC05%E8%AE%B2_KV%E7%BC%93%E5%AD%98%E4%B8%8E%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86.pptx" download><span>05</span><strong>KV 缓存与状态管理</strong><small>容量 · 分页 · 复用 · 迁移 · 失效</small><b>↓</b></a>
+        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC06%E8%AE%B2_%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.pptx" download><span>06</span><strong>推理系统架构与代码阅读</strong><small>Runtime · Worker · Kernel · 可观测性</small><b>↓</b></a>
+        <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC07%E8%AE%B2_%E6%89%A7%E8%A1%8C%E4%BC%98%E5%8C%96%E4%B8%8E%E5%BC%82%E6%9E%84%E5%B9%B3%E5%8F%B0%E9%80%82%E9%85%8D.pptx" download><span>07</span><strong>执行优化与异构平台适配</strong><small>Roofline · Attention · 量化 · 并行通信</small><b>↓</b></a>
+        <a href="tutorials/mod/#evaluation"><span>08</span><strong>论文比较与实验验证</strong><small>工作负载 · 基线 · 项目展示</small><b>→</b></a>
       </div>
     </section>
 
