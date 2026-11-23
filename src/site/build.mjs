@@ -27,12 +27,16 @@ const downloadLabels = new Map([
   ["LLM推理系统_两小时快速介绍.pptx", "中文课程介绍"],
   ["llm_inference_systems.pptx", "英文课程介绍"],
   ["第02讲_请求生命周期与PrefillDecode.pptx", "第 2 讲 · 请求生命周期与 Prefill / Decode"],
+  ["第05讲_MOD实现与CPU测试.pptx", "第 5 讲 · MOD 实现与 CPU 测试"],
+  ["第06讲_MOD打包与宿主联调.pptx", "第 6 讲 · MOD 打包与宿主联调"],
+  ["第07讲_MOD对照评测与结果分析.pptx", "第 7 讲 · MOD 对照评测与结果分析"],
+  ["第08讲_MOD复现验收与个人答辩.pptx", "第 8 讲 · MOD 复现验收与个人答辩"],
 ]);
 
 const courseRepository = "https://github.com/vLLM-HUST/intro-to-llm-inference-engines";
 const repositoryOnlyLectures = new Set([
   "第04讲_开源实践与课程项目.pptx",
-  "第08讲_论文比较与实验验证.pptx",
+  "第08讲_MOD复现验收与个人答辩.pptx",
 ]);
 
 async function collectFiles(directory, extensions) {

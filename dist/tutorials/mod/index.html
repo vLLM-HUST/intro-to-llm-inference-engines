@@ -17,7 +17,7 @@
   <main class="downloads-main tutorial-main" id="main">
     <div class="downloads-intro">
       <h1>vLLM-HUST MOD 开发教程</h1>
-      <p>第 4 讲在 CPU 上修改并测试 BidKV 抢占规则，再独立制作一个引擎 MOD。<a href="../assessment/#submission">查看选题、联调与交付要求</a>。</p>
+      <p>第 4 次授课在 CPU 上修改并测试 BidKV 抢占规则，再独立制作一个引擎 MOD。<a href="../assessment/#submission">查看选题、联调与交付要求</a>。</p>
     </div>
     <ol class="tutorial-contents">
       <li><a href="#start">首次实操前准备</a></li>
@@ -41,7 +41,7 @@ python3 -m venv .venv
     </section>
     <section class="tutorial-section" id="first-lab">
       <h2>1. 入门实操：实现一个抢占策略变体</h2>
-      <p>第 4 讲先读策略和测试，手算两条候选的分数，再修改规则、运行回归测试并确定自己的插件选题。</p>
+      <p>第 7–8 节先读策略和测试，手算两条候选的分数，再修改规则、运行回归测试并确定自己的插件选题。</p>
       <p>当 KV 缓存压力升高时，宿主给插件一组候选请求，插件返回要抢占的请求 ID，或返回 <code>None</code> 放弃决定。BidKV 的评分同时考虑候选可释放的 token 数、请求已完成比例和抢占次数。</p>
       <ol>
         <li>打开 <code>tests/test_vllm_hust_adapter.py</code>，把下面的用例加在文件末尾。只运行该用例，原策略应选中 <code>b</code>，因此断言会失败。</li>

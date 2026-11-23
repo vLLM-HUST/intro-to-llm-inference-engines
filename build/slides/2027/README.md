@@ -1,27 +1,23 @@
-# 2027 年正式课程课件
+# 2027 年课程课件
 
-2027 年正式课程使用八讲 PPTX、[四次授课安排](../../../src/docs/2027/课程安排.md)和[个人 MOD 项目实验单](../../experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)。术语、算例和研究案例口径见[课程内容基线](../../../src/docs/2027/课程内容基线.md)。
+八份主课 PPTX 对应八次授课，每次连上两节，共 16 节。第 1–3 次讲必要原理，第 4 次启动 MOD 项目，第 5–8 次完成实现、联调、评测和验收。 [完整授课安排](../../../src/docs/2027/课程安排.md)
 
-## 1. 课程介绍：`course-overview/`
+## 八讲主课程
 
-面向单次讲座或首次接触课程的听众，保留两个单文件 PPTX：
+| 授课 | 节次 | PPTX | 页数 |
+| --- | --- | --- | ---: |
+| 第 1 次 | 第 1–2 节 | [课程导论与评价指标](lectures-8-pptx/第01讲_课程导论与评价指标.pptx) | 14 |
+| 第 2 次 | 第 3–4 节 | [请求生命周期与 Prefill / Decode](lectures-8-pptx/第02讲_请求生命周期与PrefillDecode.pptx) | 12 |
+| 第 3 次 | 第 5–6 节 | [请求调度与连续批处理](lectures-8-pptx/第03讲_请求调度与连续批处理.pptx) | 13 |
+| 第 4 次 | 第 7–8 节 | [开源实践与课程项目](lectures-8-pptx/第04讲_开源实践与课程项目.pptx) | 11 |
+| 第 5 次 | 第 9–10 节 | [MOD 实现与 CPU 测试](lectures-8-pptx/第05讲_MOD实现与CPU测试.pptx) | 11 |
+| 第 6 次 | 第 11–12 节 | [MOD 打包与宿主联调](lectures-8-pptx/第06讲_MOD打包与宿主联调.pptx) | 10 |
+| 第 7 次 | 第 13–14 节 | [MOD 对照评测与结果分析](lectures-8-pptx/第07讲_MOD对照评测与结果分析.pptx) | 10 |
+| 第 8 次 | 第 15–16 节 | [MOD 复现验收与个人答辩](lectures-8-pptx/第08讲_MOD复现验收与个人答辩.pptx) | 10 |
 
-- `LLM推理系统_两小时快速介绍.pptx`：60 页中文系统导向快速介绍。
-- `llm_inference_systems.pptx`：124 页英文模型原理导向快速介绍，保留快节奏讲解方式。
+[课程考核与评分标准](../../../src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](../../experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
 
-两者是独立的两小时介绍版，可用于公开讲座和课前速览。
+## 独立课程速览
 
-## 2. 八讲主课程：`lectures-8-pptx/`
-
-共 8 份 PPTX，每讲 48 页，总计 384 页。第 4 讲在第二次授课启动 MOD 项目，第 8 讲用于结果验证和项目展示。各次授课的选页见[课程安排](../../../src/docs/2027/课程安排.md)。
-
-[考核与评分标准](../../../src/site/tutorials/assessment/index.html)对应第 1 讲第 21 页、第 4 讲第 15 和 47 页，以及第 8 讲第 47 页。
-
-1. 课程导论与评价指标
-2. 请求生命周期与 Prefill / Decode
-3. 请求调度与连续批处理
-4. [开源实践与课程项目](lectures-8-pptx/第04讲_开源实践与课程项目.pptx)
-5. KV 缓存与状态管理
-6. 推理系统架构与代码阅读
-7. 执行优化与异构平台适配
-8. [论文比较与实验验证](lectures-8-pptx/第08讲_论文比较与实验验证.pptx)
+- [中文系统导向介绍](course-overview/LLM推理系统_两小时快速介绍.pptx) · 60 页
+- [英文模型导向介绍](course-overview/llm_inference_systems.pptx) · 124 页
