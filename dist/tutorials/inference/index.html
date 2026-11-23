@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>推理流程图解｜大模型推理系统与实践</title>
+  <meta name="description" content="从文本输入到流式输出，看懂大模型推理的计算和服务流程。">
+  <link rel="canonical" href="https://courses.sage.org.ai/tutorials/inference/">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到推理流程</a>
+  <header class="site-header tutorial-header">
+    <a class="brand" href="../../"><span class="brand-mark" aria-hidden="true">IS</span><strong>LLM Inference</strong></a>
+    <a class="header-link" href="../../">返回课程主页</a>
+  </header>
+  <main class="downloads-main tutorial-main" id="main">
+    <div class="downloads-intro">
+      <h1>推理流程图解</h1>
+      <p>第 2 讲配套阅读。从文本输入到流式返回，跟踪一个推理请求。</p>
+    </div>
+    <div class="inference-layout">
+      <figure class="inference-figure">
+        <a href="../../assets/llm-inference-pipeline.jpg"><img src="../../assets/llm-inference-pipeline.jpg" width="1103" height="1517" alt="大模型推理流程图，展示文本输入、分词、Transformer、采样、推测解码与流式返回"></a>
+        <figcaption>点击查看原图</figcaption>
+      </figure>
+      <ol class="inference-steps">
+        <li><strong>输入与调度。</strong>聊天模板和 Tokenizer 把消息编码成 Token ID。准入队列和调度器按 Token 与 KV 容量选请求、组批次。</li>
+        <li><strong>Prefill。</strong>Transformer 处理提示词并建立每层 KV Cache。提示词长度、批大小和算子共同影响首 Token 延迟（TTFT）。</li>
+        <li><strong>Decode。</strong>模型读取历史 KV，LM Head 输出 Logits，经采样产生新 Token，再更新 KV。连续批处理让多条序列共享执行轮次。</li>
+        <li><strong>返回与测量。</strong>增量反分词并流式输出，结束后释放资源。记录 TPOT、P99 时延和满足服务目标的 Goodput。</li>
+      </ol>
+    </div>
+    <section class="tutorial-section">
+      <h2>阅读提示</h2>
+      <ul>
+        <li>图中的 Token ID、隐藏维度、词表和层数是示例。以实际模型和 Tokenizer 配置为准。</li>
+        <li>KV 分页分配可减少碎片，前缀缓存可复用重复上下文。GQA、MQA 和缓存精度会影响每 Token 的 KV 占用。</li>
+        <li>FlashAttention 减少 HBM 读写。推测解码由草稿机制提议候选，再由目标模型按所选算法验证。</li>
+      </ul>
+    </section>
+    <section class="tutorial-section">
+      <h2>论文阅读</h2>
+      <ul>
+        <li><a href="https://openreview.net/pdf?id=H4DqfPSibmx">FlashAttention · NeurIPS 2022</a></li>
+        <li><a href="https://doi.org/10.1145/3600006.3613165">PagedAttention · SOSP 2023</a></li>
+        <li><a href="https://proceedings.mlr.press/v202/leviathan23a.html">Speculative Decoding · ICML 2023</a></li>
+        <li><a href="https://www.usenix.org/conference/osdi24/presentation/zhong-yinmin">DistServe · OSDI 2024</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer><p>《大模型推理系统与实践》</p></footer>
+</body>
+</html>

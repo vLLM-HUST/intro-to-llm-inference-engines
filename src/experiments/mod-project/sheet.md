@@ -114,9 +114,13 @@
 
 ### 7.1 Control Plane Bonus
 
-学生可为 yancan 负责的 RIDE Control Plane 额外开发一个 Controller 插件。第 8 讲单独提交插件、注册配置、安装与运行命令、可复现的测试或请求日志。可以用 CPU 模型替身演示加载、处理请求与停止或恢复。参考 [RIDE Controller 教程](https://courses.sage.org.ai/tutorials/ride/#develop)。
+可为 yancan 负责的 RIDE Control Plane 独立开发一个 Controller 插件，**最多加 30 分，直接计入总评**。可用 CPU 模型替身验证。参考 [RIDE Controller 教程](https://courses.sage.org.ai/tutorials/ride/#develop)。
 
-Bonus 的加分值和计入方式另行确定。
+- **安装与注册（10 分）**。提供可安装的插件和注册配置，验证 RIDE 加载了指定 Controller。
+- **行为与生命周期（10 分）**。用实际请求触发策略，验证预期结果并演示停止或恢复。
+- **复现证据（10 分）**。提供准确的版本、命令和可复跑的测试或请求日志。
+
+每项按完成度和证据给 10、5 或 0 分。第 8 讲单独提交源码与提交号、注册配置、安装与运行命令，以及测试或请求日志。
 
 ## 8. 最终目标
 

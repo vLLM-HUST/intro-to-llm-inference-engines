@@ -6,7 +6,7 @@
   <title>RIDE Control Plane Bonus｜大模型推理系统与实践</title>
   <meta name="description" content="启动 RIDE，制作和打包独立 Controller 插件，并验证部署与请求链路。">
   <link rel="canonical" href="https://courses.sage.org.ai/tutorials/ride/">
-  <link rel="stylesheet" href="../../styles.css?v=20261113-ride">
+  <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到教程正文</a>
@@ -17,9 +17,15 @@
 
   <main class="downloads-main tutorial-main" id="main">
     <div class="downloads-intro">
-      <h1>RIDE Control Plane Bonus</h1>
-      <p>完成必做的 <a href="../mod/">vLLM-HUST 引擎 MOD</a> 后，可为 yancan 负责的 Control Plane 另做一个 Controller 插件。从 CPU 演示开始，再根据需要接入 Ray 集群和真实模型。<a href="../assessment/#bonus">查阅 Bonus 提交要求</a>。</p>
+      <h1>RIDE Control Plane 插件</h1>
+      <p>为 yancan 负责的 Control Plane 做一个 Controller 插件，最多加 30 分。第 8 讲单独验收，可用 CPU 模型替身演示。<a href="../assessment/#bonus">查看加分标准</a>。</p>
     </div>
+    <ul class="tutorial-contents">
+      <li><a href="#demo">限流演示</a></li>
+      <li><a href="#start">启动 RIDE</a></li>
+      <li><a href="#develop">开发 Controller</a></li>
+      <li><a href="#package">打包与验收</a></li>
+    </ul>
     <section class="tutorial-section" id="demo">
       <h2>演示：4 个请求同时进入限流层</h2>
       <p>Controller 的并发上限设为 1。客户端同时发出 4 个请求，CPU 模型替身暂时扣住第一个响应，直到另外 3 个请求进入等待。随后放开后端，观察请求逐个完成。</p>
@@ -42,12 +48,6 @@ after restart: {"new_job_id": true, "response": "hello"}</code></pre>
       </details>
       <p>2026 年 10 月的 Ascend 910B 实测使用 Qwen3-0.6B。4 个并发请求全部成功，峰值后端并发为 1，累计排队 3 次，恢复后再次推理成功。该记录验证非流式请求的限流和生命周期。<a href="https://github.com/vLLM-HUST/ride-controller-demo/blob/ed8b0fd234050c519e6d0479d7a539eabb086dfb/results/npu-20261011/summary.json">查看真机验收记录</a></p>
     </section>
-
-    <ol class="tutorial-contents">
-      <li><a href="#start">启动 RIDE 并发送第一个请求</a></li>
-      <li><a href="#develop">制作独立 Controller 插件</a></li>
-      <li><a href="#package">打包、部署与验收</a></li>
-    </ol>
 
     <section class="tutorial-section" id="start">
       <h2>1. 启动 RIDE 并发送第一个请求</h2>
