@@ -17,20 +17,21 @@
   <main class="downloads-main tutorial-main" id="main">
     <div class="downloads-intro">
       <h1>课程考核与评分标准</h1>
-      <p>每位学生独立完成一个 MOD。个人项目得分即课程总评，满分 100 分。</p>
+      <p>每位学生必做一个 vLLM-HUST 引擎 MOD，按 100 分计基础成绩。可另做一个 Control Plane 插件作为 Bonus。</p>
     </div>
     <ul class="tutorial-contents">
       <li><a href="#course-score">总评</a></li>
       <li><a href="#project-score">MOD 项目评分</a></li>
       <li><a href="#submission">提交时间与材料</a></li>
+      <li><a href="#bonus">Control Plane Bonus</a></li>
     </ul>
     <section class="tutorial-section" id="course-score">
       <h2>总评</h2>
-      <p>按本人提交的实现、测试、实验记录和答辩评分。阅读、论文精读、课堂练习和独立实验用于准备项目。</p>
+      <p>基础成绩按本人提交的 vLLM-HUST 引擎 MOD 的实现、测试、实验记录和答辩评分。Control Plane 插件作为额外加分项目单列验收。阅读、论文精读、课堂练习和独立实验用于准备必做项目。</p>
     </section>
     <section class="tutorial-section" id="project-score">
-      <h2>MOD 项目评分</h2>
-      <p>选择一个宿主支持的扩展点，独立实现一个可安装、可触发、可停用的 MOD。</p>
+      <h2>必做项目评分 · vLLM-HUST 引擎 MOD</h2>
+      <p>选择一个 vLLM-HUST 引擎支持的扩展点，独立实现一个可安装、可触发、可停用的 MOD。</p>
       <dl>
         <dt><strong>问题定义 · 20 分</strong></dt>
         <dd>具体问题、负载和目标指标 6 分。宿主版本、扩展点及输入输出 7 分。明确预期行为、验收条件和能否定假设的结果 7 分。</dd>
@@ -56,6 +57,12 @@
         <li><strong>第 8 讲 · 交付与展示。</strong>提交本人项目的仓库链接与提交号、插件代码及清单、安装命令、测试、对照配置和原始数据、简短报告。本人展示并回答技术问题。</li>
       </ol>
       <p>阶段材料汇入最终项目评分的对应项。</p>
+    </section>
+    <section class="tutorial-section" id="bonus">
+      <h2>Control Plane Bonus</h2>
+      <p>可为 yancan 负责的 RIDE Control Plane 独立开发一个额外的 Controller 插件。开发和运行步骤见 <a href="../ride/#develop">RIDE Controller 教程</a>。</p>
+      <p>第 8 讲单独提交插件源码与提交号、注册配置、安装与运行命令，以及能复现实际行为的测试或请求日志。可用 CPU 模型替身演示 Controller 加载、处理请求、停止或恢复。</p>
+      <p>Bonus 的加分值和计入方式另行确定。</p>
     </section>
   </main>
   <footer><p>《大模型推理系统与实践》 · 华中科技大学计算机学院</p><p><a href="../mod/">MOD 开发教程</a></p></footer>

@@ -4,7 +4,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 课程主页：[courses.sage.org.ai](https://courses.sage.org.ai/)
 
-2027 年每位学生独立完成一个 MOD，个人项目得分即课程总评，满分 100 分。[考核与评分标准](src/site/tutorials/assessment/index.html)列出分项评分和各讲提交要求。[vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
+2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。为 yancan 负责的 Control Plane 另做一个插件可获 Bonus。[考核与评分标准](src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
 
 **第 4 讲《开源实践与课程项目》开始制作 MOD。** 第 3 讲铺垫调度与 KV 抢占，随后用[第 4 讲 PPTX](build/slides/2027/lectures-8-pptx/第04讲_开源实践与课程项目.pptx)和 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab) 改 BidKV 策略并做 CPU 测试。第 5–7 讲支持插件联调与测量，第 8 讲比较实验结果并展示项目。[四次授课安排](src/docs/2027/课程安排.md) · [课件索引](build/slides/2027/README.md)
 
@@ -24,7 +24,7 @@ English repository slug: `intro-to-llm-inference-engines`
 ## 使用建议
 
 - 2027 年课程共 16 学时，分 4 次授课，每次 4 学时。随[课程安排](src/docs/2027/课程安排.md)使用八讲 PPTX 和个人 MOD 项目材料。
-- RIDE 是[拓展教程](src/site/tutorials/ride/index.html)。它介绍独立 Controller，可在完成主课程实践后选学。
+- [RIDE Control Plane 教程](src/site/tutorials/ride/index.html)用于可选的 Controller 插件 Bonus。
 - `.preview/` 与 `.tectonic-cache/` 属于本地构建缓存，不作为长期维护内容。
 
 ## 维护原则
