@@ -4,7 +4,7 @@
 
 本说明面向《大模型推理系统与实践》课程的学生与助教，配合 `nano-vllm-hust` 教学代码库使用。
 
-课程实践部分现在采用“tutorial 理解练习 + experiment 实验课 + assignment 作业包”三层组织。三者围绕同一课程主线联动，但不再要求编号完全一一对应：tutorial 从第 2 讲到第 14 讲逐讲展开，共 13 份；experiment 与 assignment 仍保留 5 个实践包，用于承接关键讲次的动手训练与提交评分。
+课程实践采用 tutorial 理解练习、experiment 实验课和 assignment 作业包三层组织。Tutorial 对应十四讲细分课件的第 2–14 讲，共 13 份。实验和作业包提供 5 个实践任务，用于训练系统观测和复现。2027 年课程总评全部来自 [MOD 项目](../site/tutorials/assessment/index.html)。
 
 ## 二、作业目录
 
