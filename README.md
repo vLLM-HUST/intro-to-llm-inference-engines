@@ -4,7 +4,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 课程主页：[courses.sage.org.ai](https://courses.sage.org.ai/)
 
-**第一次课即开始制作 MOD。** 先用 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab) 和 BidKV 固定版本，在 CPU 上改一条抢占选择规则并写测试。后续用调度、KV 缓存与系统架构课完善插件，最后一次课做验证、评测与展示。[四次授课安排](src/docs/2027/课程安排.md) · [三套课件索引](build/slides/2027/README.md)
+**第二次授课开始制作 MOD。** 第一次建立请求生命周期和指标概念。第二次讲完调度与 KV 抢占基础后，用 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab) 在 CPU 上改一条 BidKV 抢占规则并写测试。第三次完成插件打包和宿主联调，第四次展示和评审对照结果。[四次授课安排](src/docs/2027/课程安排.md) · [三套课件索引](build/slides/2027/README.md)
 
 本仓库是《大模型推理系统与实践》课程材料的唯一维护与发布源，同时维护配套的 Nano-vLLM 教学代码与实验说明。个人主页和其他网站只提供到本仓库的引用，不再复制保存课件。所有版本的术语、算例、论文出处和课程边界以 `src/docs/2027/课程内容基线.md` 为准。
 

@@ -13,7 +13,7 @@
 
 ## 2. 八讲主课程：`lectures-8-pptx/`
 
-共 8 份 PPTX，每讲 48 页，总计 384 页。以下编号用于按主题检索。第一次课搭配 [MOD 入门实操](../../../src/site/tutorials/mod/index.html#first-lab)，四次课的选讲与实践见[课程安排](../../../src/docs/2027/课程安排.md)。
+共 8 份 PPTX，每讲 48 页，总计 384 页。以下编号用于按主题检索。第二次授课在调度与 KV 抢占基础之后安排 [MOD 入门实操](../../../src/site/tutorials/mod/index.html#first-lab)，并从第 8 讲选讲分支、补丁和测试。各次授课的选页见[课程安排](../../../src/docs/2027/课程安排.md)。
 
 1. 课程导论与评价指标
 2. 请求生命周期与 Prefill / Decode

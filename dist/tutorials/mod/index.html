@@ -17,16 +17,16 @@
   <main class="downloads-main tutorial-main" id="main">
     <div class="downloads-intro">
       <h1>vLLM-HUST MOD 开发教程</h1>
-      <p>第一次课直接修改 BidKV 的一条抢占选择规则，使用 CPU 测试验证结果。后续完成自己的插件、注册清单与宿主验证。</p>
+      <p>第二次授课在讲完调度和 KV 抢占基础后，用 CPU 修改并验证 BidKV 的一条抢占规则。第三次实现并注册自己的插件，在宿主联调后带着结果参加第四次课的展示。</p>
     </div>
     <ol class="tutorial-contents">
-      <li><a href="#start">课前准备</a></li>
-      <li><a href="#first-lab">首课实操：修改策略并写测试</a></li>
+      <li><a href="#start">首次实操前准备</a></li>
+      <li><a href="#first-lab">入门实操：修改策略并写测试</a></li>
       <li><a href="#develop">实现和注册引擎 MOD</a></li>
       <li><a href="#package">打包、部署与验收</a></li>
     </ol>
     <section class="tutorial-section" id="start">
-      <h2>课前准备</h2>
+      <h2>首次实操前准备</h2>
       <p>BidKV 根据候选请求可释放的 token 数与抢占代价，选择要抢占的请求。本练习只需 Git、Python 3.10 或更高版本和 CPU。先获取固定版本并运行适配器测试。以下命令适用于 Linux、macOS 或 WSL。</p>
       <pre><code>git clone https://github.com/vLLM-HUST/vllm-hust-bidkv.git
 cd vllm-hust-bidkv
@@ -38,7 +38,8 @@ python3 -m venv .venv
       <p><a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/tree/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e">固定版本源码</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/tests/test_vllm_hust_adapter.py">适配器测试</a></p>
     </section>
     <section class="tutorial-section" id="first-lab">
-      <h2>1. 首课实操：实现一个抢占策略变体</h2>
+      <h2>1. 入门实操：实现一个抢占策略变体</h2>
+      <p>第二次授课的第 3 学时读策略和测试，手算两条候选的分数。第 4 学时修改规则、运行回归测试，并确定接下来要实现的插件行为。</p>
       <p>当 KV 缓存压力升高时，宿主给插件一组候选请求，插件返回要抢占的请求 ID，或返回 <code>None</code> 放弃决定。BidKV 的评分同时考虑候选可释放的 token 数、请求已完成比例和抢占次数。</p>
       <ol>
         <li>打开 <code>tests/test_vllm_hust_adapter.py</code>，把下面的用例加在文件末尾。只运行该用例，原策略应选中 <code>b</code>，因此断言会失败。</li>
