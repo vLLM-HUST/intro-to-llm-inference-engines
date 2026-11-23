@@ -13,7 +13,7 @@
   <a class="skip-link" href="#main">跳到主要内容</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="返回课程主页顶部"><span class="brand-mark" aria-hidden="true">IS</span><span><strong>LLM Inference</strong><small>Systems &amp; Practice</small></span></a>
-    <nav aria-label="主导航"><a href="#materials">课程材料</a><a href="#walkthrough">推理图解</a><a href="#syllabus">八讲主线</a><a href="#practice">MOD 插件</a><a href="#ride">RIDE 教程</a></nav>
+    <nav aria-label="主导航"><a href="#practice">MOD 入门</a><a href="#materials">课程材料</a><a href="#walkthrough">推理图解</a><a href="#syllabus">八讲课件</a><a href="#ride">RIDE 教程</a></nav>
     <a class="header-link" href="downloads/">下载课件 ↓</a>
   </header>
 
@@ -24,7 +24,7 @@
         <h1>大模型推理系统<br><span>与实践</span></h1>
         <p class="english-title">LLM Inference Systems and Practice</p>
         <p class="lede">学习大模型推理的基本原理与系统实现，涵盖请求调度、KV 缓存、推理优化和性能评测。</p>
-        <div class="hero-actions"><a class="button primary" href="#materials">查看课程内容</a><a class="button secondary" href="downloads/">全部公开课件 ↓</a></div>
+        <div class="hero-actions"><a class="button primary" href="tutorials/mod/#first-lab">开始制作 MOD</a><a class="button secondary" href="downloads/">下载公开课件 ↓</a></div>
       </div>
       <aside class="course-facts" aria-label="课程信息">
         <div><span>01</span><p><strong>16 学时</strong>共 16 节课，每次 4 节连排，共 4 次</p></div>
@@ -33,10 +33,23 @@
       </aside>
     </section>
 
+    <section class="section practice-section" id="practice">
+      <div class="section-heading"><p class="eyebrow">vLLM-HUST MOD</p><h2>第一次课制作 MOD</h2><p>用 BidKV 示例改一条抢占选择规则，并在 CPU 上验证候选变化。后续逐步完成自己的插件、宿主验证和性能评测。</p><p><a class="text-link" href="tutorials/mod/#start">课前准备</a> · <a class="text-link" href="tutorials/mod/#first-lab">首课实操</a></p></div>
+      <div class="practice-grid">
+        <article><span>01</span><h3>确定优化问题</h3><p>选择请求调度、KV 缓存或模型执行等场景，说明目标负载、优化指标和适用条件。</p></article>
+        <article><span>02</span><h3>选择接入方式</h3><p>阅读运行时和现有 MOD 的接口，确定扩展点、输入输出、依赖与配置。先检查所选版本实际支持的接口。</p></article>
+        <article><span>03</span><h3>实现与注册</h3><p>将优化逻辑组织为独立模块，按所选接口实现适配和注册，并提供安装与启用方法。</p></article>
+        <article><span>04</span><h3>验证功能</h3><p>运行单元测试与集成测试，检查插件加载、关闭和异常处理，并比较启用前后的推理结果。</p></article>
+        <article><span>05</span><h3>评测与记录</h3><p>固定模型、硬件、负载与基线，测量吞吐和时延，记录配置、运行命令与结果。</p></article>
+        <article><span>06</span><h3>整理与分享</h3><p>说明适用范围、已验证的功能和性能结果，提供代码、测试及复现说明。</p></article>
+      </div>
+      <p><a href="https://vllm-hust.sage.org.ai/">浏览 MOD 目录</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv">BidKV 示例</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-dev-hub">开发环境与服务管理</a></p>
+    </section>
+
     <section class="section" id="materials">
       <div class="section-heading materials-heading"><div><p class="eyebrow">Choose a route</p><h2>课程内容与材料</h2><p>课件按八个主题组织，并介绍 MOD 插件制作。</p></div><div class="material-shortcuts"><a class="details-link" href="downloads/#overview" aria-label="查看中英文课程快速介绍" title="中英文课程快速介绍"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="12" rx="1.5"></rect><path d="M8 21h8M12 17v4M10 9l5 2-5 2z"></path></svg><span>快速介绍</span></a><a class="details-link" href="downloads/#beamer" aria-label="查看详细课件" title="详细课件"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h10l4 4V20.5H5z"></path><path d="M15 3.5v4h4M8 12h8M8 15h8M8 18h5"></path></svg><span>详细材料</span></a></div></div>
       <div class="material-grid">
-        <article class="material-card violet"><p class="card-index">8 LECTURES</p><h3>八讲主课程</h3><p>2027 年课程共 16 学时，分 4 次授课，每次 4 节连排。八讲课件按主题组织，每讲对应 2 学时。</p><div class="card-links"><a href="#syllabus">查看八讲结构 ↓</a><a href="downloads/#lectures">已发布课件 ↓</a></div></article>
+        <article class="material-card violet"><p class="card-index">8 LECTURES</p><h3>八讲主课程</h3><p>课程共 16 学时，分 4 次授课。第一次课选讲导论和请求生命周期，中间安排 MOD 实操。八讲课件按主题编号。</p><div class="card-links"><a href="#syllabus">查看八讲课件 ↓</a><a href="downloads/#lectures">已发布课件 ↓</a></div></article>
       </div>
     </section>
 
@@ -115,7 +128,7 @@
     </section>
 
     <section class="section" id="syllabus">
-      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲主课程</h2><p>课程涵盖推理机制、系统架构、执行优化、论文阅读与 MOD 插件开发。</p></div>
+      <div class="section-heading"><p class="eyebrow">16 class periods · 4 sessions</p><h2>八讲课件</h2><p>第一次课选讲第 1、2 讲并完成 <a href="tutorials/mod/#first-lab">MOD 入门实操</a>。接下来两次课用第 3–6 讲的机制完善插件，最后一次课结合第 7、8 讲验证、评测并展示。</p></div>
       <div class="syllabus-list">
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC01%E8%AE%B2_%E8%AF%BE%E7%A8%8B%E5%AF%BC%E8%AE%BA%E4%B8%8E%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87.pptx" download><span>01</span><strong>课程导论与评价指标</strong><small>请求边界 · TTFT · TPOT · P99 · Goodput</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC02%E8%AE%B2_%E8%AF%B7%E6%B1%82%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8EPrefillDecode.pptx" download><span>02</span><strong>请求生命周期与 Prefill / Decode</strong><small>Transformer 路径 · 状态演化 · 逐步生成</small><b>↓</b></a>
@@ -123,27 +136,10 @@
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC04%E8%AE%B2_KV%E7%BC%93%E5%AD%98%E4%B8%8E%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86.pptx" download><span>04</span><strong>KV 缓存与状态管理</strong><small>容量 · 分页 · 复用 · 迁移 · 失效</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC05%E8%AE%B2_%E6%8E%A8%E7%90%86%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB.pptx" download><span>05</span><strong>推理系统架构与代码阅读</strong><small>Runtime · Worker · Kernel · 可观测性</small><b>↓</b></a>
         <a href="downloads/slides/2027/lectures-8-pptx/%E7%AC%AC06%E8%AE%B2_%E6%89%A7%E8%A1%8C%E4%BC%98%E5%8C%96%E4%B8%8E%E5%BC%82%E6%9E%84%E5%B9%B3%E5%8F%B0%E9%80%82%E9%85%8D.pptx" download><span>06</span><strong>执行优化与异构平台适配</strong><small>Roofline · Attention · 量化 · 并行通信</small><b>↓</b></a>
-        <a href="#practice"><span>07</span><strong>论文阅读与性能评测</strong><small>工作负载 · 基线 · 评价指标</small><b>→</b></a>
-        <a href="#practice"><span>08</span><strong>vLLM-HUST MOD 插件制作</strong><small>接口 · 实现 · 测试 · 评测</small><b>→</b></a>
+        <a href="tutorials/mod/#evaluation"><span>07</span><strong>论文阅读与性能评测</strong><small>工作负载 · 基线 · 评价指标</small><b>→</b></a>
+        <a href="tutorials/mod/#package"><span>08</span><strong>开源实践与课程项目</strong><small>插件打包 · 验证 · 展示</small><b>→</b></a>
       </div>
     </section>
-
-    <section class="section practice-section" id="practice">
-      <div class="section-heading"><p class="eyebrow">vLLM-HUST MOD</p><h2>制作推理优化插件</h2><p>课程实践围绕 vLLM-HUST MOD 开发，完成插件设计、实现和验证。</p><p><a class="text-link" href="tutorials/mod/#start">阅读 MOD 开发教程</a></p></div>
-      <div class="practice-grid">
-        <article><span>01</span><h3>确定优化问题</h3><p>选择请求调度、KV 缓存或模型执行等场景，说明目标负载、优化指标和适用条件。</p></article>
-        <article><span>02</span><h3>选择接入方式</h3><p>阅读运行时和现有 MOD 的接口，确定扩展点、输入输出、依赖与配置。先检查所选版本实际支持的接口。</p></article>
-        <article><span>03</span><h3>实现与注册</h3><p>将优化逻辑组织为独立模块，按所选接口实现适配和注册，并提供安装与启用方法。</p></article>
-        <article><span>04</span><h3>验证功能</h3><p>运行单元测试与集成测试，检查插件加载、关闭和异常处理，并比较启用前后的推理结果。</p></article>
-        <article><span>05</span><h3>评测与记录</h3><p>固定模型、硬件、负载与基线，测量吞吐和时延，记录配置、运行命令与结果。</p></article>
-        <article><span>06</span><h3>整理与分享</h3><p>说明适用范围、已验证的功能和性能结果，提供代码、测试及复现说明。</p></article>
-      </div>
-      <p><a href="https://vllm-hust.sage.org.ai/">浏览 MOD 目录</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv">BidKV 示例</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-dev-hub">开发环境与服务管理</a></p>
-    </section>
-
-    
-
-
 
     <section class="section practice-section" id="ride">
       <div class="section-heading"><h2>RIDE 实践教程</h2><p>从本地运行入手，学习用 RIDE 管理模型服务和独立 Controller。</p><p><a class="text-link" href="tutorials/ride/#demo">查看 4 请求并发限流演示</a></p></div>

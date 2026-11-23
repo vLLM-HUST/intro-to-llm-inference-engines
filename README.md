@@ -4,6 +4,8 @@ English repository slug: `intro-to-llm-inference-engines`
 
 课程主页：[courses.sage.org.ai](https://courses.sage.org.ai/)
 
+**第一次课即开始制作 MOD。** 先用 [MOD 开发教程](src/site/tutorials/mod/index.html#first-lab) 和 BidKV 固定版本，在 CPU 上改一条抢占选择规则并写测试。后续用调度、KV 缓存与系统架构课完善插件，最后一次课做验证、评测与展示。[四次授课安排](src/docs/2027/课程安排.md) · [三套课件索引](build/slides/2027/README.md)
+
 本仓库是《大模型推理系统与实践》课程材料的唯一维护与发布源，同时维护配套的 Nano-vLLM 教学代码与实验说明。个人主页和其他网站只提供到本仓库的引用，不再复制保存课件。所有版本的术语、算例、论文出处和课程边界以 `src/docs/2027/课程内容基线.md` 为准。
 
 仓库现采用明确的 `src/` 与 `build/` 分层：`src/` 保存可维护的源文件与课程说明，`build/` 保存正式导出的 PPTX/PDF；外部页面直接引用本仓库中的发布件。
@@ -25,7 +27,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 ## 使用建议
 
-- 2027 年正式课件分为课程介绍、8 讲版和 14 讲版三套入口；8 讲版按主题组织，每讲对应 2 学时。课程共 16 学时，每次 4 节连排，共 4 次授课；14 讲版是主题粒度更细的 Beamer 版本，两者不是新旧替代关系。
+- 2027 年课程共 16 学时，分 4 次授课，每次 4 学时。8 讲 PPTX 与 14 讲 Beamer 按主题编号，实际授课按[课程安排](src/docs/2027/课程安排.md)选页与搭配实践。
 - 需要修改 14 讲版时，进入 `src/slides/lectures-14-beamer/`；需要重新生成 PDF 时，在仓库根目录执行 `make` 或进入 `src/slides/` 执行 `make`。
 - 理论讨论与知识问答优先参考 `src/tutorials/md/`。
 - 代码实践、课程实验和作业说明优先参考 `src/code/nano-vllm-hust/` 与 `src/experiments/nano-vLLM实验课/`。
