@@ -2,6 +2,8 @@
 
 八份主课 PPTX 对应八次授课，每次连上两节，每节 45 分钟，共 16 节。课件包含逐节时间安排、动手练习与验收点，并用可编辑的流程图、时间线、块映射和对照图讲解关键步骤。 [完整授课安排](../../../src/docs/2027/课程安排.md)
 
+初学者可以直接从第 1 讲开始。第 4 次授课前，按自己的操作系统跑通 BidKV CPU 基线。第 4 讲会带着这份基线修改策略、建个人仓库并登记选题。 [实操准备](https://courses.sage.org.ai/tutorials/mod/#start)
+
 ## 八讲主课程
 
 | 授课 | 节次 | PPTX | 页数 |
@@ -18,6 +20,8 @@
 [课程考核与评分标准](../../../src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](../../experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
 
 ## 独立课程速览
+
+两份速览均可选读。各自在第 2 或第 3 页给出首次阅读路线和页码。
 
 - [中文系统导向介绍](course-overview/LLM推理系统_两小时快速介绍.pptx) · 60 页
 - [英文模型导向介绍](course-overview/llm_inference_systems.pptx) · 124 页
