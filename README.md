@@ -2,7 +2,7 @@
 
 English repository slug: `intro-to-llm-inference-engines`
 
-课程网站更新中。[2027 年授课安排](src/docs/2027/课程安排.md)和[八讲课件](build/slides/2027/README.md)可在本仓库查看。
+[课程网站](https://vllm-hust.github.io/intro-to-llm-inference-engines/) · [2027 年授课安排](src/docs/2027/课程安排.md) · [八讲课件](build/slides/2027/README.md)
 
 2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。为 yancan 负责的 Control Plane 另做一个 RIDE Controller 插件最多加 30 分。[考核与评分标准](src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
 
