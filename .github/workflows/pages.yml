@@ -30,6 +30,10 @@ jobs:
           node-version: '24'
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
         id: pages
+      - name: Install slide preview renderer and fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-impress fonts-noto-cjk fonts-liberation
       - run: npm run build
         env:
           COURSE_SITE_URL: ${{ steps.pages.outputs.base_url }}

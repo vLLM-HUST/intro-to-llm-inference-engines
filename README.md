@@ -2,7 +2,7 @@
 
 English repository slug: `intro-to-llm-inference-engines`
 
-[课程网站](https://courses.sage.org.ai/) · [2027 年授课安排](src/docs/2027/课程安排.md) · [八讲课件](build/slides/2027/README.md)
+[课程网站](https://courses.sage.org.ai/) · [2027 年授课安排](src/docs/2027/课程安排.md) · [课件下载与预览](https://courses.sage.org.ai/downloads/)
 
 2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。为 yancan 负责的 Control Plane 另做一个 RIDE Controller 插件最多加 30 分。[考核与评分标准](src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
 
@@ -35,6 +35,12 @@ English repository slug: `intro-to-llm-inference-engines`
 - 对外只发布仓库链接；不得再向个人主页仓库复制 PPTX、PDF 或其他课程材料。
 - 区分源文件与构建缓存，避免将本地 LaTeX 缓存作为正式内容提交。
 - 若课程结构或实验组织方式发生变化，应同步更新本说明。
+
+## 构建课程网站
+
+安装 Node.js 和 LibreOffice Impress，并确保环境有中文字体。运行 `npm run build` 生成 `dist/`，或运行 `npm run dev` 本地查看。若 `soffice` 不在 PATH，设置 `SOFFICE` 为其可执行文件路径，Windows 下使用 `soffice.com`。
+
+下载页从 `build/` 复制原始 PPTX 和实验单 PDF。每次构建会从当前 PPTX 生成 PDF 预览，输出到 `dist/downloads/previews/`。实验单的下载与预览使用同一份正式 PDF。
 
 ## 提交前清单
 

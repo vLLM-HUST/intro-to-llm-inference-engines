@@ -1,6 +1,8 @@
-import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { cp, mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { promisify } from "node:util";
 
 const sourceDir = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(sourceDir, "../..");
@@ -33,12 +35,6 @@ const downloadLabels = new Map([
   ["第08讲_MOD复现验收与个人答辩.pptx", "第 8 讲 · MOD 复现验收与个人答辩"],
 ]);
 
-const courseRepository = "https://github.com/vLLM-HUST/intro-to-llm-inference-engines";
-const repositoryOnlyLectures = new Set([
-  "第04讲_开源实践与课程项目.pptx",
-  "第08讲_MOD复现验收与个人答辩.pptx",
-]);
-
 async function collectFiles(directory, extensions) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
@@ -51,8 +47,11 @@ async function collectFiles(directory, extensions) {
 }
 
 const escapeHtml = (value) => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+const encodePath = (relative) => relative.split(path.sep).map(encodeURIComponent).join("/");
 const publicRoot = path.join(outputDir, "downloads");
+const previewRoot = path.join(publicRoot, "previews");
 const renderedGroups = [];
+const slidePreviews = new Map();
 
 for (const group of downloadGroups) {
   const absoluteSource = path.join(repositoryRoot, group.source);
@@ -61,34 +60,67 @@ for (const group of downloadGroups) {
   for (const sourceFile of files) {
     const relative = path.relative(path.join(repositoryRoot, "build"), sourceFile);
     const filename = path.basename(sourceFile);
-    const fromRepository = group.id === "lectures" && repositoryOnlyLectures.has(filename);
-    const encodedPath = relative.split(path.sep).map(encodeURIComponent).join("/");
-    if (!fromRepository) {
-      const destination = path.join(publicRoot, relative);
-      await mkdir(path.dirname(destination), { recursive: true });
-      await cp(sourceFile, destination);
+    const { name, ext } = path.parse(filename);
+    const destination = path.join(publicRoot, relative);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await cp(sourceFile, destination);
+
+    const downloadHref = encodePath(relative);
+    let previewHref = downloadHref;
+    if (ext.toLowerCase() === ".pptx") {
+      const previewName = `${name}.pdf`;
+      if (slidePreviews.has(previewName)) throw new Error(`Duplicate slide preview name: ${previewName}`);
+      slidePreviews.set(previewName, sourceFile);
+      previewHref = `previews/${encodeURIComponent(previewName)}`;
     }
     const bytes = (await stat(sourceFile)).size;
-    const title = downloadLabels.get(filename) ?? path.basename(filename, path.extname(filename))
+    const title = downloadLabels.get(filename) ?? name
       .replaceAll("_", " ")
       .replace(/^第0?([1-8])讲 /, "第 $1 讲 · ");
     renderedFiles.push({
-      href: fromRepository ? `${courseRepository}/blob/main/build/${encodedPath}` : encodedPath,
+      downloadHref,
+      previewHref,
       label: title,
-      format: path.extname(sourceFile).slice(1).toUpperCase(),
-      sourceLabel: fromRepository ? "GitHub" : `${(bytes / 1024 / 1024).toFixed(1)} MB`,
-      fromRepository,
+      format: ext.slice(1).toUpperCase(),
+      size: bytes < 1024 * 1024 ? `${Math.ceil(bytes / 1024)} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`,
     });
   }
   renderedGroups.push({ ...group, files: renderedFiles });
 }
 
+if (slidePreviews.size) {
+  const soffice = process.env.SOFFICE || (process.platform === "win32" ? "soffice.com" : "soffice");
+  const profile = await mkdtemp(path.join(outputDir, ".preview-profile-"));
+  try {
+    await mkdir(previewRoot, { recursive: true });
+    await promisify(execFile)(soffice, [
+      `-env:UserInstallation=${pathToFileURL(profile).href}`,
+      "--headless", "--convert-to", "pdf:impress_pdf_Export", "--outdir", previewRoot,
+      ...slidePreviews.values(),
+    ], { timeout: 180_000 });
+    for (const filename of slidePreviews.keys()) {
+      const info = await stat(path.join(previewRoot, filename));
+      if (!info.isFile() || !info.size) throw new Error(`Empty PDF preview: ${filename}`);
+    }
+  } catch (error) {
+    throw new Error("Could not produce every PPTX preview. Install LibreOffice Impress or set SOFFICE to its executable.", { cause: error });
+  } finally {
+    if (path.dirname(profile) === outputDir) await rm(profile, { recursive: true, force: true });
+  }
+}
+
 const downloadSections = renderedGroups.map((group) => `
     <section class="download-group" id="${group.id}">
       <div class="download-heading"><h2>${escapeHtml(group.title)}</h2></div>
-      <div class="download-list">
-        ${group.files.map((file) => `<a href="${file.href}"${file.fromRepository ? "" : " download"}><strong>${escapeHtml(file.label)}</strong><span>${file.format} · ${file.sourceLabel}</span></a>`).join("\n        ")}
-      </div>
+      <ul class="download-list">
+        ${group.files.map((file) => `<li class="download-item">
+          <div class="download-title"><strong>${escapeHtml(file.label)}</strong><span>${file.format} · ${file.size}</span></div>
+          <div class="download-actions">
+            <a href="${file.downloadHref}" download aria-label="下载 ${escapeHtml(file.label)}（${file.format}）">下载</a>
+            <a href="${file.previewHref}" target="_blank" rel="noopener" aria-label="预览 ${escapeHtml(file.label)}（PDF，新标签页）">预览</a>
+          </div>
+        </li>`).join("\n        ")}
+      </ul>
     </section>`).join("\n");
 
 const downloadsPage = `<!doctype html>
@@ -97,7 +129,7 @@ const downloadsPage = `<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>课程材料下载｜大模型推理系统与实践</title>
-  <meta name="description" content="《大模型推理系统与实践》公开 PPTX 与 PDF 下载。">
+  <meta name="description" content="《大模型推理系统与实践》课件和实验单，可直接下载和在线预览。">
   <link rel="canonical" href="https://courses.sage.org.ai/downloads/">
   <link rel="stylesheet" href="../styles.css">
 </head>
@@ -130,4 +162,4 @@ if (process.env.COURSE_SITE_URL) {
   }
 }
 
-console.log(`Course site built in ${outputDir} with ${renderedGroups.reduce((sum, group) => sum + group.files.filter((file) => !file.fromRepository).length, 0)} public downloads`);
+console.log(`Course site built in ${outputDir} with ${renderedGroups.flatMap(group => group.files).length} downloads and ${slidePreviews.size} generated slide previews`);
