@@ -4,7 +4,7 @@ English repository slug: `intro-to-llm-inference-engines`
 
 [课程网站](https://courses.sage.org.ai/) · [2027 年授课安排](src/docs/2027/课程安排.md) · [课件下载与预览](https://courses.sage.org.ai/downloads/)
 
-2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。为 yancan 负责的 Control Plane 另做一个 RIDE Controller 插件最多加 30 分。[考核与评分标准](src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
+2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。另交一个个人 RIDE Controller 插件最多加 30 分。[考核与评分标准](src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
 
 学生可从 [vLLM-HUST 引擎 MOD 模板](https://github.com/vLLM-HUST/vllm-hust-mod-template)和 [RIDE Controller 模板](https://github.com/vLLM-HUST/ride-controller-template)创建个人项目仓库。
 
