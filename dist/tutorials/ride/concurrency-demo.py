@@ -13,8 +13,6 @@ import time
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
-from ride.mock_vllm import server as mock_server
-
 
 def http_json(url, payload=None):
     if payload is None:
@@ -51,6 +49,11 @@ def wait_for(observe, condition, description):
 
 
 def main():
+    if sys.platform == "win32":
+        raise SystemExit("Run this demo in Linux or WSL. RIDE requires POSIX file locking.")
+
+    from ride.mock_vllm import server as mock_server
+
     release_backend = Event()
     with tempfile.TemporaryDirectory(prefix="ride-demo-") as directory, mock_server(
         "127.0.0.1", 0

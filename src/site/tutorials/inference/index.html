@@ -19,24 +19,22 @@
       <h1>推理流程图解</h1>
       <p>第 2 讲配套阅读。从文本输入到流式返回，跟踪一个推理请求。</p>
     </div>
-    <div class="inference-layout">
-      <figure class="inference-figure">
-        <a href="../../assets/llm-inference-pipeline.jpg"><img src="../../assets/llm-inference-pipeline.jpg" width="1103" height="1517" alt="大模型推理流程图，展示文本输入、分词、Transformer、采样、推测解码与流式返回"></a>
-        <figcaption>点击查看原图</figcaption>
-      </figure>
+    <section class="tutorial-section" aria-labelledby="flow">
+      <h2 id="flow">一次自回归请求的执行路径</h2>
       <ol class="inference-steps">
-        <li><strong>输入与调度。</strong>聊天模板和 Tokenizer 把消息编码成 Token ID。准入队列和调度器按 Token 与 KV 容量选请求、组批次。</li>
-        <li><strong>Prefill。</strong>Transformer 处理提示词并建立每层 KV Cache。提示词长度、批大小和算子共同影响首 Token 延迟（TTFT）。</li>
-        <li><strong>Decode。</strong>模型读取历史 KV，LM Head 输出 Logits，经采样产生新 Token，再更新 KV。连续批处理让多条序列共享执行轮次。</li>
-        <li><strong>返回与测量。</strong>增量反分词并流式输出，结束后释放资源。记录 TPOT、P99 时延和满足服务目标的 Goodput。</li>
+        <li><strong>分词与调度</strong><span>Tokenizer 将消息编码为 Token ID。调度器按 Token 和 KV 块预算安排请求。</span></li>
+        <li><strong>Prefill 与首 Token</strong><span>模型处理输入、缓存各层 KV，并根据最后位置的 logits 采样首 Token。</span></li>
+        <li><strong>Decode 循环</strong><span>每轮读历史 KV，为当前输入位置追加 KV，再预测下一个 Token。调度器可以在轮次间调整批次。</span></li>
+        <li><strong>流式返回</strong><span>增量解码已生成的 Token。达到停止条件后结束请求并释放其 KV 引用。</span></li>
       </ol>
-    </div>
+      <p>TTFT 从客户端发出请求计到收到首个内容 Token。TPOT 是首 Token 后的平均输出间隔。Goodput 只计单位时间内成功且达到服务目标的请求。</p>
+    </section>
     <section class="tutorial-section">
-      <h2>阅读提示</h2>
+      <h2>常见优化</h2>
       <ul>
-        <li>图中的 Token ID、隐藏维度、词表和层数是示例。以实际模型和 Tokenizer 配置为准。</li>
         <li>KV 分页分配可减少碎片，前缀缓存可复用重复上下文。GQA、MQA 和缓存精度会影响每 Token 的 KV 占用。</li>
-        <li>FlashAttention 减少 HBM 读写。推测解码由草稿机制提议候选，再由目标模型按所选算法验证。</li>
+        <li>FlashAttention 通过分块减少注意力计算的 HBM 读写。</li>
+        <li>推测解码先生成草稿，再由目标模型验证。第一次拒绝时，算法采样替代 Token，丢弃其余草稿，并从新的前缀继续。</li>
       </ul>
     </section>
     <section class="tutorial-section">

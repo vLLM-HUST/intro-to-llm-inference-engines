@@ -116,17 +116,15 @@ footer a { color: var(--cyan); }
 .download-actions { display: flex; flex: none; gap: .35rem; }
 .download-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .35rem .55rem; border: 1px solid var(--line); border-radius: .35rem; color: var(--link); font-weight: 700; text-decoration: none; white-space: nowrap; }
 .download-actions a:hover { border-color: var(--teal); text-decoration: underline; }
-.inference-layout { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 1.5rem; align-items: start; }
-.inference-figure { margin: 0; padding: .7rem; background: #fff; border: 1px solid var(--line); border-radius: .4rem; }
-.inference-figure img { display: block; width: 100%; height: auto; }
-.inference-figure figcaption { margin-top: .55rem; color: var(--muted); font-size: .88rem; }
-.inference-steps { margin: 0; padding-left: 1.5rem; }
-.inference-steps li + li { margin-top: .95rem; }
+.inference-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; margin: 1rem 0; padding: 0; list-style-position: inside; }
+.inference-steps li { padding: .7rem .8rem; border-top: 3px solid var(--teal); background: #fff; }
+.inference-steps li + li { margin-top: 0; }
+.inference-steps li::marker { color: var(--link); font-weight: 700; }
+.inference-steps span { display: block; margin-top: .45rem; }
 @media (max-width: 740px) {
   .site-header { grid-template-columns: 1fr auto; gap: .4rem 1rem; }
   html { scroll-padding-top: 104px; }
-  .download-list,.inference-layout { grid-template-columns: 1fr; }
-  .inference-figure { width: min(100%, 440px); }
+  .download-list,.inference-steps { grid-template-columns: 1fr; }
 }
 @media (max-width: 580px) {
   .course-width,.downloads-main { width: calc(100% - 32px); }

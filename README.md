@@ -4,11 +4,11 @@ English repository slug: `intro-to-llm-inference-engines`
 
 [课程网站](https://courses.sage.org.ai/) · [2027 年授课安排](src/docs/2027/课程安排.md) · [课件下载与预览](https://courses.sage.org.ai/downloads/)
 
-2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。另交一个个人 RIDE Controller 插件最多加 30 分。[考核与评分标准](src/site/tutorials/assessment/index.html) · [vLLM-HUST MOD 个人项目实验单](build/experiments/mod-project/vLLM-HUST_MOD_个人项目实验单.pdf)
+2027 年每位学生必做一个 vLLM-HUST 引擎 MOD，基础成绩满分 100 分。另交一个个人 RIDE Controller 插件最多加 30 分。[考核与评分标准](https://courses.sage.org.ai/tutorials/assessment/) · [vLLM-HUST MOD 个人项目实验单](https://courses.sage.org.ai/downloads/#mod-project)
 
 学生可从 [vLLM-HUST 引擎 MOD 模板](https://github.com/vLLM-HUST/vllm-hust-mod-template)和 [RIDE Controller 模板](https://github.com/vLLM-HUST/ride-controller-template)创建个人项目仓库。
 
-**8 次授课，每次连上 2 节，每节 45 分钟，共 16 节。** 第 1–3 次讲必要原理，第 4 次先用 BidKV 做 CPU 热身，再登记自己设计的 MOD 选题。第 5–8 次用于实现、联调、评测、复现和答辩。[MOD 开发教程](src/site/tutorials/mod/index.html#first-lab) · [选题门槛](src/site/tutorials/assessment/index.html#project-scope) · [八次授课安排](src/docs/2027/课程安排.md)
+**8 次授课，每次连上 2 节，每节 45 分钟，共 16 节。** 第 1–3 次讲必要原理，第 4 次先用 BidKV 做 CPU 热身，再登记自己设计的 MOD 选题。第 5–8 次用于实现、联调、评测、复现和答辩。[MOD 开发教程](https://courses.sage.org.ai/tutorials/mod/#start) · [选题门槛](https://courses.sage.org.ai/tutorials/assessment/#project-scope) · [八次授课安排](src/docs/2027/课程安排.md)
 
 本仓库维护《大模型推理系统与实践》的正式课件、MOD 项目实验单和课程网站。术语、算例、论文出处和课程边界见[课程内容基线](src/docs/2027/课程内容基线.md)。
 
@@ -26,7 +26,7 @@ English repository slug: `intro-to-llm-inference-engines`
 ## 使用建议
 
 - 按[课程安排](src/docs/2027/课程安排.md)使用八讲 PPTX 和个人 MOD 项目材料。
-- [RIDE Control Plane 教程](src/site/tutorials/ride/index.html)用于可选的 Controller 插件加分项目。
+- [RIDE Control Plane 教程](https://courses.sage.org.ai/tutorials/ride/)用于可选的 Controller 插件加分项目。
 - `.preview/` 与 `.tectonic-cache/` 属于本地构建缓存，不作为长期维护内容。
 
 ## 维护原则

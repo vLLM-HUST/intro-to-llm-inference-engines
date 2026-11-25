@@ -15,7 +15,6 @@ for (const file of ["index.html", "styles.css"]) {
   await cp(path.join(sourceDir, file), path.join(outputDir, file));
 }
 
-await cp(path.join(sourceDir, "assets"), path.join(outputDir, "assets"), { recursive: true });
 await cp(path.join(sourceDir, "tutorials"), path.join(outputDir, "tutorials"), { recursive: true });
 
 const downloadGroups = [

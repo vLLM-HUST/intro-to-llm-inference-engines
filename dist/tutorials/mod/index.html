@@ -87,11 +87,17 @@ git diff</code></pre>
     </section>
     <section class="tutorial-section" id="package">
       <h2>3. 打包、部署与验收</h2>
-      <h3>构建并检查插件</h3>
-      <p>记录源码提交及依赖版本，在独立环境构建和安装插件。以下命令针对本教程中的 BidKV 源码目录。</p>
-      <pre><code>python -m pip install build
-python -m build --wheel
-python -m pip check</code></pre>
+      <h3>构建并验证 wheel</h3>
+      <p>在源码目录构建，记录提交和包版本。下面以课内固定版本 BidKV 为例，在新的虚拟环境安装 wheel，再核对依赖与注册入口。个人 MOD 使用自己的 wheel 文件名。</p>
+      <pre><code>git rev-parse HEAD
+.venv/bin/python -m pip install build
+.venv/bin/python -m build --wheel
+
+python3 -m venv .venv-wheel
+.venv-wheel/bin/python -m pip install dist/vllm_hust_bidkv-0.2.2.dev1-py3-none-any.whl
+.venv-wheel/bin/python -m pip check
+.venv-wheel/bin/python -c 'from importlib.metadata import distribution; print(list(distribution("vllm-hust-bidkv").entry_points))'</code></pre>
+      <p>输出应包含 <code>vllm_hust.extension_bundles</code> 入口。PowerShell 用 <code>py -m venv .venv-wheel</code> 建环境，两个 Python 路径分别改为 <code>./.venv/Scripts/python.exe</code> 和 <code>./.venv-wheel/Scripts/python.exe</code>。</p>
       <p>在准备好的兼容环境安装 wheel 和 vLLM-HUST Extension Manager，按所用版本的说明检查扩展。以下标识为 BidKV 示例，宿主与协议版本须满足清单约束。</p>
       <pre><code>vllm-hust-ext extension inspect org.vllm-hust.bidkv
 vllm-hust-ext extension validate org.vllm-hust.bidkv
