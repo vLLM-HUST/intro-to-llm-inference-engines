@@ -17,7 +17,7 @@
   <main class="downloads-main tutorial-main" id="main">
     <div class="downloads-intro">
       <h1>vLLM-HUST MOD 开发教程</h1>
-      <p>第 4 次授课在 CPU 上修改并测试 BidKV 抢占规则，再独立制作一个引擎 MOD。<a href="../assessment/#submission">查看选题、联调与交付要求</a>。</p>
+      <p>第 7 节用 BidKV 做 CPU 热身。第 8 节起，针对具体负载设计并开发自己的引擎 MOD。<a href="../assessment/#project-scope">查看个人项目选题门槛</a>。</p>
     </div>
     <ol class="tutorial-contents">
       <li><a href="#start">首次实操前准备</a></li>
@@ -40,8 +40,8 @@ python3 -m venv .venv
       <p><a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/tree/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e">固定版本源码</a> · <a href="https://github.com/vLLM-HUST/vllm-hust-bidkv/blob/a55d5a8b3733fa59e2980b726f7b2230d6d2f63e/tests/test_vllm_hust_adapter.py">适配器测试</a></p>
     </section>
     <section class="tutorial-section" id="first-lab">
-      <h2>1. 入门实操：实现一个抢占策略变体</h2>
-      <p>第 7–8 节先读策略和测试，手算两条候选的分数，再修改规则、运行回归测试并确定自己的插件选题。</p>
+      <h2>1. 课堂热身：修改 BidKV 并跑回归</h2>
+      <p>第 7 节手算候选得分，用同一个 CPU 用例复现断言失败、改动和通过。该用例用于练习测试流程。</p>
       <p>当 KV 缓存压力升高时，宿主给插件一组候选请求，插件返回要抢占的请求 ID，或返回 <code>None</code> 放弃决定。BidKV 的评分同时考虑候选可释放的 token 数、请求已完成比例和抢占次数。</p>
       <ol>
         <li>打开 <code>tests/test_vllm_hust_adapter.py</code>，把下面的用例加在文件末尾。只运行该用例，原策略应选中 <code>b</code>，因此断言会失败。</li>
@@ -66,12 +66,15 @@ python3 -m venv .venv
       <pre><code>.venv/bin/python -m pytest tests/test_vllm_hust_adapter.py -k first_mod_completion_penalty -q
 .venv/bin/python -m pytest tests/test_vllm_hust_adapter.py -q
 git diff</code></pre>
-      <p>此练习验证策略对固定输入的选择。插件加载、设备运行和性能影响在后续环节验证。</p>
+      <p>此练习验证固定输入的 CPU 选择结果。课程成绩来自独立设计的个人 MOD 项目。</p>
     </section>
     <section class="tutorial-section" id="project-repo">
       <h2>建立个人仓库</h2>
       <p>BidKV 实操完成后，打开<a href="https://github.com/vLLM-HUST/vllm-hust-mod-template">引擎 MOD 模板仓库</a>，点击 <strong>Use this template</strong>，在自己的 GitHub 账号下创建仓库。先按 README 跑通 CPU 冒烟测试，再记录自己的选题和验收用例。</p>
       <p>模板以抢占接口演示打包与注册。选择其他扩展点时，按目标宿主版本调整接口与清单。<a href="../assessment/#topic">查看选题提交要求</a></p>
+      <h3 id="project-example">选题示例 · 重复抢占保护</h3>
+      <p>准备长短请求混合、会发生 KV 压力的负载。假设默认路径会先选候选 a。若 a 已被抢占两次且有另一个合法候选 b，新策略改选 b。若只有 a 合法，仍允许选 a，确保调度有可用选择。按宿主版本核对候选及历史信息的来源。</p>
+      <p>用同一请求轨迹做关闭与启用对照，保留宿主调用与选中请求的日志。比较每请求抢占次数、尾延迟和失败数。若策略只把抢占转移给其他请求，结合日志和整体指标解释代价。</p>
     </section>
     <section class="tutorial-section" id="develop">
       <h2>2. 实现和注册引擎 MOD</h2>

@@ -2,7 +2,7 @@
 
 八份主课 PPTX 对应八次授课，每次连上两节，每节 45 分钟，共 16 节。每节在相关概念或操作后穿插一个带输入和核对结果的实例。代码页标明所需环境，伪代码页用于推演策略、测试或验收。 [完整授课安排](../../../src/docs/2027/课程安排.md)
 
-初学者可以直接从第 1 讲开始。第 4 次授课前，按自己的操作系统跑通 BidKV CPU 基线。第 4 讲会带着这份基线修改策略、建个人仓库并登记选题。 [实操准备](https://courses.sage.org.ai/tutorials/mod/#start)
+初学者可以直接从第 1 讲开始。第 4 次授课前跑通 BidKV CPU 基线，用于第 7 节热身。第 8 节登记自己设计的项目行为、触发用例和边界预期。 [实操准备](https://courses.sage.org.ai/tutorials/mod/#start) · [选题门槛](https://courses.sage.org.ai/tutorials/assessment/#project-scope)
 
 ## 八讲主课程
 
